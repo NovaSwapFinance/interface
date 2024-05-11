@@ -55,6 +55,6 @@ Translations for our applications are done through [crowdin](https://crowdin.com
 # interface-v
 
 
-yarn web graphql
-yarn uniswap prepare
+yarn web graphql<br>
+yarn uniswap prepare<br>
 yarn web craco build
