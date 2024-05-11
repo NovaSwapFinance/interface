@@ -53,3 +53,8 @@ Translations for our applications are done through [crowdin](https://crowdin.com
 | `config/`   | Shared infrastructure packages and configurations.                             |
 | `packages/` | Shared code packages covering UI, shared functionality, and shared utilities.  |
 # interface-v
+
+
+yarn web graphql
+yarn uniswap prepare
+yarn web craco build
