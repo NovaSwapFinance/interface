@@ -130,11 +130,11 @@ const Navbar = ({ blur }: { blur: boolean }) => {
                 onClick={handleUniIconClick}
               />
             </Box>
-            {!isNftPage && (
+            {/* {!isNftPage && (
               <Box display={{ sm: 'flex', lg: 'none' }}>
                 <ChainSelector leftAlign={true} />
               </Box>
-            )}
+            )} */}
             <Row display={{ sm: 'none', lg: 'flex' }}>
               <PageTabs />
             </Row>
@@ -153,11 +153,11 @@ const Navbar = ({ blur }: { blur: boolean }) => {
                 {/* <SearchBar /> */}
               </Box>
               {isNftPage && sellPageState !== ProfilePageStateType.LISTING && <Bag />}
-              {!isNftPage && (
+              {/* {!isNftPage && (
                 <Box display={{ sm: 'none', lg: 'flex' }}>
                   <ChainSelector />
                 </Box>
-              )}
+              )} */}
               {isLandingPage && <GetTheAppButton />}
               <Web3Status />
             </Row>
