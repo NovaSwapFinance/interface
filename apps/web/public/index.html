@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
 
-    <title>Uniswap Interface</title>
+    <title>Novaswap Finance</title>
 
     <!--
       %PUBLIC_URL% will be replaced with the URL of the `public` folder during build.
@@ -15,13 +15,7 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
     <meta name="theme-color" content="#fff" />
-    <!-- <% const cspConfig = require('./csp.json'); %>
-    <meta
-      http-equiv="Content-Security-Policy" 
-      content="default-src <%= cspConfig.defaultSrc.join(' ') %>; script-src <%= cspConfig.scriptSrc.join(' ') %>; style-src <%= cspConfig.styleSrc.join(' ') %>; img-src <%= cspConfig.imgSrc.join(' ') %>; frame-src <%= cspConfig.frameSrc.join(' ') %>; connect-src <%= cspConfig.connectSrc.join(' ') %>; worker-src <%= cspConfig.workerSrc.join(' ') %>;"
-    > -->
-    
-    <!-- 
+<!--
       Apple Smart App Banner for Safari on iOS
       https://developer.apple.com/documentation/webkit/promoting_apps_with_smart_app_banners
      -->
@@ -41,7 +35,7 @@
 
     <!-- Include <link rel="preload"> for js assets so that they are loaded with high priority. -->
     <%= htmlWebpackPlugin.files.js.map((href) => `<link rel="preload" href="${href}" as="script" />`).join('\n    ') %>
-   
+
     <style>
       * {
         font-family: 'Basel', sans-serif;
@@ -56,7 +50,7 @@
         font-weight: 535;
         font-style: normal;
         font-display: block;
-        src: 
+        src:
           url('%PUBLIC_URL%/fonts/Basel-Grotesk-Medium.woff2') format('woff2'),
           url('%PUBLIC_URL%/fonts/Basel-Grotesk-Medium.woff') format('woff');
       }
@@ -66,7 +60,7 @@
         font-weight: 485;
         font-style: normal;
         font-display: block;
-        src: 
+        src:
           url('%PUBLIC_URL%/fonts/Basel-Grotesk-Book.woff2') format('woff2'),
           url('%PUBLIC_URL%/fonts/Basel-Grotesk-Book.woff') format('woff');
       }
