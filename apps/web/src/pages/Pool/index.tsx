@@ -174,9 +174,9 @@ function WrongNetworkCard() {
             <MainContentWrapper>
               <ErrorContainer>
                 <ThemedText.BodyPrimary color={theme.neutral3} textAlign="center">
-                  <NetworkIcon strokeWidth={1.2} />
+                <InboxIcon strokeWidth={1.2} />
                   <div data-testid="pools-unsupported-err">
-                    <Trans>Your connected network is unsupported.</Trans>
+                    <Trans>Connect your wallet to add liquidity positions.</Trans>
                   </div>
                 </ThemedText.BodyPrimary>
               </ErrorContainer>

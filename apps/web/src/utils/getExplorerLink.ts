@@ -16,7 +16,7 @@ const BLOCK_EXPLORER_PREFIXES: { [chainId: number]: string } = {
   [ChainId.AVALANCHE]: "https://snowtrace.io",
   [ChainId.BASE]: "https://basescan.org",
   [ChainId.BLAST]: "https://blastscan.io",
-  [ChainId.NOVA_SEPOLIA]: "https://sepolia.explorer.zklink.io/",
+  [ChainId.NOVA_SEPOLIA]: "https://sepolia.explorer.zklink.io",
 };
 
 export enum ExplorerDataType {
@@ -45,7 +45,7 @@ export function getExplorerLink(
       return `${prefix}/tx/${data}`;
 
     case ExplorerDataType.TOKEN:
-      return `${prefix}/token/${data}`;
+      return `${prefix}/address/${data}`;
 
     case ExplorerDataType.BLOCK:
       return `${prefix}/block/${data}`;

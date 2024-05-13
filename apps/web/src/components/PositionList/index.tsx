@@ -80,7 +80,7 @@ export default function PositionList({
     <>
       <DesktopHeader>
         <div>
-          <Trans>Your positions:2</Trans>
+          <Trans>Your positions:</Trans>
           {positions && " (" + positions.length + ")"}
         </div>
 

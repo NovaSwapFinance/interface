@@ -89,21 +89,21 @@ export function FOTTooltipContent() {
 function SwapFeeTooltipContent({ hasFee }: { hasFee: boolean }) {
   const message = hasFee ? (
     <Trans>
-      Fees are applied to ensure the best experience with Uniswap, and have
+      Fees are applied to ensure the best experience with Novaswap, and have
       already been factored into this quote.
     </Trans>
   ) : (
     <Trans>
-      Fees are applied to ensure the best experience with Uniswap. There is no
+      Fees are applied to ensure the best experience with Novaswap. There is no
       fee associated with this swap.
     </Trans>
   );
   return (
     <>
       {message}{" "}
-      <ExternalLink href="https://support.uniswap.org/hc/en-us/articles/20131678274957">
+      {/* <ExternalLink href="https://support.uniswap.org/hc/en-us/articles/20131678274957">
         <Trans>Learn more</Trans>
-      </ExternalLink>
+      </ExternalLink> */}
     </>
   );
 }

@@ -175,9 +175,8 @@ const NFTImage = styled.img`
   z-index: 1;
 `
 
-const StyledPoolLink = styled(Link)`
+const StyledPoolLink =  styled.div`
   text-decoration: none;
-  ${ClickableStyle}
 `
 
 const PairHeader = styled(ThemedText.H1Medium)`

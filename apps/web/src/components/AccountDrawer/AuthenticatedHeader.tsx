@@ -222,7 +222,7 @@ export default function AuthenticatedHeader({ account, openSettings }: { account
             <LoadingBubble height="16px" width="100px" margin="4px 0 20px 0" />
           </Column>
         )}
-        <Row gap="8px" marginBottom={!fiatOnrampAvailable && fiatOnrampAvailabilityChecked ? '20px' : '0px'}>
+        {/* <Row gap="8px" marginBottom={!fiatOnrampAvailable && fiatOnrampAvailabilityChecked ? '20px' : '0px'}>
           {shouldShowBuyFiatButton && (
             <ActionTile
               dataTestId="wallet-buy-crypto"
@@ -244,7 +244,7 @@ export default function AuthenticatedHeader({ account, openSettings }: { account
               onClick={navigateToProfile}
             />
           )}
-        </Row>
+        </Row> */}
         <MiniPortfolio account={account} />
         {isUnclaimed && (
           <UNIButton onClick={openClaimModal} size={ButtonSize.medium} emphasis={ButtonEmphasis.medium}>
