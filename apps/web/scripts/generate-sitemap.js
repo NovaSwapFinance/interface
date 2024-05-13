@@ -56,19 +56,19 @@ fs.readFile('./public/tokens-sitemap.xml', 'utf8', async (err, data) => {
     }
 
     for (const chainName of chains) {
-      const tokensResponse = await fetch('https://api.uniswap.org/v1/graphql', {
-        method: 'POST',
+      const tokensResponse = await fetch("https://api.uniswap.org/v1/graphql", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          Origin: 'https://app.uniswap.org',
+          "Content-Type": "application/json",
+          Origin: "https://novaswap.finance",
         },
         body: JSON.stringify({ query: getTopTokensQuery(chainName) }),
-      })
+      });
       const tokensJSON = await tokensResponse.json()
       const tokenAddresses = tokensJSON.data.topTokens.map((token) => token.address.toLowerCase())
 
       tokenAddresses.forEach((address) => {
-        const tokenURL = `https://app.uniswap.org/explore/tokens/${chainName.toLowerCase()}/${address}`
+        const tokenURL = `https://novaswap.finance/explore/tokens/${chainName.toLowerCase()}/${address}`;
         if (!(tokenURL in tokenURLs)) {
           sitemap.urlset.url.push({
             loc: [tokenURL],
@@ -112,18 +112,21 @@ fs.readFile('./public/nfts-sitemap.xml', 'utf8', async (err, data) => {
       })
     }
 
-    const nftResponse = await fetch('https://interface.gateway.uniswap.org/v1/graphql', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Origin: 'https://app.uniswap.org',
+    const nftResponse = await fetch(
+      "https://interface.gateway.uniswap.org/v1/graphql",
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Origin: "https://novaswap.finance",
+        },
+        body: JSON.stringify({ query: nftTopCollectionsQuery }),
       },
-      body: JSON.stringify({ query: nftTopCollectionsQuery }),
-    })
+    );
     const nftJSON = await nftResponse.json()
     const collectionAddresses = nftJSON.data.topCollections.edges.map((edge) => edge.node.nftContracts[0].address)
     collectionAddresses.forEach((address) => {
-      const collectionURL = `https://app.uniswap.org/nfts/collection/${address}`
+      const collectionURL = `https://novaswap.finance/nfts/collection/${address}`;
       if (!(collectionURL in collectionURLs)) {
         sitemap.urlset.url.push({
           loc: [collectionURL],
@@ -167,21 +170,21 @@ fs.readFile('./public/pools-sitemap.xml', 'utf8', async (err, data) => {
     }
 
     for (const chainName of chains) {
-      const poolsResponse = await fetch('https://api.uniswap.org/v1/graphql', {
-        method: 'POST',
+      const poolsResponse = await fetch("https://api.uniswap.org/v1/graphql", {
+        method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          Origin: 'https://app.uniswap.org',
+          "Content-Type": "application/json",
+          Origin: "https://novaswap.finance",
         },
         body: JSON.stringify({ query: getTopPoolsQuery(chainName) }),
-      })
+      });
       const poolsJSON = await poolsResponse.json()
       const v3PoolAddresses = poolsJSON.data.topV3Pools?.map((pool) => pool.address.toLowerCase()) ?? []
       const v2PoolAddresses = poolsJSON.data.topV2Pairs?.map((pool) => pool.address.toLowerCase()) ?? []
       const poolAddresses = v3PoolAddresses.concat(v2PoolAddresses)
 
       poolAddresses.forEach((address) => {
-        const poolUrl = `https://app.uniswap.org/explore/pools/${chainName.toLowerCase()}/${address}`
+        const poolUrl = `https://novaswap.finance/explore/pools/${chainName.toLowerCase()}/${address}`;
         if (!(poolUrl in poolURLs)) {
           sitemap.urlset.url.push({
             loc: [poolUrl],

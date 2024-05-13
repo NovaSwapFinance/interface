@@ -80,127 +80,140 @@ export function* deepLinkWatcher() {
 export function* handleUniswapAppDeepLink(path: string, url: string, linkSource: LinkSource) {
   // Navigate to the home page to ensure that a page isn't already open as a screen,
   // which causes the bottom sheet to break
-  navigate(Screens.Home)
+  navigate(Screens.Home);
 
-  // Handle NFT Item share (ex. https://app.uniswap.org/nfts/asset/0x.../123)
+  // Handle NFT Item share (ex. https://novaswap.finance/nfts/asset/0x.../123)
   if (NFT_ITEM_SHARE_LINK_HASH_REGEX.test(path)) {
-    const [, , contractAddress, tokenId] = path.match(NFT_ITEM_SHARE_LINK_HASH_REGEX) || []
+    const [, , contractAddress, tokenId] =
+      path.match(NFT_ITEM_SHARE_LINK_HASH_REGEX) || [];
     if (!contractAddress || !tokenId) {
-      return
+      return;
     }
-    yield* put(
-      openModal({
-        name: ModalName.Explore,
-        initialState: {
-          screen: Screens.NFTItem,
-          params: {
-            address: contractAddress,
-            tokenId,
-            isSpam: false,
+    yield *
+      put(
+        openModal({
+          name: ModalName.Explore,
+          initialState: {
+            screen: Screens.NFTItem,
+            params: {
+              address: contractAddress,
+              tokenId,
+              isSpam: false,
+            },
           },
-        },
-      })
-    )
-    yield* call(sendMobileAnalyticsEvent, MobileEventName.ShareLinkOpened, {
-      entity: ShareableEntity.NftItem,
-      url,
-    })
-    return
+        })
+      );
+    yield *
+      call(sendMobileAnalyticsEvent, MobileEventName.ShareLinkOpened, {
+        entity: ShareableEntity.NftItem,
+        url,
+      });
+    return;
   }
 
-  // Handle NFT collection share (ex. https://app.uniswap.org/nfts/collection/0x...)
+  // Handle NFT collection share (ex. https://novaswap.finance/nfts/collection/0x...)
   if (NFT_COLLECTION_SHARE_LINK_HASH_REGEX.test(path)) {
-    const [, , contractAddress] = path.match(NFT_COLLECTION_SHARE_LINK_HASH_REGEX) || []
+    const [, , contractAddress] =
+      path.match(NFT_COLLECTION_SHARE_LINK_HASH_REGEX) || [];
     if (!contractAddress) {
-      return
+      return;
     }
-    yield* put(
-      openModal({
-        name: ModalName.Explore,
-        initialState: {
-          screen: Screens.NFTCollection,
-          params: {
-            collectionAddress: contractAddress,
+    yield *
+      put(
+        openModal({
+          name: ModalName.Explore,
+          initialState: {
+            screen: Screens.NFTCollection,
+            params: {
+              collectionAddress: contractAddress,
+            },
           },
-        },
-      })
-    )
-    yield* call(sendMobileAnalyticsEvent, MobileEventName.ShareLinkOpened, {
-      entity: ShareableEntity.NftCollection,
-      url,
-    })
-    return
+        })
+      );
+    yield *
+      call(sendMobileAnalyticsEvent, MobileEventName.ShareLinkOpened, {
+        entity: ShareableEntity.NftCollection,
+        url,
+      });
+    return;
   }
 
-  // Handle Token share (ex. https://app.uniswap.org/tokens/ethereum/0x...)
+  // Handle Token share (ex. https://novaswap.finance/tokens/ethereum/0x...)
   if (TOKEN_SHARE_LINK_HASH_REGEX.test(path)) {
-    const [, , network, contractAddress] = path.match(TOKEN_SHARE_LINK_HASH_REGEX) || []
-    const chainId = network && fromUniswapWebAppLink(network)
+    const [, , network, contractAddress] =
+      path.match(TOKEN_SHARE_LINK_HASH_REGEX) || [];
+    const chainId = network && fromUniswapWebAppLink(network);
     if (!chainId || !contractAddress) {
-      return
+      return;
     }
     const currencyId =
       contractAddress === UNISWAP_APP_NATIVE_TOKEN
         ? buildNativeCurrencyId(chainId)
-        : buildCurrencyId(chainId, contractAddress)
-    yield* put(
-      openModal({
-        name: ModalName.Explore,
-        initialState: {
-          screen: Screens.TokenDetails,
-          params: {
-            currencyId,
-          },
-        },
-      })
-    )
-    if (linkSource === LinkSource.Share) {
-      yield* call(sendMobileAnalyticsEvent, MobileEventName.ShareLinkOpened, {
-        entity: ShareableEntity.Token,
-        url,
-      })
-    } else {
-      yield* call(sendMobileAnalyticsEvent, MobileEventName.WidgetClicked, {
-        widget_type: WidgetType.TokenPrice,
-        url,
-      })
-    }
-    return
-  }
-
-  // Handle Address share (ex. https://app.uniswap.org/address/0x...)
-  if (ADDRESS_SHARE_LINK_HASH_REGEX.test(path)) {
-    const [, , accountAddress] = path.match(ADDRESS_SHARE_LINK_HASH_REGEX) || []
-    if (!accountAddress) {
-      return
-    }
-    const accounts = yield* appSelect(selectNonPendingAccounts)
-    const activeAccountAddress = yield* appSelect(selectActiveAccountAddress)
-    if (accountAddress === activeAccountAddress) {
-      return
-    }
-
-    const isInternal = Boolean(accounts?.[accountAddress])
-    if (isInternal) {
-      yield* put(setAccountAsActive(accountAddress))
-    } else {
-      yield* put(
+        : buildCurrencyId(chainId, contractAddress);
+    yield *
+      put(
         openModal({
           name: ModalName.Explore,
           initialState: {
-            screen: Screens.ExternalProfile,
+            screen: Screens.TokenDetails,
             params: {
-              address: accountAddress,
+              currencyId,
             },
           },
         })
-      )
+      );
+    if (linkSource === LinkSource.Share) {
+      yield *
+        call(sendMobileAnalyticsEvent, MobileEventName.ShareLinkOpened, {
+          entity: ShareableEntity.Token,
+          url,
+        });
+    } else {
+      yield *
+        call(sendMobileAnalyticsEvent, MobileEventName.WidgetClicked, {
+          widget_type: WidgetType.TokenPrice,
+          url,
+        });
     }
-    yield* call(sendMobileAnalyticsEvent, MobileEventName.ShareLinkOpened, {
-      entity: ShareableEntity.Wallet,
-      url,
-    })
-    return
+    return;
+  }
+
+  // Handle Address share (ex. https://novaswap.finance/address/0x...)
+  if (ADDRESS_SHARE_LINK_HASH_REGEX.test(path)) {
+    const [, , accountAddress] =
+      path.match(ADDRESS_SHARE_LINK_HASH_REGEX) || [];
+    if (!accountAddress) {
+      return;
+    }
+    const accounts = yield * appSelect(selectNonPendingAccounts);
+    const activeAccountAddress = yield * appSelect(selectActiveAccountAddress);
+    if (accountAddress === activeAccountAddress) {
+      return;
+    }
+
+    const isInternal = Boolean(accounts?.[accountAddress]);
+    if (isInternal) {
+      yield * put(setAccountAsActive(accountAddress));
+    } else {
+      yield *
+        put(
+          openModal({
+            name: ModalName.Explore,
+            initialState: {
+              screen: Screens.ExternalProfile,
+              params: {
+                address: accountAddress,
+              },
+            },
+          })
+        );
+    }
+    yield *
+      call(sendMobileAnalyticsEvent, MobileEventName.ShareLinkOpened, {
+        entity: ShareableEntity.Wallet,
+        url,
+      });
+    return;
   }
 }
 
