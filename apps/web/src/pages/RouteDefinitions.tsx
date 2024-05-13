@@ -90,7 +90,7 @@ function createRouteDefinition(route: Partial<RouteDefinition>): RouteDefinition
   }
 }
 
-const SwapTitle = t`Buy, sell & trade Ethereum and other top tokens on Uniswap`
+const SwapTitle = t`NovaSwap | Swap all the L2's assets in NovaSwap of zkLink`;
 
 export const routes: RouteDefinition[] = [
   createRouteDefinition({
