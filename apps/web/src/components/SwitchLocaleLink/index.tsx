@@ -37,11 +37,12 @@ export function SwitchLocaleLink() {
   if (!targetLocale || !to) return null
 
   return (
-    <Container>
-      <Trans>Uniswap available in: </Trans>
-      <StyledInternalLink onClick={onClick} to={to}>
-        {LOCALE_LABEL[targetLocale]}
-      </StyledInternalLink>
-    </Container>
+    // <Container>
+    //   <Trans>Uniswap available in: </Trans>
+    //   <StyledInternalLink onClick={onClick} to={to}>
+    //     {LOCALE_LABEL[targetLocale]}
+    //   </StyledInternalLink>
+    // </Container>
+    <div />
   )
 }

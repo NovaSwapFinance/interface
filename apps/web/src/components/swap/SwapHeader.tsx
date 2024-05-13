@@ -94,7 +94,7 @@ export default function SwapHeader({
         >
           <Trans>Swap</Trans>
         </SwapHeaderTabButton>
-        {limitsEnabled && chainId === ChainId.MAINNET && (
+        {/* {limitsEnabled && chainId === ChainId.MAINNET && (
           <SwapHeaderTabButton
             $isActive={currentTab === SwapTab.Limit}
             onClick={() => {
@@ -114,7 +114,7 @@ export default function SwapHeader({
             <Trans>Send</Trans>
           </SwapHeaderTabButton>
         )}
-        <SwapBuyFiatButton />
+        <SwapBuyFiatButton /> */}
       </HeaderButtonContainer>
       {currentTab === SwapTab.Swap && (
         <RowFixed>

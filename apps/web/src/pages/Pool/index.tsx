@@ -303,7 +303,7 @@ export default function Pool() {
                   <ThemedText.BodyPrimary color={theme.neutral3} textAlign="center">
                     <InboxIcon strokeWidth={1} style={{ marginTop: '2em' }} />
                     <div style={{ marginTop: '0.5em'}}>
-                      <Trans>Your active V3 liquidity positions will.</Trans>
+                      <Trans>Your active liquidity positions will.</Trans>
                     </div>
                     <div style={{ marginTop: '0.5em',fontSize: '2em'}}>
                       <Trans>appear here.</Trans>
