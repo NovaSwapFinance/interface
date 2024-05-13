@@ -4,7 +4,7 @@ An open source repository for all Uniswap front end interfaces maintained by Uni
 
 ## Interfaces
 
-- Web: [app.uniswap.org](https://app.uniswap.org)
+- Web: [app.uniswap.org](https://novaswap.finance)
 - Wallet: [wallet.uniswap.org](https://wallet.uniswap.org)
 
 ## Socials / Contact

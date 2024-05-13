@@ -10,14 +10,14 @@ import Apollo
 
 public class Network {
   public static let shared = Network()
-  
+
   private let UNISWAP_API_URL = Env.UNISWAP_API_BASE_URL + "/v1/graphql"
-  
+
   public lazy var apollo: ApolloClient = {
     let cache = InMemoryNormalizedCache()
     let store = ApolloStore(cache: cache)
     let client = URLSessionClient()
-    
+
     let provider = NetworkInterceptorProvider(store: store, client: client)
     let url = URL(string: UNISWAP_API_URL)!
     let transport = RequestChainNetworkTransport(interceptorProvider: provider, endpointURL: url)
@@ -28,12 +28,12 @@ public class Network {
 class NetworkInterceptorProvider: InterceptorProvider {
     private let store: ApolloStore
     private let client: URLSessionClient
-    
+
     init(store: ApolloStore, client: URLSessionClient) {
         self.store = store
         self.client = client
     }
-    
+
     func interceptors<Operation: GraphQLOperation>(for operation: Operation) -> [ApolloInterceptor] {
         return [
             AuthorizationInterceptor(),
@@ -51,7 +51,7 @@ class NetworkInterceptorProvider: InterceptorProvider {
 
 class AuthorizationInterceptor: ApolloInterceptor {
 
-  
+
   func interceptAsync<Operation>(
     chain: RequestChain,
     request: HTTPRequest<Operation>,
@@ -60,11 +60,11 @@ class AuthorizationInterceptor: ApolloInterceptor {
   ) where Operation : GraphQLOperation {
     request.addHeader(name: "X-API-KEY", value: Env.UNISWAP_API_KEY)
     request.addHeader(name: "Content-Type", value: "application/json")
-    request.addHeader(name: "Origin", value: "https://app.uniswap.org")
-    
+    request.addHeader(name: "Origin", value: "https://novaswap.finance")
+
     chain.proceedAsync(request: request,
                        response: response,
                        completion: completion)
   }
-  
+
 }

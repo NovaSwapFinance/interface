@@ -4,7 +4,7 @@
 
 To access the Uniswap Interface, use an IPFS gateway link from the
 [latest release](https://github.com/Uniswap/uniswap-interface/releases/latest),
-or visit [app.uniswap.org](https://app.uniswap.org).
+or visit [app.uniswap.org](https://novaswap.finance).
 
 ## Running the interface locally
 
@@ -23,10 +23,10 @@ You can block an entire list of tokens by passing in a tokenlist like [here](./s
 
 The Uniswap Interface supports swapping, adding liquidity, removing liquidity and migrating liquidity for Uniswap protocol V2.
 
-- Swap on Uniswap V2: <https://app.uniswap.org/swap?use=v2>
-- View V2 liquidity: <https://app.uniswap.org/pools/v2>
-- Add V2 liquidity: <https://app.uniswap.org/add/v2>
-- Migrate V2 liquidity to V3: <https://app.uniswap.org/migrate/v2>
+- Swap on Uniswap V2: <https://novaswap.finance/swap?use=v2>
+- View V2 liquidity: <https://novaswap.finance/pools/v2>
+- Add V2 liquidity: <https://novaswap.finance/add/v2>
+- Migrate V2 liquidity to V3: <https://novaswap.finance/migrate/v2>
 
 ## Accessing Uniswap V1
 
