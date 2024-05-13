@@ -1,127 +1,127 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
   <url>
-    <loc>https://app.uniswap.org/</loc>
+    <loc>https://novaswap.finance/</loc>
     <lastmod>2023-10-11T19:57:27.976Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://app.uniswap.org/explore</loc>
+    <loc>https://novaswap.finance/explore</loc>
     <lastmod>2024-03-08T18:44:55.418Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://app.uniswap.org/explore/tokens</loc>
+    <loc>https://novaswap.finance/explore/tokens</loc>
     <lastmod>2024-03-08T18:44:55.418Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://app.uniswap.org/explore/pools</loc>
+    <loc>https://novaswap.finance/explore/pools</loc>
     <lastmod>2024-03-08T18:44:55.418Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://app.uniswap.org/explore/transactions</loc>
+    <loc>https://novaswap.finance/explore/transactions</loc>
     <lastmod>2024-03-08T18:44:55.418Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://app.uniswap.org/send</loc>
+    <loc>https://novaswap.finance/send</loc>
     <lastmod>2023-10-11T19:57:27.976Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://app.uniswap.org/limit</loc>
+    <loc>https://novaswap.finance/limit</loc>
     <lastmod>2024-02-21T20:00:00.976Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://app.uniswap.org/limits</loc>
+    <loc>https://novaswap.finance/limits</loc>
     <lastmod>2024-02-21T20:00:00.976Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://app.uniswap.org/swap</loc>
+    <loc>https://novaswap.finance/swap</loc>
     <lastmod>2023-10-11T19:57:27.976Z</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.9</priority>  
+    <priority>0.9</priority>
   </url>
   <url>
-    <loc>https://app.uniswap.org/pool/v2/find</loc>
-    <lastmod>2023-10-11T19:57:27.976Z</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
-  </url>
-  <url>
-    <loc>https://app.uniswap.org/pool/v2</loc>
+    <loc>https://novaswap.finance/pool/v2/find</loc>
     <lastmod>2023-10-11T19:57:27.976Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://app.uniswap.org/pool</loc>
+    <loc>https://novaswap.finance/pool/v2</loc>
     <lastmod>2023-10-11T19:57:27.976Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://app.uniswap.org/pools/v2/find</loc>
+    <loc>https://novaswap.finance/pool</loc>
     <lastmod>2023-10-11T19:57:27.976Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://app.uniswap.org/pools/v2</loc>
+    <loc>https://novaswap.finance/pools/v2/find</loc>
     <lastmod>2023-10-11T19:57:27.976Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://app.uniswap.org/pools</loc>
+    <loc>https://novaswap.finance/pools/v2</loc>
+    <lastmod>2023-10-11T19:57:27.976Z</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.6</priority>
+  </url>
+  <url>
+    <loc>https://novaswap.finance/pools</loc>
     <lastmod>2023-10-11T19:57:27.976Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://app.uniswap.org/add/v2</loc>
+    <loc>https://novaswap.finance/add/v2</loc>
     <lastmod>2023-10-11T19:57:27.976Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://app.uniswap.org/add</loc>
+    <loc>https://novaswap.finance/add</loc>
     <lastmod>2023-10-11T19:57:27.976Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://app.uniswap.org/migrate/v2</loc>
+    <loc>https://novaswap.finance/migrate/v2</loc>
     <lastmod>2023-10-11T19:57:27.976Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://app.uniswap.org/nfts</loc>
+    <loc>https://novaswap.finance/nfts</loc>
     <lastmod>2023-10-11T19:57:27.976Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://app.uniswap.org/nfts/profile</loc>
+    <loc>https://novaswap.finance/nfts/profile</loc>
     <lastmod>2023-10-11T19:57:27.976Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.6</priority>
   </url>
   <url>
-    <loc>https://app.uniswap.org/create-proposal</loc>
+    <loc>https://novaswap.finance/create-proposal</loc>
     <lastmod>2023-10-11T19:57:27.976Z</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
