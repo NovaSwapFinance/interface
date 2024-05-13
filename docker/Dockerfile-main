@@ -1,0 +1,22 @@
+FROM 475911326710.dkr.ecr.ap-northeast-1.amazonaws.com/node:18.17.1-alpine as build
+
+RUN apk add git
+
+RUN mkdir /interface
+
+ADD . /interface
+
+WORKDIR /interface
+
+RUN cd /interface && yarn install 
+RUN yarn web graphql
+RUN yarn uniswap prepare
+RUN yarn web craco build
+
+FROM 475911326710.dkr.ecr.ap-northeast-1.amazonaws.com/nginx:alpine3.18
+
+RUN mkdir /interface
+
+COPY --from=build /interface /interface
+
+CMD ["/bin/sh", "-c", "nginx -g 'daemon off;'"]
