@@ -221,67 +221,84 @@ export function* handleUniswapAppDeepLink(path: string, url: string, linkSource:
 export function* handleDeepLink(action: ReturnType<typeof openDeepLink>) {
   const { coldStart } = action.payload
   try {
-    const url = new URL(action.payload.url)
-    const screen = url.searchParams.get('screen')
-    const userAddress = url.searchParams.get('userAddress')
-    const fiatOnRamp = url.searchParams.get('fiatOnRamp') === 'true'
+    const url = new URL(action.payload.url);
+    const screen = url.searchParams.get("screen");
+    const userAddress = url.searchParams.get("userAddress");
+    const fiatOnRamp = url.searchParams.get("fiatOnRamp") === "true";
 
-    const activeAccount = yield* appSelect(selectActiveAccount)
+    const activeAccount = yield * appSelect(selectActiveAccount);
     if (!activeAccount) {
       // For app.uniswap.org links it should open a browser with the link
       // instead of handling it inside the app
       if (url.hostname === UNISWAP_APP_HOSTNAME) {
-        yield* call(openUri, action.payload.url, /* openExternalBrowser */ true)
+        yield *
+          call(openUri, action.payload.url, /* openExternalBrowser */ true);
       }
       // Skip handling any other deep links
-      return
+      return;
     }
 
     // Handle WC deep link via connections in the format uniswap://wc?uri=${WC_URI}
     // Ex: uniswap://wc?uri=wc:123@2?relay-protocol=irn&symKey=51e
-    if (action.payload.url.startsWith(UNISWAP_URL_SCHEME_WALLETCONNECT_AS_PARAM)) {
-      let wcUri = action.payload.url.split(UNISWAP_URL_SCHEME_WALLETCONNECT_AS_PARAM)[1]
+    if (
+      action.payload.url.startsWith(UNISWAP_URL_SCHEME_WALLETCONNECT_AS_PARAM)
+    ) {
+      let wcUri = action.payload.url.split(
+        UNISWAP_URL_SCHEME_WALLETCONNECT_AS_PARAM
+      )[1];
       if (!wcUri) {
-        return
+        return;
       }
       // Decode URI to handle special characters like %3A => :
-      wcUri = decodeURIComponent(wcUri)
-      yield* call(handleWalletConnectDeepLink, wcUri)
-      return
+      wcUri = decodeURIComponent(wcUri);
+      yield * call(handleWalletConnectDeepLink, wcUri);
+      return;
     }
 
     // Handle WC deep link via connections in the format uniswap://${WC_URI}
     // Ex: uniswap://wc:123@2?relay-protocol=irn&symKey=51e
-    if (action.payload.url.startsWith(UNISWAP_URL_SCHEME + WALLETCONNECT_URI_SCHEME)) {
-      let wcUri = action.payload.url.split(UNISWAP_URL_SCHEME)[1]
+    if (
+      action.payload.url.startsWith(
+        UNISWAP_URL_SCHEME + WALLETCONNECT_URI_SCHEME
+      )
+    ) {
+      let wcUri = action.payload.url.split(UNISWAP_URL_SCHEME)[1];
       if (!wcUri) {
-        return
+        return;
       }
       // Decode URI to handle special characters like %3A => :
-      wcUri = decodeURIComponent(wcUri)
-      yield* call(handleWalletConnectDeepLink, wcUri)
-      return
+      wcUri = decodeURIComponent(wcUri);
+      yield * call(handleWalletConnectDeepLink, wcUri);
+      return;
     }
 
     // Handles deep links from Uniswap Widgets (ex. uniswap://widget/#/tokens/ethereum/0x...)
-    if (action.payload.url.startsWith(UNISWAP_URL_SCHEME_WIDGET)) {
-      yield* call(handleUniswapAppDeepLink, url.hash, action.payload.url, LinkSource.Widget)
-      return
-    }
+    // if (action.payload.url.startsWith(UNISWAP_URL_SCHEME_WIDGET)) {
+    //   yield *
+    //     call(
+    //       handleUniswapAppDeepLink,
+    //       url.hash,
+    //       action.payload.url,
+    //       LinkSource.Widget
+    //     );
+    //   return;
+    // }
 
     // Handle scantastic deep links in the format uniswap://scantastic?${PARAMS}
-    const maybeScantasticQueryParams = getScantasticQueryParams(action.payload.url)
+    const maybeScantasticQueryParams = getScantasticQueryParams(
+      action.payload.url
+    );
     if (maybeScantasticQueryParams) {
-      yield* call(handleScantasticDeepLink, maybeScantasticQueryParams)
-      return
+      yield * call(handleScantasticDeepLink, maybeScantasticQueryParams);
+      return;
     }
 
     // Skip handling any non-WalletConnect uniswap:// URL scheme deep links for now for security reasons
     // Currently only used on WalletConnect Universal Link web page fallback button (https://uniswap.org/app/wc)
     if (action.payload.url.startsWith(UNISWAP_URL_SCHEME)) {
       // Set didOpenFromDeepLink so that `returnToPreviousApp()` is enabled during WalletConnect flows
-      yield* put(setDidOpenFromDeepLink(true))
-      return
+      yield * put(setDidOpenFromDeepLink(true));
+      return;
     }
 
     /*
@@ -293,53 +310,55 @@ export function* handleDeepLink(action: ReturnType<typeof openDeepLink>) {
     */
     if (action.payload.url.startsWith(UNISWAP_WALLETCONNECT_URL)) {
       // Only initial session connections include `uri` param, signing requests only link to /wc and should be ignored
-      const wcUri = action.payload.url.split(UNISWAP_WALLETCONNECT_URL).pop()
+      const wcUri = action.payload.url.split(UNISWAP_WALLETCONNECT_URL).pop();
       if (!wcUri) {
-        return
+        return;
       }
-      yield* call(handleWalletConnectDeepLink, decodeURIComponent(wcUri))
-      return
+      yield * call(handleWalletConnectDeepLink, decodeURIComponent(wcUri));
+      return;
     }
 
     // Handle plain WalletConnect URIs
     if (action.payload.url.startsWith(WALLETCONNECT_URI_SCHEME)) {
-      const wcUri = decodeURIComponent(action.payload.url)
-      yield* call(handleWalletConnectDeepLink, wcUri)
-      return
+      const wcUri = decodeURIComponent(action.payload.url);
+      yield * call(handleWalletConnectDeepLink, wcUri);
+      return;
     }
 
     if (screen && userAddress) {
-      const validUserAddress = yield* call(parseAndValidateUserAddress, userAddress)
-      yield* put(setAccountAsActive(validUserAddress))
+      const validUserAddress =
+        yield * call(parseAndValidateUserAddress, userAddress);
+      yield * put(setAccountAsActive(validUserAddress));
 
       switch (screen) {
-        case 'transaction':
+        case "transaction":
           if (fiatOnRamp) {
-            yield* call(handleMoonpayReturnLink)
+            yield * call(handleMoonpayReturnLink);
           } else {
-            yield* call(handleTransactionLink)
+            yield * call(handleTransactionLink);
           }
-          break
-        case 'swap':
-          yield* call(handleSwapLink, url)
-          break
+          break;
+        case "swap":
+          yield * call(handleSwapLink, url);
+          break;
         default:
-          throw new Error('Invalid or unsupported screen')
+          throw new Error("Invalid or unsupported screen");
       }
     }
 
-    if (url.hostname === UNISWAP_APP_HOSTNAME) {
-      const urlParts = url.href.split(`${UNISWAP_APP_HOSTNAME}/`)
-      const urlPath = urlParts.length >= 1 ? (urlParts[1] as string) : ''
-      yield* call(handleUniswapAppDeepLink, urlPath, action.payload.url, LinkSource.Share)
-      return
-    }
+    // if (url.hostname === UNISWAP_APP_HOSTNAME) {
+    //   const urlParts = url.href.split(`${UNISWAP_APP_HOSTNAME}/`)
+    //   const urlPath = urlParts.length >= 1 ? (urlParts[1] as string) : ''
+    //   yield* call(handleUniswapAppDeepLink, urlPath, action.payload.url, LinkSource.Share)
+    //   return
+    // }
 
-    yield* call(sendMobileAnalyticsEvent, MobileEventName.DeepLinkOpened, {
-      url: url.toString(),
-      screen: screen ?? 'other',
-      is_cold_start: coldStart,
-    })
+    yield *
+      call(sendMobileAnalyticsEvent, MobileEventName.DeepLinkOpened, {
+        url: url.toString(),
+        screen: screen ?? "other",
+        is_cold_start: coldStart,
+      });
   } catch (error) {
     yield* call(logger.error, error, {
       tags: { file: 'handleDeepLinkSaga', function: 'handleDeepLink' },
