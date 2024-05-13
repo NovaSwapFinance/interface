@@ -113,29 +113,27 @@ createRoot(container).render(
           <Router>
             <LanguageProvider>
               <Web3Provider>
-                <StatsigProvider>
-                  <GraphqlProviders>
-                    <BlockNumberProvider>
-                      <UnitagUpdaterContextProvider>
-                        <Updaters />
-                        <ThemeProvider>
-                          <TamaguiProvider>
-                            <ThemedGlobalStyle />
-                            <App />
-                          </TamaguiProvider>
-                        </ThemeProvider>
-                      </UnitagUpdaterContextProvider>
-                    </BlockNumberProvider>
-                  </GraphqlProviders>
-                </StatsigProvider>
+                <GraphqlProviders>
+                  <BlockNumberProvider>
+                    <UnitagUpdaterContextProvider>
+                      <Updaters />
+                      <ThemeProvider>
+                        <TamaguiProvider>
+                          <ThemedGlobalStyle />
+                          <App />
+                        </TamaguiProvider>
+                      </ThemeProvider>
+                    </UnitagUpdaterContextProvider>
+                  </BlockNumberProvider>
+                </GraphqlProviders>
               </Web3Provider>
             </LanguageProvider>
           </Router>
         </QueryClientProvider>
       </Provider>
     </HelmetProvider>
-  </StrictMode>
-)
+  </StrictMode>,
+);
 
 // We once had a ServiceWorker, and users who have not visited since then may still have it registered.
 // This ensures it is truly gone.
