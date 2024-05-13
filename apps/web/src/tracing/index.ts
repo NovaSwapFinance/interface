@@ -41,16 +41,5 @@ Sentry.init({
 
 let sentryUserId = localStorage.getItem(SENTRY_USER_ID_KEY)
 if (!sentryUserId) {
-  localStorage.setItem(SENTRY_USER_ID_KEY, (sentryUserId = uuidv4()))
+  localStorage.setItem(SENTRY_USER_ID_KEY, (sentryUserId = uuidv4()));
 }
-Sentry.setUser({ id: sentryUserId })
-
-initializeAnalytics(AMPLITUDE_DUMMY_KEY, OriginApplication.INTERFACE, {
-  proxyUrl: "PROXY_URL",
-  defaultEventName: SharedEventName.PAGE_VIEWED,
-  commitHash: "GIT_COMMIT_HASH",
-  isProductionEnv: isProductionEnv(),
-  debug: isDevelopmentEnv(),
-  reportOriginCountry: (country: string) =>
-    store.dispatch(setOriginCountry(country)),
-});
