@@ -5,8 +5,7 @@ import { PerformanceProfiler, RenderPassReport } from '@shopify/react-native-per
 import { PropsWithChildren, default as React, StrictMode, useCallback, useEffect } from 'react'
 import { I18nextProvider } from 'react-i18next'
 import { LogBox, NativeModules, StatusBar } from 'react-native'
-import appsFlyer from 'react-native-appsflyer'
-import { getUniqueId } from 'react-native-device-info'
+import appsFlyer from "react-native-appsflyer";
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { enableFreeze } from 'react-native-screens'
@@ -119,52 +118,26 @@ initAppsFlyer()
 initFirebaseAppCheck()
 
 function App(): JSX.Element | null {
-  // We want to ensure deviceID is used as the identifier to link with analytics
-  const fetchAndSetDeviceId = useCallback(async () => {
-    const uniqueId = await getUniqueId()
-    Sentry.setUser({
-      id: uniqueId,
-    })
-    return uniqueId
-  }, [])
-
-  const deviceId = useAsyncData(fetchAndSetDeviceId).data
-
-  const statSigOptions = {
-    options: {
-      environment: {
-        tier: getStatsigEnvironmentTier(),
-      },
-      api: uniswapUrls.statsigProxyUrl,
-      disableAutoMetricsLogging: true,
-      disableErrorLogging: true,
-    },
-    sdkKey: DUMMY_STATSIG_SDK_KEY,
-    user: deviceId ? { userID: deviceId } : {},
-    waitForInitialization: true,
-  }
-
   return (
     <Trace>
       <StrictMode>
         <I18nextProvider i18n={i18n}>
-          <StatsigProvider {...statSigOptions}>
-            <SentryTags>
-              <SafeAreaProvider>
-                <SharedProvider reduxStore={store}>
-                  <AnalyticsNavigationContextProvider
-                    shouldLogScreen={shouldLogScreen}
-                    useIsPartOfNavigationTree={useIsPartOfNavigationTree}>
-                    <AppOuter />
-                  </AnalyticsNavigationContextProvider>
-                </SharedProvider>
-              </SafeAreaProvider>
-            </SentryTags>
-          </StatsigProvider>
+          <SentryTags>
+            <SafeAreaProvider>
+              <SharedProvider reduxStore={store}>
+                <AnalyticsNavigationContextProvider
+                  shouldLogScreen={shouldLogScreen}
+                  useIsPartOfNavigationTree={useIsPartOfNavigationTree}
+                >
+                  <AppOuter />
+                </AnalyticsNavigationContextProvider>
+              </SharedProvider>
+            </SafeAreaProvider>
+          </SentryTags>
         </I18nextProvider>
       </StrictMode>
     </Trace>
-  )
+  );
 }
 
 function SentryTags({ children }: PropsWithChildren): JSX.Element {

@@ -123,10 +123,6 @@ export default function FiatOnrampModal() {
     }
   }, [account, isDarkMode, network, swapUrl, theme.accent1, tokenAddress])
 
-  useEffect(() => {
-    fetchSignedIframeUrl()
-  }, [fetchSignedIframeUrl])
-
   return (
     <>
       <Modal isOpen={fiatOnrampModalOpen} onDismiss={() => closeModal()} height={80 /* vh */}>

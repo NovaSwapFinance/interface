@@ -130,9 +130,9 @@ export function UniswapXDescription() {
         <InlineUniswapXGradient>UniswapX</InlineUniswapXGradient> aggregates
         liquidity sources for better prices and gas free swaps.
       </Trans>{" "}
-      <ExternalLink href="https://support.uniswap.org/hc/en-us/articles/17515415311501">
+      {/* <ExternalLink href="https://support.uniswap.org/hc/en-us/articles/17515415311501">
         <Trans>Learn more</Trans>
-      </ExternalLink>
+      </ExternalLink> */}
     </ThemedText.Caption>
   );
 }
