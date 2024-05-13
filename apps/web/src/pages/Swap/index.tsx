@@ -40,7 +40,7 @@ export default function SwapPage({ className }: { className?: string }) {
 
   const { chainId: connectedChainId } = useWeb3React()
   const supportedChainId = asSupportedChain(connectedChainId)
-  const chainId = supportedChainId || ChainId.MAINNET
+  const chainId = supportedChainId || ChainId.NOVA_SEPOLIA
 
   console.log("SwapPage", chainId, supportedChainId, connectedChainId);
   const parsedQs = useParsedQueryString()

@@ -215,9 +215,9 @@ export function CurrencySearch({
               onChange={handleInput}
               onKeyDown={handleEnter}
             />
-            <ChainSelectorWrapper>
+            {/* <ChainSelectorWrapper>
               <ChainSelector />
-            </ChainSelectorWrapper>
+            </ChainSelectorWrapper> */}
           </Row>
           {showCommonBases && (
             <CommonBases

@@ -26,11 +26,12 @@ const StyledExternalLink = styled(ExternalLink)`
 `
 export default function GetHelp() {
   return (
-    <StyledExternalLink href={SupportArticleURL.HOME}>
-      <Row gap="4px">
-        <EnvelopeHeartIcon />
-        <Trans>Get help</Trans>
-      </Row>
-    </StyledExternalLink>
+    // <StyledExternalLink href={SupportArticleURL.HOME}>
+    //   <Row gap="4px">
+    //     <EnvelopeHeartIcon />
+    //     <Trans>Get help</Trans>
+    //   </Row>
+    // </StyledExternalLink>
+    <div />
   )
 }

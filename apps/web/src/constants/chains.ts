@@ -1,9 +1,10 @@
 import {
   ChainId,
-  SUPPORTED_CHAINS,
   SupportedChainsType,
   V2_ROUTER_ADDRESSES,
 } from "@novaswap/sdk-core";
+
+const SUPPORTED_CHAINS = [ChainId.NOVA_SEPOLIA];
 
 export const CHAIN_IDS_TO_NAMES = {
   [ChainId.MAINNET]: "mainnet",
