@@ -46,7 +46,7 @@ if (!sentryUserId) {
 Sentry.setUser({ id: sentryUserId })
 
 initializeAnalytics(AMPLITUDE_DUMMY_KEY, OriginApplication.INTERFACE, {
-  proxyUrl: process.env.REACT_APP_AMPLITUDE_PROXY_URL,
+  proxyUrl: "PROXY_URL",
   defaultEventName: SharedEventName.PAGE_VIEWED,
   commitHash: "GIT_COMMIT_HASH",
   isProductionEnv: isProductionEnv(),
