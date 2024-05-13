@@ -23,7 +23,7 @@ const CHAIN_SUBGRAPH_URL: Record<number, string> = {
   [ChainId.BLAST]:
     "https://gateway-arbitrum.network.thegraph.com/api/0ae45f0bf40ae2e73119b44ccd755967/subgraphs/id/2LHovKznvo8YmKC9ZprPjsYAZDCc4K5q4AYz8s3cnQn1",
   [ChainId.NOVA_SEPOLIA]:
-    "http://13.115.181.197:8000/subgraphs/name/novasap-subgraph",
+    "https://sepolia.graph.zklink.io/subgraphs/name/novasap-subgraph",
 };
 
 const httpLink = new HttpLink({ uri: CHAIN_SUBGRAPH_URL[ChainId.MAINNET] });
