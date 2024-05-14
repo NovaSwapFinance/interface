@@ -24,16 +24,16 @@ const restLink = new RestLink({
 const retryLink = new RetryLink()
 
 export const unitagsApolloClient = new ApolloClient({
-  link: from([retryLink, restLink]),
+  link: from([retryLink]),
   cache: createNewInMemoryCache(),
   defaultOptions: {
     watchQuery: {
       // ensures query is returning data even if some fields errored out
-      errorPolicy: 'all',
-      fetchPolicy: 'cache-first',
+      errorPolicy: "all",
+      fetchPolicy: "cache-first",
     },
   },
-})
+});
 
 export function addQueryParamsToEndpoint(
   endpoint: string,
