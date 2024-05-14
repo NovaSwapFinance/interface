@@ -126,7 +126,7 @@ const CHAIN_INFO: ChainInfoMap = {
     label: "Nova Sepolia",
     nativeCurrency: {
       name: "Nova Sepolia Ether",
-      symbol: "Nova SepoliaETH",
+      symbol: "ETH",
       decimals: 18,
     },
     color: darkTheme.chain_5,
