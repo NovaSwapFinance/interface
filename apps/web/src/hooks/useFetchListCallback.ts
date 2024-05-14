@@ -17,18 +17,27 @@ export function useFetchListCallback(): (listUrl: string, skipValidation?: boole
       dispatch(fetchTokenList.pending({ requestId, url: listUrl }))
       return getTokenList(
         listUrl,
-        (ensName: string) => resolveENSContentHash(ensName, RPC_PROVIDERS[ChainId.MAINNET]),
-        skipValidation
+        (ensName: string) =>
+          resolveENSContentHash(ensName, RPC_PROVIDERS[ChainId.NOVA_SEPOLIA]),
+        skipValidation,
       )
         .then((tokenList) => {
-          dispatch(fetchTokenList.fulfilled({ url: listUrl, tokenList, requestId }))
-          return tokenList
+          dispatch(
+            fetchTokenList.fulfilled({ url: listUrl, tokenList, requestId }),
+          );
+          return tokenList;
         })
         .catch((error) => {
-          console.debug(`Failed to get list at url ${listUrl}`, error)
-          dispatch(fetchTokenList.rejected({ url: listUrl, requestId, errorMessage: error.message }))
-          throw error
-        })
+          console.debug(`Failed to get list at url ${listUrl}`, error);
+          dispatch(
+            fetchTokenList.rejected({
+              url: listUrl,
+              requestId,
+              errorMessage: error.message,
+            }),
+          );
+          throw error;
+        });
     },
     [dispatch]
   )
