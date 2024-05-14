@@ -1,4 +1,4 @@
-import { Currency } from "@novaswap/sdk-core";
+import { Currency, CurrencyAmount } from "@novaswap/sdk-core";
 import { useWeb3React } from "@web3-react/core";
 import {
   CurrencyListRow,
@@ -30,6 +30,9 @@ import { FeatureFlags } from "uniswap/src/features/statsig/flags";
 import { useFeatureFlag } from "uniswap/src/features/statsig/hooks";
 import { isSameAddress } from "utilities/src/addresses";
 
+import { useCurrencyBalance } from '../../state/connection/hooks'
+// import { NumberType, useFormatter } from 'utils/formatNumbers'
+
 interface CurrencySearchParams {
   searchQuery?: string;
   filters?: CurrencySearchFilters;
@@ -41,6 +44,7 @@ interface CurrencySearchResults {
   searchCurrency?: Currency | null;
   allCurrencyRows: CurrencyListRow[];
   loading: boolean;
+  searchTokenAmount ?: CurrencyAmount<Currency>
 }
 
 const currencyListRowMapper = (currency: Currency) =>
@@ -62,7 +66,7 @@ export function useCurrencySearchResults({
   selectedCurrency,
   otherSelectedCurrency,
 }: CurrencySearchParams): CurrencySearchResults {
-  const { chainId } = useWeb3React();
+  const { chainId,account} = useWeb3React();
 
   const gqlTokenListsEnabled = useFeatureFlag(FeatureFlags.GqlTokenLists);
 
@@ -113,6 +117,14 @@ export function useCurrencySearchResults({
   const searchToken = useTokenListToken(searchQuery);
   const defaultAndUserAddedTokens = useDefaultActiveTokens(chainId);
   const userAddedTokens = useUserAddedTokens();
+
+
+  const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, searchToken ?? undefined)
+
+  // const { formatCurrencyAmount } = useFormatter();
+
+  // const searchTokenAmount = formatCurrencyAmount({ amount: selectedCurrencyBalance,
+  //   type: NumberType.TokenNonTx,})
 
   const gqlSearchResultsEmpty =
     (!searchResults?.searchTokens || searchResults.searchTokens.length === 0) &&
@@ -309,9 +321,11 @@ export function useCurrencySearchResults({
     sortedCombinedTokens,
   ]);
 
+
   return {
     loading: searchResultsLoading || popularTokensLoading || balancesLoading,
     searchCurrency: searchToken,
     allCurrencyRows: finalCurrencyList,
+    searchTokenAmount:selectedCurrencyBalance
   };
 }
