@@ -19,20 +19,5 @@ function getAppProvider(chainId: SupportedInterfaceChain) {
 
 /** These are the only JsonRpcProviders used directly by the interface. */
 export const RPC_PROVIDERS = {
-  [ChainId.MAINNET]: getAppProvider(ChainId.MAINNET),
-  [ChainId.GOERLI]: getAppProvider(ChainId.GOERLI),
-  [ChainId.SEPOLIA]: getAppProvider(ChainId.SEPOLIA),
   [ChainId.NOVA_SEPOLIA]: getAppProvider(ChainId.NOVA_SEPOLIA),
-  [ChainId.OPTIMISM]: getAppProvider(ChainId.OPTIMISM),
-  [ChainId.OPTIMISM_GOERLI]: getAppProvider(ChainId.OPTIMISM_GOERLI),
-  [ChainId.ARBITRUM_ONE]: getAppProvider(ChainId.ARBITRUM_ONE),
-  [ChainId.ARBITRUM_GOERLI]: getAppProvider(ChainId.ARBITRUM_GOERLI),
-  [ChainId.POLYGON]: getAppProvider(ChainId.POLYGON),
-  [ChainId.POLYGON_MUMBAI]: getAppProvider(ChainId.POLYGON_MUMBAI),
-  [ChainId.CELO]: getAppProvider(ChainId.CELO),
-  [ChainId.CELO_ALFAJORES]: getAppProvider(ChainId.CELO_ALFAJORES),
-  [ChainId.BNB]: getAppProvider(ChainId.BNB),
-  [ChainId.AVALANCHE]: getAppProvider(ChainId.AVALANCHE),
-  [ChainId.BASE]: getAppProvider(ChainId.BASE),
-  [ChainId.BLAST]: getAppProvider(ChainId.BLAST),
 } satisfies Record<SupportedInterfaceChain, AppJsonRpcProvider>;
