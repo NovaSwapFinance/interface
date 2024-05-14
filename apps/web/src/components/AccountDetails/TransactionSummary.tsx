@@ -305,12 +305,12 @@ function AddLiquidityV3PoolSummary({
   return createPool ? (
     <Trans>
       Create pool and add {{ baseSymbol: baseCurrency?.symbol }}/
-      {{ quoteSymbol: quoteCurrency?.symbol }} V3 liquidity
+      {{ quoteSymbol: quoteCurrency?.symbol }} liquidity
     </Trans>
   ) : (
     <Trans>
       Add {{ baseSymbol: baseCurrency?.symbol }}/
-      {{ quoteSymbol: quoteCurrency?.symbol }} V3 liquidity
+      {{ quoteSymbol: quoteCurrency?.symbol }} liquidity
     </Trans>
   );
 }
