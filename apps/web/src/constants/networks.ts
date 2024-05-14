@@ -142,7 +142,7 @@ export const PUBLIC_RPC_URLS: Record<SupportedInterfaceChain, string[]> = {
     "https://blastl2-mainnet.public.blastapi.io",
     "https://blast.blockpi.network/v1/rpc/public",
   ],
-  [ChainId.NOVA_SEPOLIA]: ["https://sepolia.rpc.zklink.io"],
+  [ChainId.NOVA_SEPOLIA]: ["https://sepolia.rpc.zklink.io","wss://sepolia.rpc.zklink.io"],
 };
 
 /**

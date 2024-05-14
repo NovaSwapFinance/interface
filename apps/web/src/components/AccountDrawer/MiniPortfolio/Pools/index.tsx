@@ -48,6 +48,7 @@ function useFilterPossiblyMaliciousPositionInfo(positions: PositionInfo[] | unde
 
 export default function Pools({ account }: { account: string }) {
   const { positions, loading } = useMultiChainPositions(account)
+  console.log('positions====>',positions)
   const filteredPositions = useFilterPossiblyMaliciousPositionInfo(positions)
   const [showClosed, toggleShowClosed] = useReducer((showClosed) => !showClosed, false)
 

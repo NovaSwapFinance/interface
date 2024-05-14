@@ -1,10 +1,6 @@
 import { ChainId } from "@novaswap/sdk-core";
 import { Connector } from "@web3-react/types";
-import {
-  networkConnection,
-  uniwalletWCV2ConnectConnection,
-  walletConnectV2Connection,
-} from "connection";
+import { networkConnection, walletConnectV2Connection } from "connection";
 import { getChainInfo } from "constants/chainInfo";
 import { CHAIN_IDS_TO_NAMES, isSupportedChain } from "constants/chains";
 import { PUBLIC_RPC_URLS } from "constants/networks";
@@ -31,7 +27,6 @@ export function useSwitchChain() {
               if (
                 [
                   walletConnectV2Connection.connector,
-                  uniwalletWCV2ConnectConnection.connector,
                   networkConnection.connector,
                 ].includes(connector)
               ) {
@@ -44,7 +39,7 @@ export function useSwitchChain() {
                   // Attempting to add a chain using an application-specific URL will not work, as the URL will be unreachable from the MetaMask background page.
                   // MetaMask allows switching to any publicly reachable URL, but for novel chains, it will display a warning if it is not on the "Safe" list.
                   // See the definition of PUBLIC_RPC_URLS for more details.
-                  rpcUrls: [PUBLIC_RPC_URLS[chainId][0]],
+                  rpcUrls: PUBLIC_RPC_URLS[chainId],
                   nativeCurrency: info.nativeCurrency,
                   blockExplorerUrls: [info.explorer],
                 };
