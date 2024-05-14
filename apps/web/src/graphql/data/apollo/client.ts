@@ -96,5 +96,5 @@ export const apolloClient = new ApolloClient({
 });
 
 // This is done after creating the client so that client may be passed to `createSubscriptionLink`.
-const subscriptionLink = createSubscriptionLink({ uri: REALTIME_URL, token: REALTIME_TOKEN }, apolloClient)
-apolloClient.setLink(splitSubscription(subscriptionLink, httpLink))
+// const subscriptionLink = createSubscriptionLink({ uri: REALTIME_URL, token: REALTIME_TOKEN }, apolloClient)
+// apolloClient.setLink(splitSubscription(subscriptionLink, httpLink))

@@ -1,10 +1,6 @@
 import { ChainId } from "@novaswap/sdk-core";
 import { Connector } from "@web3-react/types";
-import {
-  networkConnection,
-  uniwalletWCV2ConnectConnection,
-  walletConnectV2Connection,
-} from "connection";
+import { networkConnection, walletConnectV2Connection } from "connection";
 import { getChainInfo } from "constants/chainInfo";
 import { CHAIN_IDS_TO_NAMES, isSupportedChain } from "constants/chains";
 import { PUBLIC_RPC_URLS } from "constants/networks";
@@ -31,7 +27,6 @@ export function useSwitchChain() {
               if (
                 [
                   walletConnectV2Connection.connector,
-                  uniwalletWCV2ConnectConnection.connector,
                   networkConnection.connector,
                 ].includes(connector)
               ) {

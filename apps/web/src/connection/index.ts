@@ -6,7 +6,7 @@ import { MetaMask } from "@web3-react/metamask";
 import { Network } from "@web3-react/network";
 import { Actions, Connector } from "@web3-react/types";
 import GNOSIS_ICON from "assets/images/gnosis.png";
-import UNISWAP_LOGO from "assets/svg/logo.svg";
+import NOVASWAP_LOGO from "assets/svg/logo.svg";
 import COINBASE_ICON from "assets/wallets/coinbase-icon.svg";
 import UNIWALLET_ICON from "assets/wallets/uniswap-wallet-icon.png";
 import WALLET_CONNECT_ICON from "assets/wallets/walletconnect-icon.svg";
@@ -226,9 +226,9 @@ const [web3CoinbaseWallet, web3CoinbaseWalletHooks] =
       new CoinbaseWallet({
         actions,
         options: {
-          url: APP_RPC_URLS[ChainId.MAINNET][0],
-          appName: "Uniswap",
-          appLogoUrl: UNISWAP_LOGO,
+          url: APP_RPC_URLS[ChainId.NOVA_SEPOLIA][0],
+          appName: "NovaSwap",
+          appLogoUrl: NOVASWAP_LOGO,
           reloadOnDisconnect: false,
         },
         onError,
@@ -257,7 +257,6 @@ const coinbaseWalletConnection: Connection = {
 
 export const connections = [
   gnosisSafeConnection,
-  uniwalletWCV2ConnectConnection,
   deprecatedInjectedConnection,
   walletConnectV2Connection,
   coinbaseWalletConnection,
@@ -283,8 +282,6 @@ export function getConnection(c: Connector | ConnectionType) {
         return coinbaseWalletConnection;
       case ConnectionType.WALLET_CONNECT_V2:
         return walletConnectV2Connection;
-      case ConnectionType.UNISWAP_WALLET_V2:
-        return uniwalletWCV2ConnectConnection;
       case ConnectionType.NETWORK:
         return networkConnection;
       case ConnectionType.GNOSIS_SAFE:
