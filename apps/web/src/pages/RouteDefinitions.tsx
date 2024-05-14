@@ -95,10 +95,8 @@ const SwapTitle = t`NovaSwap | Swap all the L2's assets in NovaSwap of zkLink`;
 export const routes: RouteDefinition[] = [
   createRouteDefinition({
     path: '/',
-    getTitle: () => t`Novaswap | Trade crypto & NFTs safely on the top DeFi exchange`,
-    getElement: (args) => {
-      return args.browserRouterEnabled && args.hash ? <Navigate to={args.hash.replace('#', '')} replace /> : <Landing />
-    },
+    getElement: () => <Swap />,
+    getTitle: () => SwapTitle,
   }),
   createRouteDefinition({
     path: '/explore',
