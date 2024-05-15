@@ -45,7 +45,7 @@ export const useTokenBalanceList = () => {
   }, []);
 
   const tokensWithBalance = useMemo(() => {
-    const hasBalanceList = Object.values(allTokens.balances)
+    const hasBalanceList = Object.values(allTokens?.balances||{})
       .filter((balances) => balances.token)
       .map((balances) => {
         const token = {
