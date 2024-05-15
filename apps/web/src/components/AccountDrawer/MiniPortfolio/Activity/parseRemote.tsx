@@ -689,6 +689,8 @@ function parseRemoteActivity(
       formatNumberOrString,
       assetActivity as TransactionActivity,
     );
+
+    console.log('parseRemoteActivity ===>',parsedFields,defaultFields)
     return { ...defaultFields, ...parsedFields };
   } catch (e) {
     console.error("Failed to parse activity", e, assetActivity);

@@ -34,6 +34,9 @@ import { NumberType, useFormatter } from 'utils/formatNumbers'
 
 import { CancelledTransactionTitleTable, getActivityTitle, LimitOrderTextTable, OrderTextTable } from '../constants'
 import { Activity, ActivityMap } from './types'
+import {
+  useTokenListToken,
+} from "hooks/Tokens";
 
 type FormatNumberFunctionType = ReturnType<typeof useFormatter>['formatNumber']
 
@@ -116,7 +119,14 @@ function parseApproval(
   status: TransactionStatus
 ): Partial<Activity> {
   const currency = getCurrency(approval.tokenAddress, chainId, tokens)
-  const descriptor = currency?.symbol ?? currency?.name ?? t`Unknown`
+  let descriptor = currency?.symbol ?? currency?.name ?? t`Unknown`
+  
+  if(!currency?.symbol && !currency?.name) {
+    const searchToken = useTokenListToken(approval.tokenAddress);
+    descriptor = searchToken?.symbol ?? searchToken?.name ?? t`Unknown`
+    console.log('parseApproval====>',searchToken,descriptor)
+  }
+  
   return {
     title: getActivityTitle(
       TransactionType.APPROVAL,
