@@ -13,6 +13,7 @@ import {
   DAI_ARBITRUM_ONE,
   DAI_AVALANCHE,
   DAI_BSC,
+  DAI_NOVA_SEPOLIA,
   DAI_OPTIMISM,
   DAI_POLYGON,
   ETH_BSC,
@@ -25,6 +26,7 @@ import {
   USDC_BSC,
   USDC_CELO,
   USDC_MAINNET,
+  USDC_NOVA_SEPOLIA,
   USDC_OPTIMISM,
   USDC_OPTIMISM_GOERLI,
   USDC_POLYGON,
@@ -50,18 +52,18 @@ import {
 } from "./tokens";
 
 type ChainTokenList = {
-  readonly [chainId: number]: Token[]
-}
+  readonly [chainId: number]: Token[];
+};
 
 type ChainCurrencyList = {
-  readonly [chainId: number]: Currency[]
-}
+  readonly [chainId: number]: Currency[];
+};
 
 const WRAPPED_NATIVE_CURRENCIES_ONLY: ChainTokenList = Object.fromEntries(
   Object.entries(WRAPPED_NATIVE_CURRENCY)
     .map(([key, value]) => [key, [value]])
-    .filter(Boolean)
-)
+    .filter(Boolean),
+);
 
 /**
  * Shows up in the currency select for swap and add liquidity
@@ -174,13 +176,21 @@ export const COMMON_BASES: ChainCurrencyList = {
     WRAPPED_NATIVE_CURRENCY[ChainId.NOVA_SEPOLIA] as Token,
     UT1_NOVA_SEPOLIA,
     UT2_NOVA_SEPOLIA,
+    USDC_NOVA_SEPOLIA,
+    DAI_NOVA_SEPOLIA,
   ],
 };
 
 // used to construct the list of all pairs we consider by default in the frontend
 export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   ...WRAPPED_NATIVE_CURRENCIES_ONLY,
-  [ChainId.MAINNET]: [...WRAPPED_NATIVE_CURRENCIES_ONLY[ChainId.MAINNET], DAI, USDC_MAINNET, USDT, WBTC],
+  [ChainId.MAINNET]: [
+    ...WRAPPED_NATIVE_CURRENCIES_ONLY[ChainId.MAINNET],
+    DAI,
+    USDC_MAINNET,
+    USDT,
+    WBTC,
+  ],
   [ChainId.BNB]: [
     ...WRAPPED_NATIVE_CURRENCIES_ONLY[ChainId.BNB],
     DAI_BSC,
@@ -197,7 +207,12 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
     USDT_AVALANCHE,
     WETH_AVALANCHE,
   ],
-}
+  [ChainId.NOVA_SEPOLIA]: [
+    ...WRAPPED_NATIVE_CURRENCIES_ONLY[ChainId.NOVA_SEPOLIA],
+    DAI_NOVA_SEPOLIA,
+    USDC_NOVA_SEPOLIA,
+  ],
+};
 export const PINNED_PAIRS: { readonly [chainId: number]: [Token, Token][] } = {
   [ChainId.MAINNET]: [
     [
