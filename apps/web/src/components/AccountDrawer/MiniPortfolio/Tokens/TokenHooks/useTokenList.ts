@@ -42,7 +42,7 @@ export const useTokenBalanceList = () => {
     return () => {
       clearInterval(timer);
     };
-  }, []);
+  }, [account]);
 
   const tokensWithBalance = useMemo(() => {
     const hasBalanceList = Object.values(allTokens?.balances||{})
