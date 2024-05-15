@@ -216,7 +216,7 @@ export function PortfolioLogo(props: PortfolioLogoProps) {
   return (
     <LogoContainer style={props.style}>
       {getLogo(props)}
-      <SquareL2Logo chainId={props.chainId} />
+      {props.chainId && <SquareL2Logo chainId={props.chainId} />}
     </LogoContainer>
   );
 }
