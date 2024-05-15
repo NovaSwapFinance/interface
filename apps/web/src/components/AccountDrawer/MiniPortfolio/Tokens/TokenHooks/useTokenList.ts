@@ -30,12 +30,18 @@ export const useTokenBalanceList = () => {
   useEffect(() => {
     fetch(`${fetchUrl}${account}`).then((res) =>
       res.json().then((all) => {
-        setAllTokens(all);
+        if(!all.error) {
+          setAllTokens(all);
+        }
       }),
     );
     const timer = setInterval(() => {
-      fetch(fetchUrl).then((res) =>
-        res.json().then((all) => setAllTokens(all)),
+      fetch(`${fetchUrl}${account}`).then((res) =>
+        res.json().then((all) => {
+          if(!all.error) {
+            setAllTokens(all);
+          }
+        }),
       );
     }, 1000 * 1000);
 
