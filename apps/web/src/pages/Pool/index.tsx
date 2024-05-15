@@ -159,7 +159,7 @@ function PositionsLoadingPlaceholder() {
 
 function WrongNetworkCard() {
   const theme = useTheme()
-
+  const {account} = useWeb3React()
   return (
     <>
       <PageWrapper>
@@ -176,7 +176,7 @@ function WrongNetworkCard() {
                 <ThemedText.BodyPrimary color={theme.neutral3} textAlign="center">
                 <InboxIcon strokeWidth={1.2} />
                   <div data-testid="pools-unsupported-err">
-                    <Trans>Connect your wallet to add liquidity positions.</Trans>
+                    <Trans>{account?'Switch your network to zkLink Nova, your positions will appear here':'Connect your wallet to add liquidity positions.'}</Trans>
                   </div>
                 </ThemedText.BodyPrimary>
               </ErrorContainer>

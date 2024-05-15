@@ -89,6 +89,7 @@ export function CurrencySearch({
   const isAddressSearch = isAddress(debouncedQuery)
 
   const {
+    searchTokenAmount,
     searchCurrency,
     allCurrencyRows,
     loading: currencySearchResultsLoading,
@@ -98,12 +99,6 @@ export function CurrencySearch({
     selectedCurrency,
     otherSelectedCurrency,
   })
-
-  console.log(
-    "CurrencySearch++++++searchCurrency",
-    showCommonBases,
-    DEFAULT_CURRENCY_SEARCH_FILTERS,
-  );
 
   const { balanceMap } = useTokenBalances();
 
@@ -257,6 +252,16 @@ export function CurrencySearch({
                 isAddressSearch,
               )}
               balance={
+                // tryParseCurrencyAmount(
+                //   String(
+                //     balanceMap[
+                //       searchCurrency.isNative
+                //         ? "ETH"
+                //         : searchCurrency.address?.toLowerCase()
+                //     ]?.balance ?? 0,
+                //   ),
+                //   searchCurrency,
+                // ) ?? CurrencyAmount.fromRawAmount(searchCurrency, 0)
                 tryParseCurrencyAmount(
                   String(
                     balanceMap[
@@ -266,7 +271,7 @@ export function CurrencySearch({
                     ]?.balance ?? 0,
                   ),
                   searchCurrency,
-                ) ?? CurrencyAmount.fromRawAmount(searchCurrency, 0)
+                ) ?? searchTokenAmount
               }
             />
           </Column>
