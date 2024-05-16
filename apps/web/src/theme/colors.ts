@@ -108,7 +108,7 @@ export const colors = {
   surface3_dark: '#FFFFFF12',
   surface4_dark: '#FFFFFF20',
   surface5_dark: '#00000004',
-  accent1_dark: '#03D498',
+  accent1_dark: '#8CD383',
   accent2_dark: '#1C312D',
   accent3_dark: '#4C82FB',
   neutral1_light: '#222222',

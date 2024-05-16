@@ -151,7 +151,7 @@ const ZKBaseButtonLight = styled(BaseButton)`
   color: ${({ theme }) => theme.accent1};
   font-size: 20px;
   font-weight: 535;
-  border: 1px solid #03D498;
+  border: 1px solid #8CD383;
 
   &:focus {
     box-shadow: 0 0 0 1pt ${({ theme, disabled }) => !disabled && theme.accent2};
