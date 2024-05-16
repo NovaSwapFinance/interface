@@ -195,7 +195,7 @@ export class TenderlySimulator extends Simulator {
   private overrideEstimateMultiplier: { [chainId in ChainId]?: number };
   private tenderlyRequestTimeout?: number;
   private tenderlyServiceInstance = axios.create({
-    baseURL: "https://api.example.com",
+    baseURL: "",
     // keep connections alive,
     // maxSockets default is Infinity, so Infinity is read as 50 sockets
     // httpAgent: new http.Agent({ keepAlive: true }),

@@ -150,6 +150,7 @@ import { LegacyGasPriceProvider } from "providers/legacy-gas-price-provider";
 import { ETHGasStationInfoProvider } from "providers/eth-gas-station-info-gas-price-provider";
 import { OnChainGasPriceProvider } from "providers/on-chain-gas-price-provider";
 import { Simulator } from "providers/simulation-provider";
+import { GasPriceCache } from "providers/cache-node";
 
 export type AlphaRouterParams = {
   /**
@@ -670,7 +671,7 @@ export class AlphaRouter
     } else {
       this.tokenPropertiesProvider = new TokenPropertiesProvider(
         this.chainId,
-        undefined,
+        new GasPriceCache(86400),
         new OnChainTokenFeeFetcher(this.chainId, provider),
       );
     }
@@ -683,7 +684,7 @@ export class AlphaRouter
           this.multicall2Provider,
           this.tokenPropertiesProvider,
         ),
-        undefined,
+        new GasPriceCache(60),
       );
 
     this.v2QuoteProvider = v2QuoteProvider ?? new V2QuoteProvider();
@@ -693,14 +694,18 @@ export class AlphaRouter
       new CachingTokenListProvider(
         chainId,
         UNSUPPORTED_TOKENS as TokenList,
-        undefined,
+        new GasPriceCache(3600),
       );
     this.tokenProvider =
       tokenProvider ??
       new CachingTokenProviderWithFallback(
         chainId,
-        undefined,
-        new CachingTokenListProvider(chainId, DEFAULT_TOKEN_LIST, undefined),
+        new GasPriceCache(3600),
+        new CachingTokenListProvider(
+          chainId,
+          DEFAULT_TOKEN_LIST,
+          new GasPriceCache(3600),
+        ),
         new TokenProvider(chainId, this.multicall2Provider),
       );
     this.portionProvider = portionProvider ?? new PortionProvider();
@@ -720,7 +725,7 @@ export class AlphaRouter
             undefined,
             0,
           ),
-          undefined,
+          new GasPriceCache(300),
         ),
         new StaticV2SubgraphProvider(chainId),
       ]);
@@ -738,7 +743,7 @@ export class AlphaRouter
             undefined,
             0,
           ),
-          undefined,
+          new GasPriceCache(300),
         ),
         new StaticV3SubgraphProvider(chainId, this.v3PoolProvider),
       ]);
@@ -762,7 +767,7 @@ export class AlphaRouter
       new CachingGasStationProvider(
         chainId,
         gasPriceProviderInstance,
-        undefined,
+        new GasPriceCache(7),
       );
     this.v3GasModelFactory =
       v3GasModelFactory ?? new V3HeuristicGasModelFactory(this.provider);
