@@ -90,12 +90,12 @@ const Pages: Array<Page> = [
     component: Pools,
     loggingElementName: InterfaceElementName.MINI_PORTFOLIO_POOLS_TAB,
   },
-  {
-    title: <Trans>Activity</Trans>,
-    key: 'activity',
-    component: ActivityTab,
-    loggingElementName: InterfaceElementName.MINI_PORTFOLIO_ACTIVITY_TAB,
-  },
+  // {
+  //   title: <Trans>Activity</Trans>,
+  //   key: 'activity',
+  //   component: ActivityTab,
+  //   loggingElementName: InterfaceElementName.MINI_PORTFOLIO_ACTIVITY_TAB,
+  // },
 ]
 
 export default function MiniPortfolio({ account }: { account: string }) {
