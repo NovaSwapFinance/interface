@@ -168,19 +168,19 @@ export default function AuthenticatedHeader({ account, openSettings }: { account
   const amount = unclaimedAmount?.toFixed(0, { groupSeparator: ',' } ?? '-')
 
   const {totalUsdValue} = useTokenBalanceList();
-  const totalUsdValueText = totalUsdValue > 0.01 ? `$${totalUsdValue.toFixed(2, 1)}` : 'undefined';
+  const totalUsdValueText = totalUsdValue > 0.01 ? `$${totalUsdValue.toFixed(2, 1)}` : '';
 
   return (
     <AuthenticatedHeaderWrapper>
       <HeaderWrapper>
         <Status account={account} ensUsername={ENSName} uniswapUsername={unitag?.username} connection={connection} />
         <IconContainer>
-          <IconButton
+          {/* <IconButton
             hideHorizontal={showDisconnectConfirm}
             data-testid="wallet-settings"
             onClick={openSettings}
             Icon={Settings}
-          />
+          /> */}
           <TraceEvent
             events={[BrowserEvent.onClick]}
             name={SharedEventName.ELEMENT_CLICKED}
@@ -198,7 +198,7 @@ export default function AuthenticatedHeader({ account, openSettings }: { account
         </IconContainer>
       </HeaderWrapper>
       <PortfolioDrawerContainer>
-        {totalUsdValueText !== undefined ? (
+        {totalUsdValueText ? (
           <FadeInColumn gap="xs">
             <ThemedText.HeadlineLarge fontWeight={535} data-testid="portfolio-total-balance">
               {totalUsdValueText}

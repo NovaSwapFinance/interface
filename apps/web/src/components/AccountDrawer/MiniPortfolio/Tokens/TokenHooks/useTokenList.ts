@@ -5,13 +5,9 @@ import bignumber from "bignumber.js";
 import { useMemo, useEffect, useState } from "react";
 import { ChainId } from "@novaswap/sdk-core";
 
+import { NOVA_API_ADDRESS_URL} from "constants/novaApi";
 
 // TODO change fetchUrl and ChainId hainId.NOVA_SEPOLIA,
-const fetchUrl =
-  "https://sepolia.explorer-api.zklink.io/address/";
-
-// const fetchUrl =
-//   "https://explorer-api.zklink.io/address/";
 
 function formatBalance(balance: bigint, decimals: number, fixed: number = 8) {
   const v = new bignumber(
@@ -28,7 +24,7 @@ export const useTokenBalanceList = () => {
   const { account } = useWeb3React();
 
   useEffect(() => {
-    fetch(`${fetchUrl}${account}`).then((res) =>
+    fetch(`${NOVA_API_ADDRESS_URL}${account}`).then((res) =>
       res.json().then((all) => {
         if(!all.error) {
           setAllTokens(all);
@@ -36,7 +32,7 @@ export const useTokenBalanceList = () => {
       }),
     );
     const timer = setInterval(() => {
-      fetch(`${fetchUrl}${account}`).then((res) =>
+      fetch(`${NOVA_API_ADDRESS_URL}${account}`).then((res) =>
         res.json().then((all) => {
           if(!all.error) {
             setAllTokens(all);
