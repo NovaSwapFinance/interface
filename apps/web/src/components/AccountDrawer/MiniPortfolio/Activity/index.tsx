@@ -48,6 +48,9 @@ export function ActivityTab({ account }: { account: string }) {
   }, [drawerOpen, lastFetched, refetch, setLastFetched])
 
   const hideSpam = useAtomValue(hideSpamAtom)
+
+  // console.log('ActivityTab===>activities', activities);
+  // console.log('ActivityTab===>hideSpam', hideSpam);
   const activityGroups = useMemo(() => createGroups(activities, hideSpam), [activities, hideSpam])
 
   if (activityGroups.length === 0) {

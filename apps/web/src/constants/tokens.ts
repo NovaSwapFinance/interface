@@ -34,8 +34,8 @@ export const USDC_SEPOLIA = new Token(
 );
 export const USDC_NOVA_SEPOLIA = new Token(
   ChainId.NOVA_SEPOLIA,
-  "0x5D6a5e542e7cE969c57e2d9aa05aD1766590bfb9",
-  6,
+  "0x0564c74565bcdfdb264f693033729e3a59d3a72b",
+  18,
   "USDC",
   "USDC Token",
 );
@@ -349,7 +349,7 @@ export const DAI_AVALANCHE = new Token(
 
 export const DAI_NOVA_SEPOLIA = new Token(
   ChainId.NOVA_SEPOLIA,
-  "0xDAfbaEFce3d04Cb7e0bcdA949A8d044006528e80",
+  "0x564f0Bf1FBbaeDffc82622E5D3B7a52771cAbC89",
   18,
   "DAI",
   "DAI Token",
