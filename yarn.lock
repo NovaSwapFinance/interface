@@ -7062,9 +7062,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@novaswap/smart-order-router@npm:3.28.9":
-  version: 3.28.9
-  resolution: "@novaswap/smart-order-router@npm:3.28.9"
+"@novaswap/smart-order-router@npm:3.3.0":
+  version: 3.3.0
+  resolution: "@novaswap/smart-order-router@npm:3.3.0"
   dependencies:
     "@eth-optimism/sdk": ^3.2.2
     "@novaswap/router-sdk": ^1.9.1
@@ -7095,7 +7095,7 @@ __metadata:
     zksync-web3: ^0.17.1
   peerDependencies:
     jsbi: ^3.2.0
-  checksum: 8f7205623ff7d1fd3c2f80c6bc19a50ae1625a944ef5764ef5853916d64f052b2eb7674918d6ce006b6de88246fbf9daf13b15e38e6f8a8890095ed60719d8b6
+  checksum: f9854ea700eb4404c72d591ff7a40e1dfbc4baf745471102b50ef93bfb8cbaa3a61d5acff71d379791a030d268c633142886bd7456d1a3d236622fff1f5ff9d8
   languageName: node
   linkType: hard
 
@@ -14166,7 +14166,7 @@ __metadata:
     "@novaswap/permit2-sdk": 1.2.0
     "@novaswap/router-sdk": 1.9.1
     "@novaswap/sdk-core": 4.2.0
-    "@novaswap/smart-order-router": 3.28.9
+    "@novaswap/smart-order-router": 3.3.0
     "@novaswap/universal-router-sdk": 1.9.3
     "@novaswap/v2-sdk": 4.3.0
     "@novaswap/v3-sdk": 3.11.1

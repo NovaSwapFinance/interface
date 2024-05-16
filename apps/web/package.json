@@ -177,7 +177,7 @@
     "@novaswap/permit2-sdk": "1.2.0",
     "@novaswap/router-sdk": "1.9.1",
     "@novaswap/sdk-core": "4.2.0",
-    "@novaswap/smart-order-router": "3.28.9",
+    "@novaswap/smart-order-router": "3.3.0",
     "@novaswap/universal-router-sdk": "1.9.3",
     "@novaswap/v2-sdk": "4.3.0",
     "@novaswap/v3-sdk": "3.11.1",
