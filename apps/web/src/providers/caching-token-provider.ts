@@ -195,10 +195,10 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
 
     if (seedTokens) {
       for (const token of Object.values(seedTokens)) {
-        await this.tokenCache.set(
-          this.CACHE_KEY(this.chainId, token.address.toLowerCase()),
-          token,
-        );
+        // await this.tokenCache.set(
+        //   this.CACHE_KEY(this.chainId, token.address.toLowerCase()),
+        //   token,
+        // );
       }
     }
 
@@ -214,15 +214,17 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
     const addressesToFindInSecondary = [];
 
     for (const address of addresses) {
-      if (await this.tokenCache.has(this.CACHE_KEY(this.chainId, address))) {
-        addressToToken[address.toLowerCase()] = (await this.tokenCache.get(
-          this.CACHE_KEY(this.chainId, address),
-        ))!;
-        symbolToToken[addressToToken[address]!.symbol!] =
-          (await this.tokenCache.get(this.CACHE_KEY(this.chainId, address)))!;
-      } else {
-        addressesToFindInPrimary.push(address);
-      }
+      // if (await this.tokenCache.has(this.CACHE_KEY(this.chainId, address))) {
+      //   addressToToken[address.toLowerCase()] = (await this.tokenCache.get(
+      //     this.CACHE_KEY(this.chainId, address),
+      //   ))!;
+      //   symbolToToken[addressToToken[address]!.symbol!] =
+      //     (await this.tokenCache.get(this.CACHE_KEY(this.chainId, address)))!;
+      // }
+      // else {
+      //   addressesToFindInPrimary.push(address);
+      // }
+      addressesToFindInPrimary.push(address);
     }
 
     // log.info(
@@ -248,10 +250,10 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
         if (token) {
           addressToToken[address.toLowerCase()] = token;
           symbolToToken[addressToToken[address]!.symbol!] = token;
-          await this.tokenCache.set(
-            this.CACHE_KEY(this.chainId, address.toLowerCase()),
-            addressToToken[address]!,
-          );
+          // await this.tokenCache.set(
+          //   this.CACHE_KEY(this.chainId, address.toLowerCase()),
+          //   addressToToken[address]!,
+          // );
         } else {
           addressesToFindInSecondary.push(address);
         }
@@ -279,10 +281,10 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
         if (token) {
           addressToToken[address.toLowerCase()] = token;
           symbolToToken[addressToToken[address]!.symbol!] = token;
-          await this.tokenCache.set(
-            this.CACHE_KEY(this.chainId, address.toLowerCase()),
-            addressToToken[address]!,
-          );
+          // await this.tokenCache.set(
+          //   this.CACHE_KEY(this.chainId, address.toLowerCase()),
+          //   addressToToken[address]!,
+          // );
         }
       }
     }

@@ -4,9 +4,6 @@ import { parseBytes32String } from "@ethersproject/strings";
 import { ChainId, Token } from "@novaswap/sdk-core";
 import _ from "lodash";
 
-// import { IERC20Metadata__factory } from '../types/v3/factories/IERC20Metadata__factory';
-// import { log, WRAPPED_NATIVE_CURRENCY } from "../util";
-
 import { IMulticallProvider, Result } from "./multicall-provider";
 import { ProviderConfig } from "./provider";
 import { IERC20Metadata__factory } from "types/smart-router/types/v3";
@@ -655,6 +652,22 @@ export const USDB_BLAST = new Token(
   18,
   "USDB",
   "USD Blast",
+);
+
+export const DAI_NOVA_SEPOLIA = new Token(
+  ChainId.NOVA_SEPOLIA,
+  "0x564f0Bf1FBbaeDffc82622E5D3B7a52771cAbC89",
+  18,
+  "DAI",
+  "DAI Token",
+);
+
+export const USDC_NOVA_SEPOLIA = new Token(
+  ChainId.NOVA_SEPOLIA,
+  "0x5D6a5e542e7cE969c57e2d9aa05aD1766590bfb9",
+  18,
+  "USDC",
+  "USDC Token",
 );
 
 export class TokenProvider implements ITokenProvider {
