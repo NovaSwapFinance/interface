@@ -656,7 +656,7 @@ export const USDB_BLAST = new Token(
 
 export const DAI_NOVA_SEPOLIA = new Token(
   ChainId.NOVA_SEPOLIA,
-  "0x564f0Bf1FBbaeDffc82622E5D3B7a52771cAbC89",
+  "0xC8afe2e5Cd64265499ca8Eab79CC5387D6c47A10",
   18,
   "DAI",
   "DAI Token",
@@ -664,7 +664,7 @@ export const DAI_NOVA_SEPOLIA = new Token(
 
 export const USDC_NOVA_SEPOLIA = new Token(
   ChainId.NOVA_SEPOLIA,
-  "0x5D6a5e542e7cE969c57e2d9aa05aD1766590bfb9",
+  "0x461fE851Cd66e82A274570ED5767c873bE9Ae1ff",
   18,
   "USDC",
   "USDC Token",
