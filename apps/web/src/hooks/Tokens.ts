@@ -197,7 +197,6 @@ function useTokenFromMapOrNetwork(
   const tokenFromNetwork = useTokenFromActiveNetwork(
     token ? undefined : address ? address : undefined,
   );
-
   useEffect(() => {
     if (tokenFromNetwork) {
       sendAnalyticsEvent(InterfaceEventName.WALLET_PROVIDER_USED, {

@@ -688,7 +688,7 @@ export function SwapForm({ disableTokenInputs = false, onCurrencyChange }: SwapF
               properties={{ received_swap_quote: getIsReviewableQuote(trade, tradeState, swapInputError) }}
               element={InterfaceElementName.CONNECT_WALLET_BUTTON}
             >
-              <ZKButtonLight onClick={toggleWalletDrawer} fontWeight={535} $borderRadius="16px" $borderColor="#03D498">
+              <ZKButtonLight onClick={toggleWalletDrawer} fontWeight={535} $borderRadius="16px" $borderColor="#8CD383">
                 <Trans>Connect wallet</Trans>
               </ZKButtonLight>
             </TraceEvent>

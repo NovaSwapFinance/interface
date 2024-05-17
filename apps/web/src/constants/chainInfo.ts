@@ -119,7 +119,7 @@ const CHAIN_INFO: ChainInfoMap = {
     color: darkTheme.chain_5,
   },
   [ChainId.NOVA_SEPOLIA]: {
-    networkType: NetworkType.L2,
+    networkType: NetworkType.L1,
     docs: "https://docs.uniswap.org/",
     explorer: "https://sepolia.explorer.zklink.io/",
     infoLink: "https://info.uniswap.org/#/",

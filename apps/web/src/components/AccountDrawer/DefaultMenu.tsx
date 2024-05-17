@@ -63,14 +63,14 @@ function DefaultMenu({ drawerOpen }: { drawerOpen: boolean }) {
         ) : (
           <WalletModal openSettings={openSettings} />
         )
-      case MenuState.SETTINGS:
-        return (
-          <SettingsMenu
-            onClose={closeSettings}
-            openLanguageSettings={openLanguageSettings}
-            openLocalCurrencySettings={openLocalCurrencySettings}
-          />
-        )
+      // case MenuState.SETTINGS:
+      //   return (
+      //     <SettingsMenu
+      //       onClose={closeSettings}
+      //       openLanguageSettings={openLanguageSettings}
+      //       openLocalCurrencySettings={openLocalCurrencySettings}
+      //     />
+      //   )
       case MenuState.LANGUAGE_SETTINGS:
         return <LanguageMenu onClose={openSettings} />
       case MenuState.LOCAL_CURRENCY_SETTINGS:
