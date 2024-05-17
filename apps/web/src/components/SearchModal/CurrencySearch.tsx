@@ -203,7 +203,7 @@ export function CurrencySearch({
               type="text"
               id="token-search-input"
               data-testid="token-search-input"
-              placeholder={t`Search name or paste address`}
+              placeholder={t`Search paste address`}
               autoComplete="off"
               value={searchQuery}
               ref={inputRef as RefObject<HTMLInputElement>}
