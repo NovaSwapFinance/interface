@@ -1,5 +1,8 @@
 import { ChainId } from "@novaswap/sdk-core";
-import { SupportedChainsType, SupportedInterfaceChain } from "constants/chains";
+import {
+  NovaSupportedChainsType,
+  SupportedInterfaceChain,
+} from "constants/chains";
 
 const INFURA_KEY = process.env.REACT_APP_INFURA_KEY;
 if (typeof INFURA_KEY === "undefined") {
@@ -38,7 +41,7 @@ if (typeof QUICKNODE_BNB_RPC_URL === "undefined") {
  *
  * These "Safe" URLs are listed first, followed by other fallback URLs, which are taken from chainlist.org.
  */
-export const PUBLIC_RPC_URLS: Record<SupportedChainsType, string[]> = {
+export const PUBLIC_RPC_URLS: Record<NovaSupportedChainsType, string[]> = {
   [ChainId.NOVA_SEPOLIA]: [
     "https://sepolia.rpc.zklink.io",
     "wss://sepolia.rpc.zklink.io",
@@ -49,7 +52,7 @@ export const PUBLIC_RPC_URLS: Record<SupportedChainsType, string[]> = {
  * Application-specific JSON-RPC endpoints.
  * These are URLs which may only be used by the interface, due to origin policies, &c.
  */
-export const APP_RPC_URLS: Record<SupportedChainsType, string[]> = {
+export const APP_RPC_URLS: Record<NovaSupportedChainsType, string[]> = {
   [ChainId.NOVA_SEPOLIA]: ["https://sepolia.rpc.zklink.io"],
 };
 

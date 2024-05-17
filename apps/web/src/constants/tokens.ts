@@ -682,6 +682,7 @@ export const TOKEN_SHORTHANDS: {
     [ChainId.GOERLI]: USDC_GOERLI.address,
     [ChainId.SEPOLIA]: USDC_SEPOLIA.address,
     [ChainId.AVALANCHE]: USDC_AVALANCHE.address,
+    [ChainId.NOVA_SEPOLIA]: USDC_NOVA_SEPOLIA.address,
   },
 };
 
@@ -699,7 +700,6 @@ const STABLECOINS: { [chainId in ChainId]: Token[] } = {
   [ChainId.CELO_ALFAJORES]: [USDC_CELO],
   [ChainId.GOERLI]: [USDC_GOERLI],
   [ChainId.SEPOLIA]: [USDC_SEPOLIA],
-  [ChainId.NOVA_SEPOLIA]: [],
   [ChainId.AVALANCHE]: [USDC_AVALANCHE],
   [ChainId.GNOSIS]: [],
   [ChainId.MOONBEAM]: [],
@@ -710,6 +710,7 @@ const STABLECOINS: { [chainId in ChainId]: Token[] } = {
   [ChainId.ZORA]: [],
   [ChainId.ROOTSTOCK]: [],
   [ChainId.BLAST]: [USDB_BLAST],
+  [ChainId.NOVA_SEPOLIA]: [USDC_NOVA_SEPOLIA, DAI_NOVA_SEPOLIA],
 };
 
 export function isStablecoin(currency?: Currency): boolean {
