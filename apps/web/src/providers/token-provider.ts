@@ -661,11 +661,25 @@ export const DAI_NOVA_SEPOLIA = new Token(
   "DAI",
   "DAI Token",
 );
+export const DAI_NOVA_MAINNET = new Token(
+  ChainId.NOVA_MAINNET,
+  "0xF573fA04A73d5AC442F3DEa8741317fEaA3cDeab",
+  18,
+  "DAI",
+  "DAI Token",
+);
 
 export const USDC_NOVA_SEPOLIA = new Token(
   ChainId.NOVA_SEPOLIA,
   "0x461fE851Cd66e82A274570ED5767c873bE9Ae1ff",
   18,
+  "USDC",
+  "USDC Token",
+);
+export const USDC_NOVA_MAINNET = new Token(
+  ChainId.NOVA_MAINNET,
+  "0x1a1A3b2ff016332e866787B311fcB63928464509",
+  6,
   "USDC",
   "USDC Token",
 );

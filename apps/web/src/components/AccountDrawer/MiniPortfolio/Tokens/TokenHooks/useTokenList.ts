@@ -65,12 +65,10 @@ export const useTokenBalanceList = () => {
         if (token.usdPrice) {
           const usdValue = token.formattedBalance * token.usdPrice || 0;
           token.usdValue = usdValue;
-          if(usdValue > 0.01) {     
-            token.usdValueText = `$${(
-              usdValue
-            ).toFixed(2, 1)}`;
+          if (usdValue > 0.01) {
+            token.usdValueText = `$${usdValue.toFixed(2, 1)}`;
           }
-     
+
         }
         return token;
       });

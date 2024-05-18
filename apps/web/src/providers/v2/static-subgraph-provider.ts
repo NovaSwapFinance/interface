@@ -46,6 +46,7 @@ import {
 
 import { IV2SubgraphProvider, V2SubgraphPool } from "./subgraph-provider";
 import { WRAPPED_NATIVE_CURRENCY } from "providers/utils/chains";
+import { DAI_NOVA_MAINNET, USDC_NOVA_MAINNET } from "constants/tokens";
 
 type ChainTokenList = {
   readonly [chainId in ChainId]: Token[];
@@ -118,6 +119,11 @@ const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
     WRAPPED_NATIVE_CURRENCY[ChainId.NOVA_SEPOLIA]!,
     USDC_NOVA_SEPOLIA,
     DAI_NOVA_SEPOLIA,
+  ],
+  [ChainId.NOVA_MAINNET]: [
+    WRAPPED_NATIVE_CURRENCY[ChainId.NOVA_MAINNET]!,
+    USDC_NOVA_MAINNET,
+    DAI_NOVA_MAINNET,
   ],
 };
 

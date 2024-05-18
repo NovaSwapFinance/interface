@@ -43,6 +43,7 @@ export const DEFAULT_ROUTING_CONFIG_BY_CHAIN = (
     case ChainId.ARBITRUM_GOERLI:
     case ChainId.ARBITRUM_SEPOLIA:
     case ChainId.NOVA_SEPOLIA:
+    case ChainId.NOVA_MAINNET:
     case ChainId.CELO:
     case ChainId.CELO_ALFAJORES:
       return {
@@ -76,7 +77,7 @@ export const DEFAULT_ROUTING_CONFIG_BY_CHAIN = (
           topNTokenInOut: 5,
           topNSecondHop: 2,
           tokensToAvoidOnSecondHops: new LowerCaseStringArray(
-            '0xd46ba6d942050d489dbd938a2c909a5d5039a161' // AMPL on Mainnet
+            "0xd46ba6d942050d489dbd938a2c909a5d5039a161", // AMPL on Mainnet
           ),
           topNWithEachBaseToken: 2,
           topNWithBaseToken: 6,

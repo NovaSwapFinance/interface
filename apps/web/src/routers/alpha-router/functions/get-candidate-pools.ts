@@ -92,6 +92,7 @@ import {
   V2SubgraphPool,
 } from "providers/v2/subgraph-provider";
 import { ITokenListProvider } from "providers/caching-token-list-provider";
+import { DAI_NOVA_MAINNET, USDC_NOVA_MAINNET } from "constants/tokens";
 
 export type PoolId = { id: string };
 export type CandidatePoolsBySelectionCriteria = {
@@ -203,6 +204,7 @@ const baseTokensByChain: { [chainId in ChainId]?: Token[] } = {
   [ChainId.BASE]: [USDC_BASE],
   [ChainId.BLAST]: [WRAPPED_NATIVE_CURRENCY[ChainId.BLAST]!, USDB_BLAST],
   [ChainId.NOVA_SEPOLIA]: [USDC_NOVA_SEPOLIA, DAI_NOVA_SEPOLIA],
+  [ChainId.NOVA_MAINNET]: [USDC_NOVA_MAINNET, DAI_NOVA_MAINNET],
 };
 
 class SubcategorySelectionPools<SubgraphPool> {

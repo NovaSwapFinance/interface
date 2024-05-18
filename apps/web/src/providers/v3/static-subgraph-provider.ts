@@ -43,8 +43,6 @@ import {
   USDC_MAINNET,
   USDC_MOONBEAM,
   USDC_NOVA_SEPOLIA,
-  // USDC_NOVA_SEPOLIA,
-  // USDC_NOVA_SEPOLIA,
   USDC_OPTIMISM,
   USDC_OPTIMISM_GOERLI,
   USDC_POLYGON,
@@ -55,7 +53,6 @@ import {
   USDT_MAINNET,
   USDT_OPTIMISM,
   USDT_OPTIMISM_GOERLI,
-  // UT3_NOVA_SEPOLIA,
   WBTC_ARBITRUM,
   WBTC_GNOSIS,
   WBTC_GOERLI,
@@ -74,6 +71,7 @@ import { IV3SubgraphProvider, V3SubgraphPool } from "./subgraph-provider";
 import { WRAPPED_NATIVE_CURRENCY } from "providers/utils/chains";
 import { unparseFeeAmount } from "providers/utils/amounts";
 import { IV3PoolProvider } from "providers/pool-provider";
+import { DAI_NOVA_MAINNET, USDC_NOVA_MAINNET } from "constants/tokens";
 
 type ChainTokenList = {
   readonly [chainId in ChainId]: Token[];
@@ -179,6 +177,11 @@ const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
     WRAPPED_NATIVE_CURRENCY[ChainId.NOVA_SEPOLIA]!,
     USDC_NOVA_SEPOLIA,
     DAI_NOVA_SEPOLIA,
+  ],
+  [ChainId.NOVA_MAINNET]: [
+    WRAPPED_NATIVE_CURRENCY[ChainId.NOVA_MAINNET]!,
+    USDC_NOVA_MAINNET,
+    DAI_NOVA_MAINNET,
   ],
 };
 
