@@ -20,11 +20,14 @@ function formatBalance(balance: bigint, decimals: number, fixed: number = 8) {
 }
 
 export const useTokenBalanceList = () => {
+  
   const [allTokens, setAllTokens] = useState({ balances: {} });
-  const { account } = useWeb3React();
+  const { account,chainId } = useWeb3React();
+
+  const url = NOVA_API_ADDRESS_URL[chainId]?NOVA_API_ADDRESS_URL[chainId]:NOVA_API_ADDRESS_URL[ChainId.NOVA_MAINNET];
 
   useEffect(() => {
-    fetch(`${NOVA_API_ADDRESS_URL}${account}`).then((res) =>
+    fetch(`${url}${account}`).then((res) =>
       res.json().then((all) => {
         if(!all.error) {
           setAllTokens(all);
@@ -32,7 +35,7 @@ export const useTokenBalanceList = () => {
       }),
     );
     const timer = setInterval(() => {
-      fetch(`${NOVA_API_ADDRESS_URL}${account}`).then((res) =>
+      fetch(`${url}${account}`).then((res) =>
         res.json().then((all) => {
           if(!all.error) {
             setAllTokens(all);
@@ -44,7 +47,7 @@ export const useTokenBalanceList = () => {
     return () => {
       clearInterval(timer);
     };
-  }, [account]);
+  }, [account,chainId]);
 
   const tokensWithBalance = useMemo(() => {
     const hasBalanceList = Object.values(allTokens?.balances||{})
@@ -52,7 +55,7 @@ export const useTokenBalanceList = () => {
       .map((balances) => {
         const token = {
           id: balances.token.l2Address,
-          chainId:ChainId.NOVA_SEPOLIA,
+          chainId: [ChainId.NOVA_SEPOLIA, ChainId.NOVA_MAINNET].includes(chainId)?chainId :ChainId.NOVA_MAINNET,
           address: balances.token.l2Address,
           formattedBalance: formatBalance(
             balances.balance ?? 0n,
@@ -76,7 +79,7 @@ export const useTokenBalanceList = () => {
     return hasBalanceList.filter(
       (token) => parseFloat(token.formattedBalance) > 0.00001,
     ).sort((a, b) => b.usdValue - a.usdValue);;
-  }, [allTokens]);
+  }, [allTokens,chainId]);
 
   const totalUsdValue = tokensWithBalance.reduce((total, token) => total + (token.usdValue || 0 ), 0);
 

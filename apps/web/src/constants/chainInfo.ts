@@ -134,7 +134,7 @@ const CHAIN_INFO: ChainInfoMap = {
   [ChainId.NOVA_MAINNET]: {
     networkType: NetworkType.L1,
     docs: "https://docs.uniswap.org/",
-    explorer: "https://sepolia.explorer.zklink.io/",
+    explorer: "https://explorer.zklink.io/",
     infoLink: "https://info.uniswap.org/#/",
     label: "Nova Mainnet",
     nativeCurrency: {
