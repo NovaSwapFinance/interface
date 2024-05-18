@@ -22,6 +22,7 @@ import {
   UniswapInterfaceMulticall,
   UniswapInterfaceMulticall__factory,
 } from "types/smart-router/types/v3";
+import { UNISWAP_MULTICALL_ADDRESSES } from "./utils/addresses";
 
 export type UniswapMulticallConfig = {
   gasLimitPerCallOverride?: number;
@@ -46,7 +47,7 @@ export class UniswapMulticallProvider extends IMulticallProvider<UniswapMultical
   ) {
     super();
     //TODO: Remember to change this to the correct address
-    const multicallAddress = "0x4c3c1Ede18AD2E00587068B43cf490401F2a7645";
+    const multicallAddress = UNISWAP_MULTICALL_ADDRESSES[this.chainId];
 
     if (!multicallAddress) {
       throw new Error(
