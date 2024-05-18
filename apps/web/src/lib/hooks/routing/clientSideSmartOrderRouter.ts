@@ -7,11 +7,10 @@ import {
 } from "@novaswap/sdk-core";
 // This file is lazy-loaded, so the import of smart-order-router is intentional.
 // eslint-disable-next-line @typescript-eslint/no-restricted-imports
-import { asSupportedChain } from "constants/chains";
+import { NovaSupportedChainsType, asSupportedChain } from "constants/chains";
 import { RPC_PROVIDERS } from "constants/providers";
 import { nativeOnChain } from "constants/tokens";
 import JSBI from "jsbi";
-// import { NodeJSCache } from "providers/cache-node";
 import { CachingGasStationProvider } from "providers/caching-gas-provider";
 import { EIP1559GasPriceProvider } from "providers/eip-1559-gas-price-provider";
 import { LegacyGasPriceProvider } from "providers/legacy-gas-price-provider";
@@ -20,11 +19,8 @@ import { OnChainGasPriceProvider } from "providers/on-chain-gas-price-provider";
 import { OnChainQuoteProvider } from "providers/on-chain-quote-provider";
 import { V3PoolProvider } from "providers/pool-provider";
 import { PortionProvider } from "providers/portion-provider";
-import { TokenProvider } from "providers/token-provider";
 import { V2PoolProvider } from "providers/v2/pool-provider";
 import { AlphaRouter, AlphaRouterConfig } from "routers/alpha-router";
-import NodeCache from "node-cache";
-import { LegacyRouter } from "routers/legacy-router";
 import {
   GetQuoteArgs,
   QuoteResult,
@@ -32,11 +28,7 @@ import {
   SwapRouterNativeAssets,
 } from "state/routing/types";
 import { transformSwapRouteToGetQuoteResult } from "utils/transformSwapRouteToGetQuoteResult";
-import { GasPrice } from "providers/gas-price-provider";
-import { CachingV3PoolProvider } from "providers/v3/caching-pool-provider";
 import { EthEstimateGasSimulator } from "providers/eth-estimate-gas-provider";
-import { TokenPropertiesProvider } from "providers/token-properties-provider";
-import { OnChainTokenFeeFetcher } from "providers/token-fee-fetcher";
 import {
   FallbackTenderlySimulator,
   TenderlySimulator,
@@ -64,14 +56,10 @@ const CLIENT_SIDE_ROUTING_ALLOW_LIST = [
 const routers = new Map<ChainId, AlphaRouter>();
 export async function getRouter(chainId: ChainId): Promise<AlphaRouter> {
   const router = routers.get(chainId);
-  // console.log(router, "router_____res");
   if (router) return router;
-  console.log("router-passed_______________________");
   const supportedChainId = asSupportedChain(chainId);
   if (supportedChainId && CLIENT_SIDE_ROUTING_ALLOW_LIST.includes(chainId)) {
-    // const cache = new LocalStorageCache(60);
-    console.log("router-in_______________________");
-    const provider = RPC_PROVIDERS[supportedChainId];
+    const provider = RPC_PROVIDERS[supportedChainId as NovaSupportedChainsType];
     const multicall2Provider = new UniswapMulticallProvider(chainId, provider);
 
     const v3PoolProvider = new V3PoolProvider(chainId, multicall2Provider);
@@ -205,8 +193,6 @@ async function getQuote(
   if (!swapRoute) {
     return { state: QuoteState.NOT_FOUND };
   }
-
-  console.log(swapRoute, "swapRoute", tradeType, "tradeType", amount, "amount");
   return transformSwapRouteToGetQuoteResult(tradeType, amount, swapRoute);
 }
 
