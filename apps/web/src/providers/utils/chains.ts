@@ -224,6 +224,11 @@ export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
     "ETHER",
     "0x000000000000000000000000000000000000800A",
   ],
+  [ChainId.NOVA_MAINNET]: [
+    "ETH",
+    "ETHER",
+    "0x000000000000000000000000000000000000800A",
+  ],
 };
 
 export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
