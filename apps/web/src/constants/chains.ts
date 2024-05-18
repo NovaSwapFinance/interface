@@ -32,7 +32,7 @@ export type SupportedInterfaceChain = Exclude<
 >;
 
 export declare const SUPPORTED_CHAINS_NOVA: readonly [ChainId.NOVA_SEPOLIA];
-export declare type SupportedChainsType =
+export declare type NovaSupportedChainsType =
   (typeof SUPPORTED_CHAINS_NOVA)[number];
 
 export function isSupportedChain(
@@ -70,7 +70,7 @@ export const SUPPORTED_GAS_ESTIMATE_CHAIN_IDS = [
   ChainId.AVALANCHE,
   ChainId.BASE,
   ChainId.BLAST,
-  // ChainId.NOVA_SEPOLIA,
+  ChainId.NOVA_SEPOLIA,
 ] as const;
 
 /**
@@ -123,7 +123,6 @@ export const L2_CHAIN_IDS = [
   ChainId.OPTIMISM_GOERLI,
   ChainId.BASE,
   ChainId.BLAST,
-  // ChainId.NOVA_SEPOLIA,
 ] as const;
 
 export type SupportedL2ChainId = (typeof L2_CHAIN_IDS)[number];
