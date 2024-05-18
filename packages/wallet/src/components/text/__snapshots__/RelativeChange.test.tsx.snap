@@ -29,7 +29,7 @@ exports[`renders a relative change 1`] = `
           "borderWidth": 0,
         },
         {
-          "color": "#40B66B",
+          "color": "#8CD383",
           "height": 16,
           "transform": [
             {
@@ -45,7 +45,7 @@ exports[`renders a relative change 1`] = `
         },
       ]
     }
-    tintColor="#40B66B"
+    tintColor="#8CD383"
     vbHeight={24}
     vbWidth={24}
   >
@@ -129,7 +129,7 @@ exports[`renders placeholders with absolute change 1`] = `
           "borderWidth": 0,
         },
         {
-          "color": "#40B66B",
+          "color": "#8CD383",
           "height": 16,
           "transform": [
             {
@@ -145,7 +145,7 @@ exports[`renders placeholders with absolute change 1`] = `
         },
       ]
     }
-    tintColor="#40B66B"
+    tintColor="#8CD383"
     vbHeight={24}
     vbWidth={24}
   >

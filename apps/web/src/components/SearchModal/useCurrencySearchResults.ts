@@ -115,11 +115,13 @@ export function useCurrencySearchResults({
 
   // Queries for a single token directly by address, if the query is an address.
   const searchToken = useTokenListToken(searchQuery);
+  console.log('searchToken====>',searchToken)
   const defaultAndUserAddedTokens = useDefaultActiveTokens(chainId);
   const userAddedTokens = useUserAddedTokens();
 
 
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, searchToken ?? undefined)
+
 
   // const { formatCurrencyAmount } = useFormatter();
 

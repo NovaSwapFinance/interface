@@ -72,6 +72,7 @@ export function isPricePoint(p: PricePoint | undefined): p is PricePoint {
 
 const GQL_MAINNET_CHAINS = [
   Chain.Ethereum,
+  Chain.NovaMainnet,
   Chain.Polygon,
   Chain.Celo,
   Chain.Optimism,
@@ -80,10 +81,10 @@ const GQL_MAINNET_CHAINS = [
   Chain.Avalanche,
   Chain.Base,
   Chain.Blast,
-] as const
+] as const;
 
 /** Used for making graphql queries to all chains supported by the graphql backend. Must be mutable for some apollo typechecking. */
-export const GQL_MAINNET_CHAINS_MUTABLE = GQL_MAINNET_CHAINS.map((c) => c)
+export const GQL_MAINNET_CHAINS_MUTABLE = GQL_MAINNET_CHAINS.map((c) => c);
 
 const GQL_TESTNET_CHAINS = [
   Chain.EthereumGoerli,
@@ -113,7 +114,8 @@ export const CHAIN_ID_TO_BACKEND_NAME: { [key: number]: InterfaceGqlChain } = {
   [ChainId.AVALANCHE]: Chain.Avalanche,
   [ChainId.BASE]: Chain.Base,
   [ChainId.BLAST]: Chain.Blast,
-  [ChainId.NOVA_SEPOLIA]: Chain.NovaSepolia,
+  [ChainId.NOVA_SEPOLIA]: 'zkLink Nova',
+  [ChainId.NOVA_MAINNET]: 'zkLink Nova',
 };
 
 export function chainIdToBackendName(chainId: number | undefined) {
@@ -179,6 +181,8 @@ const URL_CHAIN_PARAM_TO_BACKEND: { [key: string]: InterfaceGqlChain } = {
   avalanche: Chain.Avalanche,
   base: Chain.Base,
   blast: Chain.Blast,
+  novasepolia: Chain.NovaSepolia,
+  novamainnet: Chain.NovaMainnet,
 };
 
 /**
@@ -234,6 +238,7 @@ const CHAIN_NAME_TO_CHAIN_ID: { [key in InterfaceGqlChain]: ChainId } = {
   [Chain.Base]: ChainId.BASE,
   [Chain.Blast]: ChainId.BLAST,
   [Chain.NovaSepolia]: ChainId.NOVA_SEPOLIA,
+  [Chain.NovaMainnet]: ChainId.NOVA_MAINNET,
 };
 
 export function isSupportedGQLChain(chain: Chain): chain is InterfaceGqlChain {

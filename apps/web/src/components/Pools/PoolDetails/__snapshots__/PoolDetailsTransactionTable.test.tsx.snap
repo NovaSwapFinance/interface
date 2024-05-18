@@ -52,7 +52,7 @@ exports[`PoolDetailsTransactionsTable renders data filled state 1`] = `
 }
 
 .c28 {
-  color: #40B66B;
+  color: #8CD383;
   -webkit-letter-spacing: -0.01em;
   -moz-letter-spacing: -0.01em;
   -ms-letter-spacing: -0.01em;

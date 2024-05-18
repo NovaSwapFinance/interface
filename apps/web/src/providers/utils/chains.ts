@@ -25,6 +25,7 @@ export const SUPPORTED_CHAINS: ChainId[] = [
   ChainId.BASE,
   ChainId.BLAST,
   ChainId.NOVA_SEPOLIA,
+  ChainId.NOVA_MAINNET,
   // Gnosis and Moonbeam don't yet have contracts deployed yet
 ];
 
@@ -70,6 +71,8 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
       return ChainId.SEPOLIA;
     case 810181:
       return ChainId.NOVA_SEPOLIA;
+    case 810180:
+      return ChainId.NOVA_MAINNET;
     case 56:
       return ChainId.BNB;
     case 10:
@@ -110,115 +113,121 @@ export const ID_TO_CHAIN_ID = (id: number): ChainId => {
 };
 
 export enum ChainName {
-  MAINNET = 'mainnet',
-  GOERLI = 'goerli',
-  SEPOLIA = 'sepolia',
-  OPTIMISM = 'optimism-mainnet',
-  OPTIMISM_GOERLI = 'optimism-goerli',
-  OPTIMISM_SEPOLIA = 'optimism-sepolia',
-  ARBITRUM_ONE = 'arbitrum-mainnet',
-  ARBITRUM_GOERLI = 'arbitrum-goerli',
-  ARBITRUM_SEPOLIA = 'arbitrum-sepolia',
-  POLYGON = 'polygon-mainnet',
-  POLYGON_MUMBAI = 'polygon-mumbai',
-  CELO = 'celo-mainnet',
-  CELO_ALFAJORES = 'celo-alfajores',
-  GNOSIS = 'gnosis-mainnet',
-  MOONBEAM = 'moonbeam-mainnet',
-  BNB = 'bnb-mainnet',
-  AVALANCHE = 'avalanche-mainnet',
-  BASE = 'base-mainnet',
-  BASE_GOERLI = 'base-goerli',
-  BLAST = 'blast-mainnet',
-  NOVA_SEPOLIA = 'nova-sepolia',
+  MAINNET = "mainnet",
+  GOERLI = "goerli",
+  SEPOLIA = "sepolia",
+  OPTIMISM = "optimism-mainnet",
+  OPTIMISM_GOERLI = "optimism-goerli",
+  OPTIMISM_SEPOLIA = "optimism-sepolia",
+  ARBITRUM_ONE = "arbitrum-mainnet",
+  ARBITRUM_GOERLI = "arbitrum-goerli",
+  ARBITRUM_SEPOLIA = "arbitrum-sepolia",
+  POLYGON = "polygon-mainnet",
+  POLYGON_MUMBAI = "polygon-mumbai",
+  CELO = "celo-mainnet",
+  CELO_ALFAJORES = "celo-alfajores",
+  GNOSIS = "gnosis-mainnet",
+  MOONBEAM = "moonbeam-mainnet",
+  BNB = "bnb-mainnet",
+  AVALANCHE = "avalanche-mainnet",
+  BASE = "base-mainnet",
+  BASE_GOERLI = "base-goerli",
+  BLAST = "blast-mainnet",
+  NOVA_SEPOLIA = "nova-sepolia",
+  NOVA_MAINNET = "nova-mainnet",
 }
 
 export enum NativeCurrencyName {
   // Strings match input for CLI
-  ETHER = 'ETH',
-  MATIC = 'MATIC',
-  CELO = 'CELO',
-  GNOSIS = 'XDAI',
-  MOONBEAM = 'GLMR',
-  BNB = 'BNB',
-  AVALANCHE = 'AVAX',
+  ETHER = "ETH",
+  MATIC = "MATIC",
+  CELO = "CELO",
+  GNOSIS = "XDAI",
+  MOONBEAM = "GLMR",
+  BNB = "BNB",
+  AVALANCHE = "AVAX",
 }
 
 export const NATIVE_NAMES_BY_ID: { [chainId: number]: string[] } = {
   [ChainId.MAINNET]: [
-    'ETH',
-    'ETHER',
-    '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    "ETH",
+    "ETHER",
+    "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
   ],
   [ChainId.GOERLI]: [
-    'ETH',
-    'ETHER',
-    '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    "ETH",
+    "ETHER",
+    "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
   ],
   [ChainId.SEPOLIA]: [
-    'ETH',
-    'ETHER',
-    '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    "ETH",
+    "ETHER",
+    "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
   ],
   [ChainId.OPTIMISM]: [
-    'ETH',
-    'ETHER',
-    '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    "ETH",
+    "ETHER",
+    "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
   ],
   [ChainId.OPTIMISM_GOERLI]: [
-    'ETH',
-    'ETHER',
-    '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    "ETH",
+    "ETHER",
+    "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
   ],
   [ChainId.OPTIMISM_SEPOLIA]: [
-    'ETH',
-    'ETHER',
-    '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    "ETH",
+    "ETHER",
+    "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
   ],
   [ChainId.ARBITRUM_ONE]: [
-    'ETH',
-    'ETHER',
-    '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    "ETH",
+    "ETHER",
+    "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
   ],
   [ChainId.ARBITRUM_GOERLI]: [
-    'ETH',
-    'ETHER',
-    '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    "ETH",
+    "ETHER",
+    "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
   ],
   [ChainId.ARBITRUM_SEPOLIA]: [
-    'ETH',
-    'ETHER',
-    '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    "ETH",
+    "ETHER",
+    "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
   ],
-  [ChainId.POLYGON]: ['MATIC', '0x0000000000000000000000000000000000001010'],
+  [ChainId.POLYGON]: ["MATIC", "0x0000000000000000000000000000000000001010"],
   [ChainId.POLYGON_MUMBAI]: [
-    'MATIC',
-    '0x0000000000000000000000000000000000001010',
+    "MATIC",
+    "0x0000000000000000000000000000000000001010",
   ],
-  [ChainId.CELO]: ['CELO'],
-  [ChainId.CELO_ALFAJORES]: ['CELO'],
-  [ChainId.GNOSIS]: ['XDAI'],
-  [ChainId.MOONBEAM]: ['GLMR'],
-  [ChainId.BNB]: ['BNB', 'BNB', '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee'],
+  [ChainId.CELO]: ["CELO"],
+  [ChainId.CELO_ALFAJORES]: ["CELO"],
+  [ChainId.GNOSIS]: ["XDAI"],
+  [ChainId.MOONBEAM]: ["GLMR"],
+  [ChainId.BNB]: ["BNB", "BNB", "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"],
   [ChainId.AVALANCHE]: [
-    'AVAX',
-    'AVALANCHE',
-    '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    "AVAX",
+    "AVALANCHE",
+    "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
   ],
   [ChainId.BASE]: [
-    'ETH',
-    'ETHER',
-    '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    "ETH",
+    "ETHER",
+    "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
   ],
   [ChainId.BLAST]: [
-    'ETH',
-    'ETHER',
-    '0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee',
+    "ETH",
+    "ETHER",
+    "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
   ],
   [ChainId.NOVA_SEPOLIA]: [
-    'ETH',
-    'ETHER',
-    '0x000000000000000000000000000000000000800A',
+    "ETH",
+    "ETHER",
+    "0x000000000000000000000000000000000000800A",
+  ],
+  [ChainId.NOVA_MAINNET]: [
+    "ETH",
+    "ETHER",
+    "0x000000000000000000000000000000000000800A",
   ],
 };
 
@@ -243,6 +252,7 @@ export const NATIVE_CURRENCY: { [chainId: number]: NativeCurrencyName } = {
   [ChainId.BASE]: NativeCurrencyName.ETHER,
   [ChainId.BLAST]: NativeCurrencyName.ETHER,
   [ChainId.NOVA_SEPOLIA]: NativeCurrencyName.ETHER,
+  [ChainId.NOVA_MAINNET]: NativeCurrencyName.ETHER,
 };
 
 export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
@@ -289,13 +299,15 @@ export const ID_TO_NETWORK_NAME = (id: number): ChainName => {
       return ChainName.BLAST;
     case 810181:
       return ChainName.NOVA_SEPOLIA;
+    case 810180:
+      return ChainName.NOVA_MAINNET;
     default:
       throw new Error(`Unknown chain id: ${id}`);
   }
 };
 
 export const CHAIN_IDS_LIST = Object.values(ChainId).map((c) =>
-  c.toString()
+  c.toString(),
 ) as string[];
 
 export const ID_TO_PROVIDER = (id: ChainId): string => {
@@ -336,6 +348,8 @@ export const ID_TO_PROVIDER = (id: ChainId): string => {
       return process.env.JSON_RPC_PROVIDER_BLAST!;
     case ChainId.NOVA_SEPOLIA:
       return process.env.JSON_RPC_PROVIDER_NOVA_SEPOLIA!;
+    case ChainId.NOVA_MAINNET:
+      return process.env.JSON_RPC_PROVIDER_NOVA_MAINNET!;
     default:
       throw new Error(`Chain id: ${id} not supported`);
   }
@@ -344,173 +358,180 @@ export const ID_TO_PROVIDER = (id: ChainId): string => {
 export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
   [ChainId.MAINNET]: new Token(
     1,
-    '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
+    "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
     18,
-    'WETH',
-    'Wrapped Ether'
+    "WETH",
+    "Wrapped Ether",
   ),
   [ChainId.GOERLI]: new Token(
     5,
-    '0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6',
+    "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
     18,
-    'WETH',
-    'Wrapped Ether'
+    "WETH",
+    "Wrapped Ether",
   ),
   [ChainId.SEPOLIA]: new Token(
     11155111,
-    '0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14',
+    "0xfFf9976782d46CC05630D1f6eBAb18b2324d6B14",
     18,
-    'WETH',
-    'Wrapped Ether'
+    "WETH",
+    "Wrapped Ether",
   ),
   [ChainId.BNB]: new Token(
     56,
-    '0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c',
+    "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
     18,
-    'WBNB',
-    'Wrapped BNB'
+    "WBNB",
+    "Wrapped BNB",
   ),
   [ChainId.OPTIMISM]: new Token(
     ChainId.OPTIMISM,
-    '0x4200000000000000000000000000000000000006',
+    "0x4200000000000000000000000000000000000006",
     18,
-    'WETH',
-    'Wrapped Ether'
+    "WETH",
+    "Wrapped Ether",
   ),
   [ChainId.OPTIMISM_GOERLI]: new Token(
     ChainId.OPTIMISM_GOERLI,
-    '0x4200000000000000000000000000000000000006',
+    "0x4200000000000000000000000000000000000006",
     18,
-    'WETH',
-    'Wrapped Ether'
+    "WETH",
+    "Wrapped Ether",
   ),
   [ChainId.OPTIMISM_SEPOLIA]: new Token(
     ChainId.OPTIMISM_SEPOLIA,
-    '0x4200000000000000000000000000000000000006',
+    "0x4200000000000000000000000000000000000006",
     18,
-    'WETH',
-    'Wrapped Ether'
+    "WETH",
+    "Wrapped Ether",
   ),
   [ChainId.ARBITRUM_ONE]: new Token(
     ChainId.ARBITRUM_ONE,
-    '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1',
+    "0x82aF49447D8a07e3bd95BD0d56f35241523fBab1",
     18,
-    'WETH',
-    'Wrapped Ether'
+    "WETH",
+    "Wrapped Ether",
   ),
   [ChainId.ARBITRUM_GOERLI]: new Token(
     ChainId.ARBITRUM_GOERLI,
-    '0xe39Ab88f8A4777030A534146A9Ca3B52bd5D43A3',
+    "0xe39Ab88f8A4777030A534146A9Ca3B52bd5D43A3",
     18,
-    'WETH',
-    'Wrapped Ether'
+    "WETH",
+    "Wrapped Ether",
   ),
   [ChainId.ARBITRUM_SEPOLIA]: new Token(
     ChainId.ARBITRUM_SEPOLIA,
-    '0xc556bAe1e86B2aE9c22eA5E036b07E55E7596074',
+    "0xc556bAe1e86B2aE9c22eA5E036b07E55E7596074",
     18,
-    'WETH',
-    'Wrapped Ether'
+    "WETH",
+    "Wrapped Ether",
   ),
   [ChainId.POLYGON]: new Token(
     ChainId.POLYGON,
-    '0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270',
+    "0x0d500B1d8E8eF31E21C99d1Db9A6444d3ADf1270",
     18,
-    'WMATIC',
-    'Wrapped MATIC'
+    "WMATIC",
+    "Wrapped MATIC",
   ),
   [ChainId.POLYGON_MUMBAI]: new Token(
     ChainId.POLYGON_MUMBAI,
-    '0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889',
+    "0x9c3C9283D3e44854697Cd22D3Faa240Cfb032889",
     18,
-    'WMATIC',
-    'Wrapped MATIC'
+    "WMATIC",
+    "Wrapped MATIC",
   ),
 
   // The Celo native currency 'CELO' implements the erc-20 token standard
   [ChainId.CELO]: new Token(
     ChainId.CELO,
-    '0x471EcE3750Da237f93B8E339c536989b8978a438',
+    "0x471EcE3750Da237f93B8E339c536989b8978a438",
     18,
-    'CELO',
-    'Celo native asset'
+    "CELO",
+    "Celo native asset",
   ),
   [ChainId.CELO_ALFAJORES]: new Token(
     ChainId.CELO_ALFAJORES,
-    '0xF194afDf50B03e69Bd7D057c1Aa9e10c9954E4C9',
+    "0xF194afDf50B03e69Bd7D057c1Aa9e10c9954E4C9",
     18,
-    'CELO',
-    'Celo native asset'
+    "CELO",
+    "Celo native asset",
   ),
   [ChainId.GNOSIS]: new Token(
     ChainId.GNOSIS,
-    '0xe91d153e0b41518a2ce8dd3d7944fa863463a97d',
+    "0xe91d153e0b41518a2ce8dd3d7944fa863463a97d",
     18,
-    'WXDAI',
-    'Wrapped XDAI on Gnosis'
+    "WXDAI",
+    "Wrapped XDAI on Gnosis",
   ),
   [ChainId.MOONBEAM]: new Token(
     ChainId.MOONBEAM,
-    '0xAcc15dC74880C9944775448304B263D191c6077F',
+    "0xAcc15dC74880C9944775448304B263D191c6077F",
     18,
-    'WGLMR',
-    'Wrapped GLMR'
+    "WGLMR",
+    "Wrapped GLMR",
   ),
   [ChainId.AVALANCHE]: new Token(
     ChainId.AVALANCHE,
-    '0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7',
+    "0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7",
     18,
-    'WAVAX',
-    'Wrapped AVAX'
+    "WAVAX",
+    "Wrapped AVAX",
   ),
   [ChainId.BASE]: new Token(
     ChainId.BASE,
-    '0x4200000000000000000000000000000000000006',
+    "0x4200000000000000000000000000000000000006",
     18,
-    'WETH',
-    'Wrapped Ether'
+    "WETH",
+    "Wrapped Ether",
   ),
   [ChainId.BASE_GOERLI]: new Token(
     ChainId.BASE_GOERLI,
-    '0x4200000000000000000000000000000000000006',
+    "0x4200000000000000000000000000000000000006",
     18,
-    'WETH',
-    'Wrapped Ether'
+    "WETH",
+    "Wrapped Ether",
   ),
   [ChainId.ROOTSTOCK]: new Token(
     ChainId.ROOTSTOCK,
-    '0x542fDA317318eBF1d3DEAf76E0b632741A7e677d',
+    "0x542fDA317318eBF1d3DEAf76E0b632741A7e677d",
     18,
-    'WRBTC',
-    'Wrapped BTC'
+    "WRBTC",
+    "Wrapped BTC",
   ),
   [ChainId.ZORA]: new Token(
     ChainId.ZORA,
-    '0x4200000000000000000000000000000000000006',
+    "0x4200000000000000000000000000000000000006",
     18,
-    'WETH',
-    'Wrapped Ether'
+    "WETH",
+    "Wrapped Ether",
   ),
   [ChainId.ZORA_SEPOLIA]: new Token(
     ChainId.ZORA_SEPOLIA,
-    '0x4200000000000000000000000000000000000006',
+    "0x4200000000000000000000000000000000000006",
     18,
-    'WETH',
-    'Wrapped Ether'
+    "WETH",
+    "Wrapped Ether",
   ),
   [ChainId.BLAST]: new Token(
     ChainId.BLAST,
-    '0x4300000000000000000000000000000000000004',
+    "0x4300000000000000000000000000000000000004",
     18,
-    'WETH',
-    'Wrapped Ether'
+    "WETH",
+    "Wrapped Ether",
   ),
   [ChainId.NOVA_SEPOLIA]: new Token(
     ChainId.NOVA_SEPOLIA,
-    '0x6e42d10eB474a17b14f3cfeAC2590bfa604313C7',
+    "0x6e42d10eB474a17b14f3cfeAC2590bfa604313C7",
     18,
-    'WETH',
-    'Wrapped Ether'
+    "WETH",
+    "Wrapped Ether",
+  ),
+  [ChainId.NOVA_MAINNET]: new Token(
+    ChainId.NOVA_MAINNET,
+    "0x8280a4e7D5B3B658ec4580d3Bc30f5e50454F169",
+    18,
+    "WETH",
+    "Wrapped Ether",
   ),
 };
 

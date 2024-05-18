@@ -15,6 +15,7 @@ import { IUniswapV3PoolState__factory } from "types/smart-router/types/v3";
 import { ProviderConfig } from "./provider";
 import { IMulticallProvider, Result } from "./multicall-provider";
 import { poolToString } from "./utils/route";
+import { V3_CORE_FACTORY_ADDRESSES } from "./utils/addresses";
 
 console.log("V3PoolProvider-Build-1");
 
@@ -232,7 +233,7 @@ export class V3PoolProvider implements IV3PoolProvider {
     }
 
     const poolAddress = computePoolAddress({
-      factoryAddress: "0x0c283f1a3C6981eE623cb4E8AcC4f450f39D0815",
+      factoryAddress: V3_CORE_FACTORY_ADDRESSES[this.chainId]!,
       tokenA: token0,
       tokenB: token1,
       fee: feeAmount,

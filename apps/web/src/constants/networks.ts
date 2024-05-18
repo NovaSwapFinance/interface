@@ -46,6 +46,7 @@ export const PUBLIC_RPC_URLS: Record<NovaSupportedChainsType, string[]> = {
     "https://sepolia.rpc.zklink.io",
     "wss://sepolia.rpc.zklink.io",
   ],
+  [ChainId.NOVA_MAINNET]: ["https://rpc.zklink.io", "wss://rpc.zklink.io"],
 };
 
 /**
@@ -54,8 +55,10 @@ export const PUBLIC_RPC_URLS: Record<NovaSupportedChainsType, string[]> = {
  */
 export const APP_RPC_URLS: Record<NovaSupportedChainsType, string[]> = {
   [ChainId.NOVA_SEPOLIA]: ["https://sepolia.rpc.zklink.io"],
+  [ChainId.NOVA_MAINNET]: ["https://rpc.zklink.io"],
 };
 
 export const INFURA_PREFIX_TO_CHAIN_ID: { [prefix: string]: ChainId } = {
   "nova-sepolia": ChainId.NOVA_SEPOLIA,
+  "nova-mainnet": ChainId.NOVA_MAINNET,
 };

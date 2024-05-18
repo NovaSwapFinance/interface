@@ -131,6 +131,19 @@ const CHAIN_INFO: ChainInfoMap = {
     },
     color: darkTheme.chain_5,
   },
+  [ChainId.NOVA_MAINNET]: {
+    networkType: NetworkType.L1,
+    docs: "https://docs.uniswap.org/",
+    explorer: "https://explorer.zklink.io/",
+    infoLink: "https://info.uniswap.org/#/",
+    label: "Nova Mainnet",
+    nativeCurrency: {
+      name: "Nova Mainnet Ether",
+      symbol: "ETH",
+      decimals: 18,
+    },
+    color: darkTheme.chain_5,
+  },
   [ChainId.OPTIMISM]: {
     networkType: NetworkType.L2,
     blockWaitMsBeforeWarning: ms(`25m`),

@@ -168,7 +168,7 @@ export default function AuthenticatedHeader({ account, openSettings }: { account
   const amount = unclaimedAmount?.toFixed(0, { groupSeparator: ',' } ?? '-')
 
   const {totalUsdValue} = useTokenBalanceList();
-  const totalUsdValueText = totalUsdValue > 0.01 ? `$${totalUsdValue.toFixed(2, 1)}` : '';
+  const totalUsdValueText = totalUsdValue > 0.001 ? `$${totalUsdValue.toFixed(2, 1)}` : '$0.0';
 
   return (
     <AuthenticatedHeaderWrapper>

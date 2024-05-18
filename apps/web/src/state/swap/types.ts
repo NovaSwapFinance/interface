@@ -99,7 +99,8 @@ export const SwapAndLimitContext = createContext<SwapAndLimitContextType>({
     inputCurrency: undefined,
     outputCurrency: undefined,
   },
-  chainId: ChainId.NOVA_SEPOLIA,
+  //TODO: change base on env
+  chainId: ChainId.NOVA_MAINNET,
   currentTab: SwapTab.Swap,
   setCurrentTab: () => undefined,
 });

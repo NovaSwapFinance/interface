@@ -175,7 +175,7 @@ export const vars = createGlobalTheme(':root', {
     gold200: '#EEB317',
     gold400: '#B17900',
     green200: '#5CFE9D',
-    green300: '#40B66B',
+    green300: '#8CD383',
     green400: '#1A9550',
     violet200: '#BDB8FA',
     violet400: '#7A7BEB',
@@ -224,7 +224,7 @@ export const vars = createGlobalTheme(':root', {
     surface5_light: '#0000000a',
     accent1_light: '#FC72FF',
     accent2_light: '#FFEFFF',
-    success: '#40B66B',
+    success: '#8CD383',
     critical: '#FF5F52',
   },
   border: {
