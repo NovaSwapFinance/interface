@@ -240,7 +240,7 @@ function getSwapFee(
       );
       return {
         //TODO: add real recipient
-        recipient: "0x0EA020485869D6C8B37Ad19D3f87a9d6469F45cc",
+        recipient: "0xD3D3dE8317F3C47e5bdf0bFdeC9C0CFfA6506d66",
         percent: new Percent(25, BIPS_BASE),
         amount: amount.toString(),
       };
