@@ -458,7 +458,7 @@ exports[`PoolDetailsPositionsTable renders with PositionStatus In Range 1`] = `
   width: max-content;
   margin-right: 0;
   margin-left: auto;
-  color: #40B66B;
+  color: #8CD383;
 }
 
 .c14 {
@@ -476,7 +476,7 @@ exports[`PoolDetailsPositionsTable renders with PositionStatus In Range 1`] = `
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background-color: #40B66B;
+  background-color: #8CD383;
 }
 
 @media screen and (max-width:640px) {

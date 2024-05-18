@@ -68,7 +68,7 @@ export const colors = {
   green50: '#EDFDF0',
   green100: '#BFEECA',
   green200: '#76D191',
-  green300: '#40B66B',
+  green300: '#8CD383',
   green400: '#209853',
   green500: '#0B783E',
   green600: '#0C522A',
@@ -188,7 +188,7 @@ const sporeLight = {
   accentSoft: '#FC72FF33', //33 = 20%
 
   statusActive: '#236EFF',
-  statusSuccess: '#40B66B',
+  statusSuccess: '#8CD383',
   statusSuccess2: '#EEFBF1',
   statusCritical: '#FF5F52',
 }
@@ -215,7 +215,7 @@ const sporeDark = {
   accentSoft: '#FC72FF33', //33 = 20%
 
   statusActive: '#236EFF',
-  statusSuccess: '#40B66B',
+  statusSuccess: '#8CD383',
   statusSuccess2: '#0F2C1A',
   statusCritical: '#FF5F52',
 }
