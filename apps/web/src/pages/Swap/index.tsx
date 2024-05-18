@@ -36,20 +36,27 @@ export function getIsReviewableQuote(
 }
 
 export default function SwapPage({ className }: { className?: string }) {
-  const location = useLocation()
+  const location = useLocation();
 
-  const { chainId: connectedChainId } = useWeb3React()
-  const supportedChainId = asSupportedChain(connectedChainId)
-  const chainId = supportedChainId || ChainId.NOVA_SEPOLIA
+  const { chainId: connectedChainId } = useWeb3React();
+  const supportedChainId = asSupportedChain(connectedChainId);
+  //TODO: P0 - Add chain id detection
+  const chainId = supportedChainId || ChainId.NOVA_MAINNET;
 
   console.log("SwapPage", chainId, supportedChainId, connectedChainId);
-  const parsedQs = useParsedQueryString()
+  const parsedQs = useParsedQueryString();
   const parsedCurrencyState = useMemo(() => {
-    return queryParametersToCurrencyState(parsedQs)
-  }, [parsedQs])
+    return queryParametersToCurrencyState(parsedQs);
+  }, [parsedQs]);
 
-  const initialInputCurrency = useCurrency(parsedCurrencyState.inputCurrencyId, chainId)
-  const initialOutputCurrency = useCurrency(parsedCurrencyState.outputCurrencyId, chainId)
+  const initialInputCurrency = useCurrency(
+    parsedCurrencyState.inputCurrencyId,
+    chainId,
+  );
+  const initialOutputCurrency = useCurrency(
+    parsedCurrencyState.outputCurrencyId,
+    chainId,
+  );
 
   return (
     <Trace page={InterfacePageName.SWAP_PAGE} shouldLogImpression>
@@ -64,9 +71,9 @@ export default function SwapPage({ className }: { className?: string }) {
         />
         <NetworkAlert />
       </PageWrapper>
-      {location.pathname === '/swap' && <SwitchLocaleLink />}
+      {location.pathname === "/swap" && <SwitchLocaleLink />}
     </Trace>
-  )
+  );
 }
 
 /**
