@@ -51,6 +51,7 @@ function timestampToDeadline(
 ) {
   if (blockTimestamp && chainId && L2_CHAIN_IDS.includes(chainId))
     return blockTimestamp.add(L2_DEADLINE_FROM_NOW);
+  // TODO: Nova Mainnet need to check deadline
   if (blockTimestamp && chainId && chainId === ChainId.NOVA_SEPOLIA)
     return blockTimestamp.add(NOVA_SEPOLIA_DEADLINE_FROM_NOW);
   if (blockTimestamp && ttl)

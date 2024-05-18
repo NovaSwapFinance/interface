@@ -13,6 +13,7 @@ import {
   DAI_ARBITRUM_ONE,
   DAI_AVALANCHE,
   DAI_BSC,
+  DAI_NOVA_MAINNET,
   DAI_NOVA_SEPOLIA,
   DAI_OPTIMISM,
   DAI_POLYGON,
@@ -26,6 +27,7 @@ import {
   USDC_BSC,
   USDC_CELO,
   USDC_MAINNET,
+  USDC_NOVA_MAINNET,
   USDC_NOVA_SEPOLIA,
   USDC_OPTIMISM,
   USDC_OPTIMISM_GOERLI,
@@ -175,6 +177,12 @@ export const COMMON_BASES: ChainCurrencyList = {
     USDC_NOVA_SEPOLIA,
     DAI_NOVA_SEPOLIA,
   ],
+  [ChainId.NOVA_MAINNET]: [
+    nativeOnChain(ChainId.NOVA_MAINNET),
+    WRAPPED_NATIVE_CURRENCY[ChainId.NOVA_MAINNET] as Token,
+    USDC_NOVA_MAINNET,
+    DAI_NOVA_MAINNET,
+  ],
 };
 
 // used to construct the list of all pairs we consider by default in the frontend
@@ -207,6 +215,11 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
     ...WRAPPED_NATIVE_CURRENCIES_ONLY[ChainId.NOVA_SEPOLIA],
     DAI_NOVA_SEPOLIA,
     USDC_NOVA_SEPOLIA,
+  ],
+  [ChainId.NOVA_MAINNET]: [
+    ...WRAPPED_NATIVE_CURRENCIES_ONLY[ChainId.NOVA_MAINNET],
+    DAI_NOVA_MAINNET,
+    USDC_NOVA_MAINNET,
   ],
 };
 export const PINNED_PAIRS: { readonly [chainId: number]: [Token, Token][] } = {

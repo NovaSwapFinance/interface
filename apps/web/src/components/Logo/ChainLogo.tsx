@@ -36,6 +36,12 @@ export function getChainUI(
         bgColor: "transparent",
         textColor: "transparent",
       };
+    case ChainId.NOVA_MAINNET:
+      return {
+        Symbol: zklink,
+        bgColor: "transparent",
+        textColor: "transparent",
+      };
     case ChainId.MAINNET:
     case ChainId.GOERLI:
     case ChainId.SEPOLIA:

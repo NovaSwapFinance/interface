@@ -74,7 +74,8 @@ const DEFAULT_CHAINS = [
   // ChainId.AVALANCHE,
   // ChainId.BASE,
   // ChainId.BLAST,
-  ChainId.NOVA_SEPOLIA
+  ChainId.NOVA_SEPOLIA,
+  ChainId.NOVA_MAINNET,
 ];
 
 type UseMultiChainPositionsData = {

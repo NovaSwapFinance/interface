@@ -27,6 +27,7 @@ import {
   USDC_BASE,
   USDC_GOERLI,
   USDC_MAINNET,
+  USDC_NOVA_MAINNET,
   USDC_NOVA_SEPOLIA,
   USDC_OPTIMISM_GOERLI,
   USDC_POLYGON,
@@ -69,6 +70,10 @@ export const STABLECOIN_AMOUNT_OUT: {
   [ChainId.BLAST]: CurrencyAmount.fromRawAmount(USDB_BLAST, 10_000e18),
   [ChainId.NOVA_SEPOLIA]: CurrencyAmount.fromRawAmount(
     USDC_NOVA_SEPOLIA,
+    10_000e6,
+  ),
+  [ChainId.NOVA_MAINNET]: CurrencyAmount.fromRawAmount(
+    USDC_NOVA_MAINNET,
     10_000e6,
   ),
 };

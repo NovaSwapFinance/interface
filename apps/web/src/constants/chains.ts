@@ -4,10 +4,11 @@ import {
   V2_ROUTER_ADDRESSES,
 } from "@novaswap/sdk-core";
 
-const SUPPORTED_CHAINS = [ChainId.NOVA_SEPOLIA];
+const SUPPORTED_CHAINS = [ChainId.NOVA_SEPOLIA, ChainId.NOVA_MAINNET];
 
 export const CHAIN_IDS_TO_NAMES = {
   [ChainId.NOVA_SEPOLIA]: "nova_sepolia",
+  [ChainId.NOVA_MAINNET]: "nova_mainnet",
 } as const;
 
 // Include ChainIds in this array if they are not supported by the UX yet, but are already in the SDK.
@@ -31,7 +32,10 @@ export type SupportedInterfaceChain = Exclude<
   | ChainId.ZORA_SEPOLIA
 >;
 
-export declare const SUPPORTED_CHAINS_NOVA: readonly [ChainId.NOVA_SEPOLIA];
+export declare const SUPPORTED_CHAINS_NOVA: readonly [
+  ChainId.NOVA_SEPOLIA,
+  ChainId.NOVA_MAINNET,
+];
 export declare type NovaSupportedChainsType =
   (typeof SUPPORTED_CHAINS_NOVA)[number];
 
@@ -71,6 +75,7 @@ export const SUPPORTED_GAS_ESTIMATE_CHAIN_IDS = [
   ChainId.BASE,
   ChainId.BLAST,
   ChainId.NOVA_SEPOLIA,
+  ChainId.NOVA_MAINNET,
 ] as const;
 
 /**
@@ -108,6 +113,7 @@ export const L1_CHAIN_IDS = [
   ChainId.BNB,
   ChainId.AVALANCHE,
   ChainId.NOVA_SEPOLIA,
+  ChainId.NOVA_MAINNET,
 ] as const;
 
 export type SupportedL1ChainId = (typeof L1_CHAIN_IDS)[number];
@@ -137,6 +143,7 @@ export function getChainPriority(chainId: ChainId): number {
     case ChainId.MAINNET:
     case ChainId.GOERLI:
     case ChainId.SEPOLIA:
+    case ChainId.NOVA_MAINNET:
     case ChainId.NOVA_SEPOLIA:
       return 0;
     case ChainId.ARBITRUM_ONE:
