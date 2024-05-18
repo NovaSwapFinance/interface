@@ -6,6 +6,7 @@ import {
   UNI_ADDRESSES,
   WETH9,
 } from "@novaswap/sdk-core";
+import { USDT_NOVA_MAINNET } from "providers/token-provider";
 import invariant from "tiny-invariant";
 
 // eslint-disable-next-line no-restricted-syntax
@@ -717,7 +718,7 @@ const STABLECOINS: { [chainId in ChainId]: Token[] } = {
   [ChainId.ROOTSTOCK]: [],
   [ChainId.BLAST]: [USDB_BLAST],
   [ChainId.NOVA_SEPOLIA]: [USDC_NOVA_SEPOLIA, DAI_NOVA_SEPOLIA],
-  [ChainId.NOVA_MAINNET]: [USDC_NOVA_MAINNET, DAI_NOVA_MAINNET],
+  [ChainId.NOVA_MAINNET]: [USDC_NOVA_MAINNET, USDT_NOVA_MAINNET],
 };
 
 export function isStablecoin(currency?: Currency): boolean {

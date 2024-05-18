@@ -445,6 +445,14 @@ export const USDT_BNB = new Token(
   "USDT",
 );
 
+export const USDT_NOVA_MAINNET = new Token(
+  ChainId.NOVA_MAINNET,
+  "0x2F8A25ac62179B31D62D7F80884AE57464699059",
+  6,
+  "USDT",
+  "USDT",
+);
+
 // Celo Tokens
 export const CELO = new Token(
   ChainId.CELO,
@@ -910,6 +918,8 @@ export const USDT_ON = (chainId: ChainId): Token => {
       return USDT_ARBITRUM;
     case ChainId.BNB:
       return USDT_BNB;
+    case ChainId.NOVA_MAINNET:
+      return USDT_NOVA_MAINNET;
     default:
       throw new Error(`Chain id: ${chainId} not supported`);
   }

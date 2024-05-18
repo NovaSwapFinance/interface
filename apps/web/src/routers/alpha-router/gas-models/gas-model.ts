@@ -58,6 +58,7 @@ import {
   USDT_OPTIMISM_GOERLI,
   USDT_OPTIMISM_SEPOLIA,
   WBTC_GOERLI,
+  USDT_NOVA_MAINNET,
 } from "../../../providers/token-provider";
 // import { IV2PoolProvider } from '../../../providers/v2/pool-provider';
 import {
@@ -123,7 +124,7 @@ export const usdGasTokensByChain: { [chainId in ChainId]?: Token[] } = {
   [ChainId.BASE]: [USDC_BASE, USDC_NATIVE_BASE],
   [ChainId.BLAST]: [USDB_BLAST],
   [ChainId.NOVA_SEPOLIA]: [USDC_NOVA_SEPOLIA, DAI_NOVA_SEPOLIA],
-  [ChainId.NOVA_MAINNET]: [USDC_NOVA_MAINNET, DAI_NOVA_MAINNET],
+  [ChainId.NOVA_MAINNET]: [USDC_NOVA_MAINNET, USDT_NOVA_MAINNET],
 };
 
 export type L1ToL2GasCosts = {

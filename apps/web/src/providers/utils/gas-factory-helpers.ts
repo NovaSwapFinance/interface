@@ -91,6 +91,7 @@ export async function getHighestLiquidityV3NativePool(
   providerConfig?: GasModelProviderConfig,
 ): Promise<Pool | null> {
   const nativeCurrency = WRAPPED_NATIVE_CURRENCY[token.chainId as ChainId]!;
+  console.log(nativeCurrency, "nativeCurrency");
 
   const nativePools = _([
     FeeAmount.HIGH,
@@ -139,6 +140,7 @@ export async function getHighestLiquidityV3USDPool(
   providerConfig?: GasModelProviderConfig,
 ): Promise<Pool> {
   const usdTokens = usdGasTokensByChain[chainId];
+  console.log(usdTokens, "usdTokens");
   const wrappedCurrency = WRAPPED_NATIVE_CURRENCY[chainId]!;
 
   if (!usdTokens) {
@@ -161,6 +163,7 @@ export async function getHighestLiquidityV3USDPool(
       ]);
     })
     .value();
+  console.log(providerConfig, usdPools, "providerConfig====>");
   const poolAccessor = await poolProvider.getPools(usdPools, providerConfig);
 
   const pools = _([
