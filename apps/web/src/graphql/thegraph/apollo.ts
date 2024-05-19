@@ -86,4 +86,8 @@ export const chainToApolloClient: Record<
     cache: new InMemoryCache(),
     uri: CHAIN_SUBGRAPH_URL[ChainId.NOVA_SEPOLIA],
   }),
+  [ChainId.NOVA_MAINNET]: new ApolloClient({
+    cache: new InMemoryCache(),
+    uri: CHAIN_SUBGRAPH_URL[ChainId.NOVA_MAINNET],
+  }),
 };

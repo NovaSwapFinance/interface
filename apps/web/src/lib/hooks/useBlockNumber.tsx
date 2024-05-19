@@ -97,9 +97,9 @@ export function BlockNumberProvider({ children }: PropsWithChildren) {
 
   // Poll once for the mainnet block number using the network provider.
   useEffect(() => {
-    RPC_PROVIDERS[ChainId.NOVA_SEPOLIA]
+    RPC_PROVIDERS[ChainId.NOVA_MAINNET]
       .getBlockNumber()
-      .then((block) => onChainBlock(ChainId.NOVA_SEPOLIA, block))
+      .then((block) => onChainBlock(ChainId.NOVA_MAINNET, block))
       // swallow errors - it's ok if this fails, as we'll try again if we activate mainnet
       .catch(() => undefined);
   }, [onChainBlock]);

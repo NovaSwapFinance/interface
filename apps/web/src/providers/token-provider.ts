@@ -961,6 +961,10 @@ export const USDC_ON = (chainId: ChainId): Token => {
       return USDC_BASE;
     case ChainId.BASE_GOERLI:
       return USDC_BASE_GOERLI;
+    case ChainId.NOVA_SEPOLIA:
+      return USDC_NOVA_SEPOLIA;
+    case ChainId.NOVA_MAINNET:
+      return USDC_NOVA_MAINNET;
     default:
       throw new Error(`Chain id: ${chainId} not supported`);
   }

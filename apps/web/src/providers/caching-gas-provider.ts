@@ -38,27 +38,27 @@ export class CachingGasStationProvider extends IGasPriceProvider {
     // If block number is specified in the request, we have to use that block number find any potential cache hits.
     // Otherwise, we can use the latest block number.
     const targetBlockNumber = requestBlockNumber ?? latestBlockNumber;
-    // const cachedGasPrice = await this.cache.get(
-    //   this.GAS_KEY(this.chainId, targetBlockNumber),
-    // );
+    const cachedGasPrice = await this.cache.get(
+      this.GAS_KEY(this.chainId, targetBlockNumber),
+    );
 
-    // if (cachedGasPrice) {
-    //   // log.info(
-    //   //   { cachedGasPrice },
-    //   //   `Got gas station price from local cache: ${cachedGasPrice.gasPriceWei}.`,
-    //   // );
+    if (cachedGasPrice) {
+      // log.info(
+      //   { cachedGasPrice },
+      //   `Got gas station price from local cache: ${cachedGasPrice.gasPriceWei}.`,
+      // );
 
-    //   return cachedGasPrice;
-    // }
+      return cachedGasPrice;
+    }
 
     const gasPrice = await this.gasPriceProvider.getGasPrice(
       latestBlockNumber,
       requestBlockNumber,
     );
-    // await this.cache.set(
-    //   this.GAS_KEY(this.chainId, targetBlockNumber),
-    //   gasPrice,
-    // );
+    await this.cache.set(
+      this.GAS_KEY(this.chainId, targetBlockNumber),
+      gasPrice,
+    );
 
     return gasPrice;
   }

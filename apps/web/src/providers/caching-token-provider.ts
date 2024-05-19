@@ -20,6 +20,7 @@ import {
   DAI_CELO_ALFAJORES,
   DAI_MAINNET,
   DAI_MOONBEAM,
+  DAI_NOVA_SEPOLIA,
   DAI_OPTIMISM,
   DAI_OPTIMISM_GOERLI,
   DAI_OPTIMISM_SEPOLIA,
@@ -37,6 +38,8 @@ import {
   USDC_ETHEREUM_GNOSIS,
   USDC_MAINNET,
   USDC_MOONBEAM,
+  USDC_NOVA_MAINNET,
+  USDC_NOVA_SEPOLIA,
   USDC_OPTIMISM,
   USDC_OPTIMISM_GOERLI,
   USDC_OPTIMISM_SEPOLIA,
@@ -45,6 +48,7 @@ import {
   USDT_ARBITRUM,
   USDT_BNB,
   USDT_MAINNET,
+  USDT_NOVA_MAINNET,
   USDT_OPTIMISM,
   USDT_OPTIMISM_GOERLI,
   USDT_OPTIMISM_SEPOLIA,
@@ -167,6 +171,16 @@ export const CACHE_SEED_TOKENS: {
     USDB: USDB_BLAST,
     WETH: WRAPPED_NATIVE_CURRENCY[ChainId.BLAST],
   },
+  [ChainId.NOVA_SEPOLIA]: {
+    USDC: USDC_NOVA_SEPOLIA,
+    DAI: DAI_NOVA_SEPOLIA,
+    WETH: WRAPPED_NATIVE_CURRENCY[ChainId.NOVA_SEPOLIA],
+  },
+  [ChainId.NOVA_MAINNET]: {
+    USDC: USDC_NOVA_MAINNET,
+    USDT: USDT_NOVA_MAINNET,
+    WETH: WRAPPED_NATIVE_CURRENCY[ChainId.NOVA_MAINNET],
+  },
   // Currently we do not have providers for Moonbeam mainnet or Gnosis testnet
 };
 
@@ -195,10 +209,10 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
 
     if (seedTokens) {
       for (const token of Object.values(seedTokens)) {
-        // await this.tokenCache.set(
-        //   this.CACHE_KEY(this.chainId, token.address.toLowerCase()),
-        //   token,
-        // );
+        await this.tokenCache.set(
+          this.CACHE_KEY(this.chainId, token.address.toLowerCase()),
+          token,
+        );
       }
     }
 
@@ -214,16 +228,15 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
     const addressesToFindInSecondary = [];
 
     for (const address of addresses) {
-      // if (await this.tokenCache.has(this.CACHE_KEY(this.chainId, address))) {
-      //   addressToToken[address.toLowerCase()] = (await this.tokenCache.get(
-      //     this.CACHE_KEY(this.chainId, address),
-      //   ))!;
-      //   symbolToToken[addressToToken[address]!.symbol!] =
-      //     (await this.tokenCache.get(this.CACHE_KEY(this.chainId, address)))!;
-      // }
-      // else {
-      //   addressesToFindInPrimary.push(address);
-      // }
+      if (await this.tokenCache.has(this.CACHE_KEY(this.chainId, address))) {
+        addressToToken[address.toLowerCase()] = (await this.tokenCache.get(
+          this.CACHE_KEY(this.chainId, address),
+        ))!;
+        symbolToToken[addressToToken[address]!.symbol!] =
+          (await this.tokenCache.get(this.CACHE_KEY(this.chainId, address)))!;
+      } else {
+        addressesToFindInPrimary.push(address);
+      }
       addressesToFindInPrimary.push(address);
     }
 
@@ -250,10 +263,10 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
         if (token) {
           addressToToken[address.toLowerCase()] = token;
           symbolToToken[addressToToken[address]!.symbol!] = token;
-          // await this.tokenCache.set(
-          //   this.CACHE_KEY(this.chainId, address.toLowerCase()),
-          //   addressToToken[address]!,
-          // );
+          await this.tokenCache.set(
+            this.CACHE_KEY(this.chainId, address.toLowerCase()),
+            addressToToken[address]!,
+          );
         } else {
           addressesToFindInSecondary.push(address);
         }
@@ -281,10 +294,10 @@ export class CachingTokenProviderWithFallback implements ITokenProvider {
         if (token) {
           addressToToken[address.toLowerCase()] = token;
           symbolToToken[addressToToken[address]!.symbol!] = token;
-          // await this.tokenCache.set(
-          //   this.CACHE_KEY(this.chainId, address.toLowerCase()),
-          //   addressToToken[address]!,
-          // );
+          await this.tokenCache.set(
+            this.CACHE_KEY(this.chainId, address.toLowerCase()),
+            addressToToken[address]!,
+          );
         }
       }
     }
