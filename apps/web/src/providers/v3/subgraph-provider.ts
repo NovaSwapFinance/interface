@@ -73,7 +73,7 @@ const SUBGRAPH_URL_BY_CHAIN: { [chainId in ChainId]?: string } = {
     "https://gateway-arbitrum.network.thegraph.com/api/0ae45f0bf40ae2e73119b44ccd755967/subgraphs/id/2LHovKznvo8YmKC9ZprPjsYAZDCc4K5q4AYz8s3cnQn1",
   [ChainId.NOVA_SEPOLIA]:
     "https://sepolia.graph.zklink.io/subgraphs/name/novasap-subgraph",
-  [ChainId.NOVA_MAINNET]: "",
+  [ChainId.NOVA_MAINNET]: "https://graph.zklink.io/subgraphs/name/novaswap",
 };
 
 const PAGE_SIZE = 1000; // 1k is max possible query size from subgraph.

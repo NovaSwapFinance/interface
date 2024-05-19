@@ -10,6 +10,7 @@ if (!API_URL || !REALTIME_URL || !REALTIME_TOKEN) {
   throw new Error('AWS CONFIG MISSING FROM ENVIRONMENT')
 }
 
+//TODO: Add api url for different chainid
 const httpLink = new HttpLink({ uri: API_URL })
 
 export const apolloClient = new ApolloClient({
