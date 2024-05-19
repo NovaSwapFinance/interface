@@ -114,8 +114,8 @@ export const CHAIN_ID_TO_BACKEND_NAME: { [key: number]: InterfaceGqlChain } = {
   [ChainId.AVALANCHE]: Chain.Avalanche,
   [ChainId.BASE]: Chain.Base,
   [ChainId.BLAST]: Chain.Blast,
-  [ChainId.NOVA_SEPOLIA]: 'zkLink Nova',
-  [ChainId.NOVA_MAINNET]: 'zkLink Nova',
+  [ChainId.NOVA_SEPOLIA]: Chain.NovaSepolia,
+  [ChainId.NOVA_MAINNET]: Chain.NovaMainnet,
 };
 
 export function chainIdToBackendName(chainId: number | undefined) {

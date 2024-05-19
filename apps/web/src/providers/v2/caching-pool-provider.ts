@@ -56,19 +56,19 @@ export class CachingV2PoolProvider implements IV2PoolProvider {
 
       poolAddressSet.add(poolAddress);
 
-      // const cachedPool = await this.cache.get(
-      //   this.POOL_KEY(this.chainId, poolAddress),
-      // );
+      const cachedPool = await this.cache.get(
+        this.POOL_KEY(this.chainId, poolAddress),
+      );
 
-      // if (cachedPool) {
-      //   // If a block was specified by the caller, ensure that the result in our cache matches the
-      //   // expected block number. If a block number is not specified, just return whatever is in the
-      //   // cache.
-      //   if (!blockNumber || (blockNumber && cachedPool.block == blockNumber)) {
-      //     poolAddressToPool[poolAddress] = cachedPool.pair;
-      //     continue;
-      //   }
-      // }
+      if (cachedPool) {
+        // If a block was specified by the caller, ensure that the result in our cache matches the
+        // expected block number. If a block number is not specified, just return whatever is in the
+        // cache.
+        if (!blockNumber || (blockNumber && cachedPool.block == blockNumber)) {
+          poolAddressToPool[poolAddress] = cachedPool.pair;
+          continue;
+        }
+      }
 
       poolsToGetTokenPairs.push([token0, token1]);
       poolsToGetAddresses.push(poolAddress);

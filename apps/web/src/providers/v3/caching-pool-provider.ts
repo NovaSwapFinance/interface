@@ -64,19 +64,19 @@ export class CachingV3PoolProvider implements IV3PoolProvider {
 
       poolAddressSet.add(poolAddress);
 
-      // const cachedPool = await this.cache.get(
-      //   this.POOL_KEY(this.chainId, poolAddress, blockNumber),
-      // );
-      // console.log("cachedPool", cachedPool);
-      // if (cachedPool) {
-      //   // metric.putMetric(
-      //   //   "V3_INMEMORY_CACHING_POOL_HIT_IN_MEMORY",
-      //   //   1,
-      //   //   MetricLoggerUnit.None,
-      //   // );
-      //   poolAddressToPool[poolAddress] = cachedPool;
-      //   continue;
-      // }
+      const cachedPool = await this.cache.get(
+        this.POOL_KEY(this.chainId, poolAddress, blockNumber),
+      );
+      console.log("cachedPool", cachedPool);
+      if (cachedPool) {
+        // metric.putMetric(
+        //   "V3_INMEMORY_CACHING_POOL_HIT_IN_MEMORY",
+        //   1,
+        //   MetricLoggerUnit.None,
+        // );
+        poolAddressToPool[poolAddress] = cachedPool;
+        continue;
+      }
 
       // metric.putMetric(
       //   "V3_INMEMORY_CACHING_POOL_MISS_NOT_IN_MEMORY",
@@ -115,10 +115,10 @@ export class CachingV3PoolProvider implements IV3PoolProvider {
         if (pool) {
           poolAddressToPool[address] = pool;
           // We don't want to wait for this caching to complete before returning the pools.
-          // this.cache.set(
-          //   this.POOL_KEY(this.chainId, address, blockNumber),
-          //   pool,
-          // );
+          this.cache.set(
+            this.POOL_KEY(this.chainId, address, blockNumber),
+            pool,
+          );
         }
       }
     }

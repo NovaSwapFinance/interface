@@ -18,7 +18,7 @@ export function useFetchListCallback(): (listUrl: string, skipValidation?: boole
       return getTokenList(
         listUrl,
         (ensName: string) =>
-          resolveENSContentHash(ensName, RPC_PROVIDERS[ChainId.NOVA_SEPOLIA]),
+          resolveENSContentHash(ensName, RPC_PROVIDERS[ChainId.NOVA_MAINNET]),
         skipValidation,
       )
         .then((tokenList) => {
