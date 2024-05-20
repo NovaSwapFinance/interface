@@ -225,16 +225,8 @@ function getSwapFee(
   args: GetQuoteArgs,
   classicQuoteData: ClassicQuoteData,
 ): SwapFeeInfo | undefined {
-  const { portionAmount, portionBips, portionRecipient } = data;
-  const { tokenOutAddress, tokenOutChainId } = args;
   if (args.tokenOutAddress && args.tokenOutChainId) {
-    const commonBases = COMMON_BASES[tokenOutChainId];
-    if (
-      classicQuoteData?.quote &&
-      commonBases?.some(
-        (base) => !base.isNative && base.address === tokenOutAddress,
-      )
-    ) {
+    if (classicQuoteData?.quote) {
       const amount = BigInt(
         Math.round(Number(classicQuoteData.quote) * 0.0025),
       );
