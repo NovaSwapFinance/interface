@@ -15,12 +15,10 @@ export default function CurrencyLogo(
   const tokenImg = useMemo(() => {
     if(props.currency?.isNative) return ETH_LOGO;
 
-    const novaBaseToken = NOVA_BASE_TOKEN_SOURCE.find((token) => token.address === props.currency?.wrapped.address)
+    const novaBaseToken = NOVA_BASE_TOKEN_SOURCE.find((token) => token.address.toLowerCase() === (props.currency?.address ||props.currency?.wrapped.address).toLowerCase())
 
     return novaBaseToken?.logurl
   }, [props.currency])
-
-
   return (
     <AssetLogo
       currency={props.currency}
