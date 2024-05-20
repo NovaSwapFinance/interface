@@ -60,7 +60,6 @@ export const useTokenBalanceList = () => {
           formattedBalance: formatBalance(
             balances.balance ?? 0n,
             balances.token.decimals,
-            3,
           ),
           usdValue:0,
           ...balances.token,
@@ -68,11 +67,16 @@ export const useTokenBalanceList = () => {
         if (token.usdPrice) {
           const usdValue = token.formattedBalance * token.usdPrice || 0;
           token.usdValue = usdValue;
-          if (usdValue > 0.01) {
+          if (usdValue >= 0.01) {
             token.usdValueText = `$${usdValue.toFixed(2, 1)}`;
+          } else {
+            token.usdValueText = '<$0.01'
           }
-
         }
+
+        // if(balances.token.l2Address ===   '0xA8A59Bb7fe9fE2364ae39a3B48E219fAB096c852') {
+        //   console.log("balancestoken====>",balances.balance, balances.token.decimals, token);
+        // }
         return token;
       });
 
