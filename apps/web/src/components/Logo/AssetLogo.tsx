@@ -48,6 +48,7 @@ export default function AssetLogo({
   currency,
   chainId = ChainId.MAINNET,
   size = "24px",
+  images,
   style,
 }: AssetLogoProps) {
   return (
@@ -56,6 +57,7 @@ export default function AssetLogo({
         currencies={currency ? [currency] : []}
         size={size}
         chainId={chainId}
+        images={images}
       />
     </LogoContainer>
   );
