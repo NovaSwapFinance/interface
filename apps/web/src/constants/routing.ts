@@ -52,6 +52,8 @@ import {
 } from "./tokens";
 import { USDT_NOVA_MAINNET } from "providers/token-provider";
 
+import {NOVA_BASE_TOKEN} from './NovaBaseToken'
+
 type ChainTokenList = {
   readonly [chainId: number]: Token[];
 };
@@ -183,6 +185,7 @@ export const COMMON_BASES: ChainCurrencyList = {
     WRAPPED_NATIVE_CURRENCY[ChainId.NOVA_MAINNET] as Token,
     USDC_NOVA_MAINNET,
     USDT_NOVA_MAINNET,
+    ...NOVA_BASE_TOKEN,
   ],
 };
 
@@ -221,6 +224,7 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
     ...WRAPPED_NATIVE_CURRENCIES_ONLY[ChainId.NOVA_MAINNET],
     USDC_NOVA_MAINNET,
     USDT_NOVA_MAINNET,
+    ...NOVA_BASE_TOKEN,
   ],
 };
 export const PINNED_PAIRS: { readonly [chainId: number]: [Token, Token][] } = {

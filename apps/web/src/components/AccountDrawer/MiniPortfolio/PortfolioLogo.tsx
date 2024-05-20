@@ -216,7 +216,7 @@ export function PortfolioLogo(props: PortfolioLogoProps) {
   return (
     <LogoContainer style={props.style}>
       {getLogo(props)}
-      {props.chainId && <SquareL2Logo chainId={props.chainId} />}
+      {/* {props.chainId && <SquareL2Logo chainId={props.chainId} />} */}
     </LogoContainer>
   );
 }
@@ -231,6 +231,11 @@ function getLogo({
   if (accountAddress) {
     return <PortfolioAvatar accountAddress={accountAddress} size={size} />;
   }
+
+  if (images?.length === 1) {
+    return <CircleLogoImage size={size} src={images[0] ?? blankTokenUrl} />;
+  }
+
   if (currencies && currencies.length) {
     return (
       <DoubleCurrencyLogo
@@ -240,9 +245,7 @@ function getLogo({
       />
     );
   }
-  if (images?.length === 1) {
-    return <CircleLogoImage size={size} src={images[0] ?? blankTokenUrl} />;
-  }
+
   if (images && images?.length >= 2) {
     return (
       <DoubleLogo
