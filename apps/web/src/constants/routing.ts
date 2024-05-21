@@ -183,8 +183,8 @@ export const COMMON_BASES: ChainCurrencyList = {
   [ChainId.NOVA_MAINNET]: [
     nativeOnChain(ChainId.NOVA_MAINNET),
     WRAPPED_NATIVE_CURRENCY[ChainId.NOVA_MAINNET] as Token,
-    USDC_NOVA_MAINNET,
-    USDT_NOVA_MAINNET,
+    // USDC_NOVA_MAINNET,
+    // USDT_NOVA_MAINNET,
     ...NOVA_BASE_TOKEN,
   ],
 };
@@ -222,8 +222,8 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   ],
   [ChainId.NOVA_MAINNET]: [
     ...WRAPPED_NATIVE_CURRENCIES_ONLY[ChainId.NOVA_MAINNET],
-    USDC_NOVA_MAINNET,
-    USDT_NOVA_MAINNET,
+    // USDC_NOVA_MAINNET,
+    // USDT_NOVA_MAINNET,
     ...NOVA_BASE_TOKEN,
   ],
 };

@@ -197,10 +197,6 @@ export default function useMultiChainPositions(
         const tokenB =
           tokens[details.token1] ??
           new Token(chainId, details.token1, DEFAULT_ERC20_DECIMALS);
-        console.log(
-          "V3_CORE_FACTORY_ADDRESSES[chainId]3",
-          V3_CORE_FACTORY_ADDRESSES,
-        );
         let poolAddress = poolAddressCache.get(details, chainId);
         if (!poolAddress) {
           const factoryAddress = V3_CORE_FACTORY_ADDRESSES[chainId];
@@ -222,6 +218,7 @@ export default function useMultiChainPositions(
 
       return (await multicall.callStatic.multicall(calls)).returnData.reduce(
         (acc: PositionInfo[], result, i) => {
+          console.log('returnData===>',result)
           if (result.success) {
             const slot0 = poolInterface.decodeFunctionResult(
               "slot0",
