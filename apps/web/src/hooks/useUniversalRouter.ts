@@ -27,7 +27,7 @@ import { didUserReject, swapErrorToUserReadableMessage } from 'utils/swapErrorTo
 import { getWalletMeta } from 'utils/walletMeta'
 import { PermitSignature } from './usePermitAllowance'
 import {APP_RPC_URLS} from 'constants/networks'
-import { zkSyncProvider } from '../NovaProvider/zksync-provider';
+import { zkSyncProvider } from '../novaProvider/zksync-provider';
 
 /** Thrown when gas estimation fails. This class of error usually requires an emulator to determine the root cause. */
 class GasEstimationError extends Error {
