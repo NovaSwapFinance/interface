@@ -16,7 +16,7 @@ import { useGetTransactionDeadline } from 'hooks/useTransactionDeadline'
 import { t } from 'i18n'
 import useBlockNumber from 'lib/hooks/useBlockNumber'
 import { formatCommonPropertiesForTrade, formatSwapSignedAnalyticsEventProperties } from 'lib/utils/analytics'
-import { useCallback } from 'react'
+import { useCallback, useMemo } from 'react'
 import { ClassicTrade, TradeFillType } from 'state/routing/types'
 import { useUserSlippageTolerance } from 'state/user/hooks'
 import { trace } from 'tracing/trace'
@@ -26,6 +26,8 @@ import isZero from 'utils/isZero'
 import { didUserReject, swapErrorToUserReadableMessage } from 'utils/swapErrorToUserReadableMessage'
 import { getWalletMeta } from 'utils/walletMeta'
 import { PermitSignature } from './usePermitAllowance'
+import {APP_RPC_URLS} from 'constants/networks'
+import { zkSyncProvider } from '../NovaProvider/zksync-provider';
 
 /** Thrown when gas estimation fails. This class of error usually requires an emulator to determine the root cause. */
 class GasEstimationError extends Error {
@@ -64,6 +66,17 @@ export function useUniversalRouterSwapCallback(
   const getDeadline = useGetTransactionDeadline()
   const isAutoSlippage = useUserSlippageTolerance()[0] === 'auto'
   const portfolioBalanceUsd = useTotalBalancesUsdForAnalytics()
+
+  const novaRpc: string | undefined = useMemo(() => {
+    if(chainId){
+      if(Object.keys(APP_RPC_URLS).includes(chainId?.toString())) {
+        return APP_RPC_URLS[chainId?.toString()][0]
+      }
+      return undefined
+    }
+    return undefined
+  },[chainId])
+  
 
   return useCallback(
     (): Promise<{
@@ -120,8 +133,17 @@ export function useUniversalRouterSwapCallback(
 
           let gasLimit: BigNumber;
           try {
-            const gasEstimate = await provider.estimateGas(tx);
-            gasLimit = calculateGasMargin(gasEstimate);
+            if(novaRpc) {
+              const fee = await zkSyncProvider.attachEstimateFee(
+                novaRpc,
+              )(tx);
+              gasLimit = calculateGasMargin(fee.gasLimit);
+              tx.maxFeePerGas = fee.maxFeePerGas.toBigInt();
+              tx.maxPriorityFeePerGas = fee.maxPriorityFeePerGas.toBigInt();
+            }else {
+              const gasEstimate = await provider.estimateGas(tx);
+              gasLimit = calculateGasMargin(gasEstimate);
+            }
             trace.setData("gasLimit", gasLimit.toNumber());
           } catch (gasError) {
             sendAnalyticsEvent(SwapEventName.SWAP_ESTIMATE_GAS_CALL_FAILED, {
@@ -137,7 +159,6 @@ export function useUniversalRouterSwapCallback(
             console.warn(gasError);
             throw new GasEstimationError();
           }
-
           const response = await trace.child(
             { name: "Send transaction", op: "wallet.send_transaction" },
             async (walletTrace) => {

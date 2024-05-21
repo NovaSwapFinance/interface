@@ -178,7 +178,6 @@ export function usePoolMultichain(
   fee: number | undefined,
   chainId: ChainId
 ): [PoolState, Pool | null] {
-  console.log('V3_CORE_FACTORY_ADDRESSES[chainId]1',V3_CORE_FACTORY_ADDRESSES[chainId])
   const [poolData, setPoolData] = useState<[PoolState, Pool | null]>([PoolState.LOADING, null])
   const poolAddress =
     tokenA && tokenB && fee
