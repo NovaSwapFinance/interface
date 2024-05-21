@@ -13,7 +13,7 @@ export default function CurrencyLogo(
 
 
   const tokenImg = useMemo(() => {
-    if(props.currency?.isNative) return ETH_LOGO;
+    if(props.currency?.isNative || (props.currency?.address ||props.currency?.wrapped.address||'').toLowerCase() === '0x8280a4e7d5b3b658ec4580d3bc30f5e50454f169') return ETH_LOGO;
 
     const novaBaseToken = NOVA_BASE_TOKEN_SOURCE.find((token) => token.address.toLowerCase() === (props.currency?.address ||props.currency?.wrapped.address||'').toLowerCase())
 
