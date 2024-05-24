@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useRef } from 'react'
+import {useEffect, useState,useCallback, useMemo, useRef } from 'react'
 import {
   Chain,
   PoolTransaction,
@@ -6,6 +6,9 @@ import {
   useV2TransactionsQuery,
   useV3TransactionsQuery,
 } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
+
+
+import {useTopTransactionsQuery} from 'graphql/thegraph/__generated__/types-and-hooks'
 
 export enum TransactionType {
   SWAP = 'Swap',
@@ -30,18 +33,69 @@ export function useAllTransactions(
     loading: loadingV3,
     error: errorV3,
     fetchMore: fetchMoreV3,
-  } = useV3TransactionsQuery({
+  } = useTopTransactionsQuery({
     variables: { chain, first: ALL_TX_DEFAULT_QUERY_SIZE },
   })
-  const {
-    data: dataV2,
-    loading: loadingV2,
-    error: errorV2,
-    fetchMore: fetchMoreV2,
-  } = useV2TransactionsQuery({
-    variables: { first: ALL_TX_DEFAULT_QUERY_SIZE },
-    skip: chain !== Chain.Ethereum,
-  })
+
+  const [allTokens,setAllTokens] = useState<any[]>([])
+
+  useEffect(()=>{
+    fetch(`https://explorer-api.zklink.io/tokens?limit=300`).then((res) =>
+      res.json().then((all) => {
+        if(!all.error) {
+          setAllTokens(all.items);
+        }
+      }),
+    );
+  },[])
+
+  console.log('useTopTransactionsQuery===>',dataV3)
+  // const {
+  //   data: dataV2,
+  //   loading: loadingV2,
+  //   error: errorV2,
+  //   fetchMore: fetchMoreV2,
+  // } = useV2TransactionsQuery({
+  //   variables: { first: ALL_TX_DEFAULT_QUERY_SIZE },
+  //   skip: chain !== Chain.Ethereum,
+  // })
+
+  const getProjectToken = (address:string) => {
+    const item = allTokens.find((token) => token.l2Address.toLowerCase() === address.toLowerCase());
+    return item?.iconURL || '';
+  }
+
+
+  const formatterTransactions = (arr) => {
+    if(arr.length>0){
+      return arr.map((tx) => {
+        const {swaps} = tx;
+        const {id,amount0,amount1,amountUSD,origin,timestamp,token0,token1,transaction} = swaps[0]|| {};
+        const {id:hx} = transaction;
+       
+        const token0Logo = getProjectToken(token0.address||'');
+        const token1Logo = getProjectToken(token1.address||'');
+
+        const result = {
+          account:origin,
+          hash:hx, 
+          id,
+          protocolVersion: "V3",
+          type: "SWAP",
+          timestamp,
+          token0: token0Logo ?{...token0,project:{logo:{url:token0Logo}}, chain:'NOVAMAINNET',}:{...token0, chain:'NOVAMAINNET',},
+          token0Quantity:amount0,
+          token1: token1Logo? {...token1,project:{logo:{url:token1Logo}}, chain:'NOVAMAINNET',}: {...token1, chain:'NOVAMAINNET',},
+          token1Quantity:amount1,
+          usdValue:{value:amountUSD}
+        }
+
+        console.log('token0.address',result)
+        return result
+      })
+    }
+    return []
+  }
 
   const loadingMoreV3 = useRef(false)
   const loadingMoreV2 = useRef(false)
@@ -52,59 +106,52 @@ export function useAllTransactions(
         return
       }
       loadingMoreV3.current = true
-      loadingMoreV2.current = true
+      // loadingMoreV2.current = true
       querySizeRef.current += ALL_TX_DEFAULT_QUERY_SIZE
       fetchMoreV3({
         variables: {
-          cursor: dataV3?.v3Transactions?.[dataV3.v3Transactions.length - 1]?.timestamp,
+          cursor: dataV3?.transactions?.[dataV3.transactions.length - 1]?.timestamp,
         },
         updateQuery: (prev, { fetchMoreResult }) => {
           if (!fetchMoreResult) return prev
           if (!loadingMoreV2.current || chain !== Chain.Ethereum) onComplete?.()
           const mergedData = {
-            v3Transactions: [...(prev.v3Transactions ?? []), ...(fetchMoreResult.v3Transactions ?? [])],
+            v3Transactions: [...(prev.transactions ?? []), ...(fetchMoreResult.transactions ?? [])],
           }
           loadingMoreV3.current = false
           return mergedData
         },
       })
-      chain === Chain.Ethereum &&
-        fetchMoreV2({
-          variables: {
-            cursor: dataV2?.v2Transactions?.[dataV2.v2Transactions.length - 1]?.timestamp,
-          },
-          updateQuery: (prev, { fetchMoreResult }) => {
-            if (!fetchMoreResult) return prev
-            !loadingMoreV3.current && onComplete?.()
-            const mergedData = {
-              v2Transactions: [...(prev.v2Transactions ?? []), ...(fetchMoreResult.v2Transactions ?? [])],
-            }
-            loadingMoreV2.current = false
-            return mergedData
-          },
-        })
+      // chain === Chain.Ethereum &&
+      //   fetchMoreV2({
+      //     variables: {
+      //       cursor: dataV2?.v2Transactions?.[dataV2.v2Transactions.length - 1]?.timestamp,
+      //     },
+      //     updateQuery: (prev, { fetchMoreResult }) => {
+      //       if (!fetchMoreResult) return prev
+      //       !loadingMoreV3.current && onComplete?.()
+      //       const mergedData = {
+      //         v2Transactions: [...(prev.v2Transactions ?? []), ...(fetchMoreResult.v2Transactions ?? [])],
+      //       }
+      //       loadingMoreV2.current = false
+      //       return mergedData
+      //     },
+      //   })
     },
-    [chain, dataV2?.v2Transactions, dataV3?.v3Transactions, fetchMoreV2, fetchMoreV3]
+    [chain, dataV3?.transactions, fetchMoreV3]
   )
 
   const transactions: PoolTransaction[] = useMemo(() => {
-    const v3Transactions =
-      dataV3?.v3Transactions?.filter(
-        (tx): tx is PoolTransaction => tx.type && filter.includes(BETypeToTransactionType[tx.type])
-      ) ?? []
-    const v2Transactions =
-      dataV2?.v2Transactions?.filter(
-        (tx): tx is PoolTransaction => tx !== undefined && tx.type && filter.includes(BETypeToTransactionType[tx.type])
-      ) ?? []
-    return [...v3Transactions, ...v2Transactions]
-      .sort((a, b) => (b?.timestamp || 0) - (a?.timestamp || 0))
-      .slice(0, querySizeRef.current)
-  }, [dataV2?.v2Transactions, dataV3?.v3Transactions, filter])
+   return formatterTransactions(dataV3?.transactions||[])
+  }, [dataV3?.transactions, allTokens])
+
+
+
 
   return {
     transactions,
-    loading: loadingV2 || loadingV3,
-    errorV2,
+    loading: loadingV3,
+    errorV2:null,
     errorV3,
     loadMore,
   }

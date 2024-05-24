@@ -102,3 +102,50 @@ query TopTokens( $first: Int!) {
       totalValueLocked
      }
 }
+query TopTransactions( $first: Int!)  {
+  transactions(first: $first,orderBy: timestamp, orderDirection: desc) {
+    timestamp
+    id
+    swaps {
+      amount0
+      amount1
+      amountUSD
+      id
+      recipient
+      sender
+      origin
+      timestamp
+      token0 {
+        address:id
+        id
+        name
+        symbol
+        decimals
+      }
+      token1 {
+        address:id
+        decimals
+        id
+        name
+        symbol
+      }
+       transaction {
+        id
+      }
+    }
+  }
+}
+
+
+query NovaSwapDayDatas {
+  uniswapDayDatas {
+    tvlUSD
+    date
+    feesUSD
+    id
+    txCount
+    volumeETH
+    volumeUSD
+    volumeUSDUntracked
+  }
+}
