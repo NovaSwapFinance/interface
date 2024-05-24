@@ -493,10 +493,12 @@ function DoubleTokenLogo({
   tokens: Array<Token | undefined>;
   size?: number;
 }) {
-  const currencyInfos = [
-    gqlTokenToCurrencyInfo(tokens?.[0]),
-    gqlTokenToCurrencyInfo(tokens?.[1]),
-  ];
+  // const currencyInfos = [
+  //   gqlTokenToCurrencyInfo(tokens?.[0]),
+  //   gqlTokenToCurrencyInfo(tokens?.[1]),
+  // ];
+
+  const currencyInfos = [...tokens]
 
   if (!currencyInfos[0]?.logoUrl && !currencyInfos[1]?.logoUrl) {
     return null;

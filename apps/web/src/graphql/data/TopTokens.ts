@@ -1,3 +1,4 @@
+import  { useEffect, useState } from 'react'
 import { ApolloError } from '@apollo/client'
 import {
   exploreSearchStringAtom,
@@ -24,6 +25,8 @@ import {
   unwrapToken,
   usePollQueryWhileMounted,
 } from './util'
+
+import {useTopTokensQuery} from 'graphql/thegraph/__generated__/types-and-hooks'
 
 const TokenSortMethods = {
   [TokenSortMethod.PRICE]: (a: TopToken, b: TopToken) =>
@@ -83,6 +86,21 @@ interface UseTopTokensReturnValue {
 }
 
 export function useTopTokens(chain: Chain): UseTopTokensReturnValue {
+
+
+
+  const [allTokens,setAllTokens] = useState<any[]>([])
+
+  useEffect(()=>{
+    fetch(`https://explorer-api.zklink.io/tokens?limit=300`).then((res) =>
+      res.json().then((all) => {
+        if(!all.error) {
+          setAllTokens(all.items);
+        }
+      }),
+    );
+  },[])
+
   const chainId = supportedChainIdFromGQLChain(chain)
   const duration = toHistoryDuration(useAtomValue(filterTimeAtom))
 
@@ -109,17 +127,32 @@ export function useTopTokens(chain: Chain): UseTopTokensReturnValue {
     loading: loadingTokens,
     error,
   } = usePollQueryWhileMounted(
-    useTopTokens100Query({
-      variables: { duration, chain },
+    useTopTokensQuery({
+      variables: { first: 30 },
     }),
     PollingInterval.Fast
   )
 
-  const unwrappedTokens = useMemo(
-    () => chainId && data?.topTokens?.map((token) => unwrapToken(chainId, token)),
-    [chainId, data]
-  )
-  const sortedTokens = useSortedTokens(unwrappedTokens)
+  // const unwrappedTokens = useMemo(
+  //   () => chainId && data?.topTokens?.map((token) => unwrapToken(chainId, token)),
+  //   [chainId, data]
+  // )
+
+  const addLogoTokens = useMemo(() =>{
+    if(data?.tokens && allTokens.length > 0){
+      return data.tokens.map((token) => {
+        const item = allTokens.find((t) => t.l2Address.toLowerCase() === token.address.toLowerCase());
+        return item?.iconURL ?{
+          ...token,
+          project:{logoUrl: item?.iconURL || ''},
+        } : token
+      })
+    }
+    return []
+  },[allTokens,data?.tokens])
+
+
+  const sortedTokens = useSortedTokens(addLogoTokens)
   const tokenSortRank = useMemo(
     () =>
       sortedTokens?.reduce((acc, cur, i) => {

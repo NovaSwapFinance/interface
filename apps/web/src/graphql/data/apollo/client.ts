@@ -44,7 +44,7 @@ export const apolloClient = new ApolloClient({
         // Tokens are cached by their chain/address (see Query.fields.token, above).
         // In any query for `token` or `tokens`, you *must* include `chain` and `address` fields in order
         // to properly normalize the result in the cache.
-        keyFields: ["chain", "address"],
+        // keyFields: ["chain", "address"],
         fields: {
           address: {
             // Always cache lowercased for consistency (backend sometimes returns checksummed).

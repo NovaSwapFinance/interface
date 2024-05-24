@@ -189,25 +189,26 @@ function TokenTable({
               <DeltaText delta={delta1d}>{formatDelta(delta1d)}</DeltaText>
             </>
           ),
-          fdv: token?.project?.markets?.[0]?.fullyDilutedValuation?.value ?? 0,
-          volume: token?.market?.volume?.value ?? 0,
-          sparkline: (
-            <SparklineContainer>
-              <ParentSize>
-                {({ width, height }) =>
-                  sparklines && (
-                    <SparklineChart
-                      width={width}
-                      height={height}
-                      tokenData={token}
-                      pricePercentChange={token?.market?.pricePercentChange?.value}
-                      sparklineMap={sparklines}
-                    />
-                  )
-                }
-              </ParentSize>
-            </SparklineContainer>
-          ),
+          // fdv: token?.project?.markets?.[0]?.fullyDilutedValuation?.value ?? 0,
+          // volume: token?.market?.volume?.value ?? 0,
+          volume: token?.totalValueLocked ?? 0,
+          // sparkline: (
+          //   <SparklineContainer>
+          //     <ParentSize>
+          //       {({ width, height }) =>
+          //         sparklines && (
+          //           <SparklineChart
+          //             width={width}
+          //             height={height}
+          //             tokenData={token}
+          //             pricePercentChange={token?.market?.pricePercentChange?.value}
+          //             sparklineMap={sparklines}
+          //           />
+          //         )
+          //       }
+          //     </ParentSize>
+          //   </SparklineContainer>
+          // ),
           link: getTokenDetailsURL({
             address: token?.address,
             chain: chainIdToBackendName(chainId),

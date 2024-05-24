@@ -37,3 +37,68 @@ query FeeTierDistribution($token0: String!, $token1: String!) {
     totalValueLockedToken1
   }
 }
+
+query TopPools( $first: Int!) {
+   pools(first: $first) {
+    id
+    liquidity
+    txCount
+    liquidityProviderCount
+    volumeUSD
+    feeTier
+    token0 {
+      address:id
+      decimals
+      feesUSD
+      id
+      name
+      poolCount
+      symbol
+      totalSupply
+      totalValueLocked
+      totalValueLockedUSD
+      totalValueLockedUSDUntracked
+      txCount
+      untrackedVolumeUSD
+      volume
+      volumeUSD
+    }
+    token1 {
+      address:id
+      decimals
+      feesUSD
+      id
+      name
+      poolCount
+      symbol
+      totalSupply
+      totalValueLocked
+      totalValueLockedUSD
+      totalValueLockedUSDUntracked
+      txCount
+      untrackedVolumeUSD
+      volume
+      volumeUSD
+    }
+    poolDayData {
+      volumeUSD
+    }
+  }
+}
+
+query TopTokens( $first: Int!) {
+   tokens(first: $first) {
+      address:id
+      id
+      decimals
+      feesUSD
+      symbol
+      volume
+      volumeUSD
+      derivedETH
+      name
+      poolCount
+      totalValueLockedUSD
+      totalValueLocked
+     }
+}
