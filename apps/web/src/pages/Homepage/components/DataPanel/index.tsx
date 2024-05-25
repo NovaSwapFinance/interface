@@ -8,12 +8,35 @@ const Container = styled.div`
   padding: 40px 80px 56px;
   border-radius: 16px;
   background: #181918;
+  @media (max-width: 900px) {
+    display: grid;
+    grid-auto-columns: 1fr;
+    gap: 20px;
+    padding: 32px 0;
+  }
 `;
 
 const Box = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
+const Dec = styled.span`
+  margin-bottom: 27px;
+  color: #fff;
+  text-align: center;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px; /* 150% */
+  letter-spacing: -0.5px;
+  @media (max-width: 600px) {
+    margin: 0;
+    font-size: 12px;
+    line-height: 20px; /* 166.667% */
+    letter-spacing: -0.5px;
+  }
+`;
+
 const Info = styled.div`
   color: #fff;
   text-align: center;
@@ -23,15 +46,11 @@ const Info = styled.div`
   letter-spacing: 1px;
   white-space: break-spaces;
   word-break: break-all;
-`;
-const Dec = styled.span`
-  margin-bottom: 27px;
-  color: #fff;
-  text-align: center;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 24px; /* 150% */
-  letter-spacing: -0.5px;
+  @media (max-width: 600px) {
+    font-size: 30px;
+    line-height: 40px; /* 133.333% */
+    letter-spacing: 1px;
+  }
 `;
 const StartBuilding = () => {
   return (

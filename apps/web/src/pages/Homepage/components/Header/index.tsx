@@ -1,6 +1,7 @@
 import React from "react";
 import styled from "styled-components";
 import bg from "../../assets/header/background.webp";
+import bgMobile from "../../assets/header/bgMobile.webp";
 import { Link } from "react-router-dom";
 
 const Wrap = styled.div`
@@ -9,34 +10,61 @@ const Wrap = styled.div`
   height: 100vh;
   background: url(${bg}) no-repeat;
   background-size: 100% 100%;
+
+  @media (max-width: 600px) {
+    padding: 0 24px;
+    background: url(${bgMobile}) no-repeat;
+    background-size: 100% 100%;
+  }
 `;
 const Container = styled.div`
   display: grid;
   grid-template-rows: 1fr 1fr 1fr;
   justify-items: center;
   padding-top: 157px;
+  text-align: center;
+
+  @media (max-width: 600px) {
+    display: flex;
+    flex-direction: column;
+    padding-top: 50px;
+    text-align: left;
+  }
 `;
 const Title = styled.h2`
   max-width: 1186px;
   margin: 0;
+  margin-block: 0;
   color: #fff;
-  text-align: center;
   font-size: 56px;
   font-weight: 600;
   line-height: 72px; /* 128.571% */
+  @media (max-width: 900px) {
+    max-width: 313px;
+    font-size: 30px;
+    line-height: 38px; /* 126.667% */
+  }
 `;
 const Desc = styled.p`
   max-width: 817px;
   margin: 32px 0 48px;
   color: #c5c9bc;
-  text-align: center;
   font-size: 18px;
   font-weight: 400;
+  @media (max-width: 900px) {
+    max-width: 318px;
+    margin: 16px 0 32px;
+    font-size: 14px;
+    line-height: 22px; /* 157.143% */
+  }
 `;
 const ButtonWrap = styled.div`
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 32px;
+  @media (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
 `;
 const Button = styled(Link)`
   width: 232px;
@@ -64,6 +92,10 @@ const Button = styled(Link)`
 
   &:active {
     background: #80bf78;
+  }
+
+  @media (max-width: 600px) {
+    width: 100%;
   }
 `;
 

@@ -9,14 +9,27 @@ const Wrap = styled.div`
   justify-content: space-between;
   max-width: 1213px;
   margin: 46px auto 0;
+  @media (max-width: 900px) {
+    flex-direction: column;
+    padding: 0 21px;
+  }
 `;
 const BlockL = styled.div`
   display: flex;
   flex-direction: column;
+  @media (max-width: 900px) {
+    margin-bottom: 12px;
+  }
 `;
 const LWrap = styled.div`
   display: flex;
   align-items: center;
+  @media (max-width: 900px) {
+    &.desc {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  }
 `;
 const A = styled.a`
   margin-right: 22px;
@@ -37,6 +50,11 @@ const Icon = styled.img`
     width: fit-content;
     height: 25px;
   }
+
+  @media (max-width: 900px) {
+    width: 131px;
+    height: 33px;
+  }
 `;
 const P = styled.p`
   margin: 0 165px 0 47px;
@@ -45,12 +63,20 @@ const P = styled.p`
   font-weight: 400;
   line-height: 32px; /* 200% */
   letter-spacing: -0.5px;
+  @media (max-width: 900px) {
+    margin: 0;
+    font-size: 12px;
+    letter-spacing: -0.5px;
+  }
 `;
 
 const BlockR = styled.div`
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   gap: 90px;
+  @media (max-width: 900px) {
+    gap: 27px;
+  }
 `;
 
 const RWrap = styled.div`
@@ -78,7 +104,7 @@ const Index = () => {
   return (
     <Wrap>
       <BlockL>
-        <LWrap>
+        <LWrap className={"desc"}>
           <Icon src={novaIcon} alt={""}></Icon>
           <P>Swap all the L2’s assets in NovaSwap of zkLink Nova</P>
         </LWrap>

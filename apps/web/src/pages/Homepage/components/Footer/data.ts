@@ -7,7 +7,7 @@ import email from "../../assets/media/email@2x.png";
 export const mediaData = [
   {
     icon: github,
-    link: "/",
+    link: "https://github.com/NovaSwapFinance",
   },
   {
     icon: tg,
@@ -15,11 +15,11 @@ export const mediaData = [
   },
   {
     icon: x,
-    link: "/",
+    link: "https://x.com/NovaSwap_fi",
   },
   {
     icon: gitbook,
-    link: "/",
+    link: "https://docs.novaswap.fi/",
   },
   {
     icon: email,
@@ -37,7 +37,7 @@ export const nav = [
         isBlank: true,
       },
       {
-        href: "/",
+        href: "https://docs.novaswap.fi/future/tokenomics",
         name: "Tokenomics",
         isBlank: true,
       },
@@ -47,7 +47,7 @@ export const nav = [
     title: "Develpoers",
     children: [
       {
-        href: "/",
+        href: "https://github.com/NovaSwapFinance",
         name: "Github",
         isBlank: true,
       },

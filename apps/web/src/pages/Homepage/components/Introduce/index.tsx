@@ -13,6 +13,14 @@ const Wrap = styled.div`
     "c  b"
     "d  d";
   gap: 32px;
+  @media (max-width: 900px) {
+    grid-template-areas:
+      "a"
+      "d"
+      "b"
+      "c";
+    gap: 20px;
+  }
 `;
 const Item = styled.div`
   height: 236px;
@@ -41,18 +49,37 @@ const Item = styled.div`
     grid-area: d;
     background: #181918 url(${adorn3}) no-repeat right center/contain;
   }
+
+  @media (max-width: 900px) {
+    height: 167px;
+    padding: 20px 0 24px 24px;
+    &:nth-child(2) {
+      max-width: 100%;
+    }
+  }
 `;
 const Title = styled.h3`
   margin: 0;
   color: #fff;
   font-size: 32px;
   font-weight: 600;
+
+  @media (max-width: 600px) {
+    font-size: 22px;
+    line-height: 32px; /* 145.455% */
+  }
 `;
 const Desc = styled.p`
   margin: 8px 0 16px;
   color: #c5c9bc;
   font-size: 18px;
   font-weight: 400;
+
+  @media (max-width: 600px) {
+    max-width: 271px;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.75);
+    font-size: 12px;
+  }
 `;
 const Button = styled(Link)`
   color: #8cd383;
@@ -91,6 +118,10 @@ const Button = styled(Link)`
   &:active {
     background: #80bf78;
   }
+
+  @media (max-width: 600px) {
+    font-size: 14px;
+  }
 `;
 
 const Index = () => {
@@ -103,16 +134,22 @@ const Index = () => {
           <br />
           blockchain networks within a single DEX platform.
         </Desc>
-        <Button to={"/"}>{`More >`}</Button>
+        <Button
+          to={"https://docs.novaswap.fi/welcome-to-novaswap/why-novaswap"}
+          target={"_blank"}
+        >{`More >`}</Button>
       </Item>
       <Item>
         <Title>Security</Title>
         <Desc>
-          Adopt the well-tested core code <br /> of Uniswap v3 in addition
-          <br /> to being built on zkLink Nova,
-          <br /> which inherits the security of <br /> Ethereum.
+          Adopt the well-tested core code of Uniswap v3 in addition to being
+          built on zkLink Nova, which inherits the security of Ethereum.
         </Desc>
-        <Button className={"btn"} to={"/"}>
+        <Button
+          className={"btn"}
+          to={"https://github.com/NovaSwapFinance"}
+          target={"_blank"}
+        >
           GitHub
         </Button>
       </Item>
@@ -123,7 +160,10 @@ const Index = () => {
           <br />
           which targets to place community at the forefront of our endeavors
         </Desc>
-        <Button to={"/"}>{`Tokenomics >`}</Button>
+        <Button
+          to={"https://docs.novaswap.fi/future/tokenomics"}
+          target={"_blank"}
+        >{`Tokenomics >`}</Button>
       </Item>
       <Item>
         <Title>Multi-layer Yields</Title>
@@ -132,7 +172,12 @@ const Index = () => {
           Rewards... <br /> There are even more higher-yield L2 "Lego"s waiting
           for you to explore!
         </Desc>
-        <Button to={"/"}>{`How to get >`}</Button>
+        <Button
+          to={
+            "https://docs.novaswap.fi/support/user-guide/how-to-get-higher-yield"
+          }
+          target={"_blank"}
+        >{`How to get >`}</Button>
       </Item>
     </Wrap>
   );

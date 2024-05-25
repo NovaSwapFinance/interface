@@ -10,12 +10,18 @@ const Wrap = styled.div`
   font-family: Poppins;
   padding-bottom: 223px;
   background: #0e0e0e url(${adorn}) no-repeat bottom center/contain;
+  @media (max-width: 900px) {
+    padding-bottom: 128px;
+  }
 `;
 const Container = styled.div`
   display: grid;
   gap: 120px;
   max-width: 1213px;
   margin: 0 auto;
+  @media (max-width: 900px) {
+    padding: 0 24px;
+  }
 `;
 const Index = () => {
   return (
