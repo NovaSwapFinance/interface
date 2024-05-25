@@ -24,6 +24,7 @@ import { MICROSITE_LINK } from 'utils/openDownloadApp'
 import { getCurrentPageFromLocation } from 'utils/urlRoutes'
 import { getCLS, getFCP, getFID, getLCP, Metric } from 'web-vitals'
 import { findRouteByPath, RouteDefinition, routes, useRouterConfig } from './RouteDefinitions'
+import  HomePageNav from './Homepage/components/Nav'
 
 // The Chrome is always loaded, but is lazy-loaded because it is not needed without user interaction.
 // Annotating it with webpackPreload allows it to be ready when requested.
@@ -35,7 +36,7 @@ const BodyWrapper = styled.div<{ bannerIsVisible?: boolean ,isHomePage?:boolean}
   position: relative;
   width: 100%;
   min-height: calc(100vh - ${({ bannerIsVisible }) => (bannerIsVisible ? UK_BANNER_HEIGHT : 0)}px);
-  padding: ${({ isHomePage }) => (isHomePage ? 0 : 72)}px 0px 5rem 0px;
+  padding: ${({ isHomePage }) => (isHomePage ? 68 : 72)}px 0px 5rem 0px;
   align-items: center;
   flex: 1;
 
@@ -142,7 +143,7 @@ export default function App() {
         </Helmet>
         <UserPropertyUpdater />
         {renderUkBanner && <UkBanner />}
-        {!isHomePage ?<Header />:null}
+        {!isHomePage ?<Header />:<HomePageHeader />}
         <ResetPageScrollEffect />
         <Body />
         <MobileBottomBar>
@@ -159,7 +160,6 @@ const Body = memo(function Body() {
   const routerConfig = useRouterConfig()
   const renderUkBanner = useRenderUkBanner()
   const isHomePage = pathname === '/';
-  console.log('isHomePage===>',isHomePage)
   return (
     <BodyWrapper bannerIsVisible={renderUkBanner} isHomePage={isHomePage}>
       <Suspense>
@@ -227,6 +227,29 @@ const Header = memo(function Header() {
     </HeaderWrapper>
   )
 })
+
+
+const HomePageHeader = function Header() {
+  const [isScrolledDown, setIsScrolledDown] = useState(false)
+  const isBagExpanded = useBag((state) => state.bagExpanded)
+  const isHeaderTransparent = !isScrolledDown && !isBagExpanded
+  const renderUkBanner = useRenderUkBanner()
+
+  useEffect(() => {
+    const scrollListener = () => {
+      setIsScrolledDown(window.scrollY > 0)
+    }
+    window.addEventListener('scroll', scrollListener)
+    return () => window.removeEventListener('scroll', scrollListener)
+  }, [])
+
+  return (
+    <HeaderWrapper transparent={isHeaderTransparent} bannerIsVisible={renderUkBanner} scrollY={scrollY}>
+      {/* <NavBar blur={isHeaderTransparent} /> */}
+      <HomePageNav/>
+    </HeaderWrapper>
+  )
+}
 
 function UserPropertyUpdater() {
   const isDarkMode = useIsDarkMode()

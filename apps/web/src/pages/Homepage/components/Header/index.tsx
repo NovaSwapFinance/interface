@@ -13,8 +13,8 @@ const Wrap = styled.div`
 
   @media (max-width: 600px) {
     padding: 0 24px;
-    background: url(${bgMobile}) no-repeat;
-    background-size: 100% 100%;
+    background: url(${bgMobile}) no-repeat center center;
+    background-size: 150% 90%;
   }
 `;
 const Container = styled.div`
@@ -115,7 +115,7 @@ const Index = () => {
           <Button className={"normal"} to={"/swap"}>
             Launch APP
           </Button>
-          <Button to={"/"}>Bridge Assets</Button>
+          <Button to={"https://portal.zklink.io/"}>Bridge Assets</Button>
         </ButtonWrap>
       </Container>
     </Wrap>

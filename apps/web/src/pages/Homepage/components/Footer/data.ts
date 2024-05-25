@@ -9,10 +9,10 @@ export const mediaData = [
     icon: github,
     link: "https://github.com/NovaSwapFinance",
   },
-  {
-    icon: tg,
-    link: "/",
-  },
+  // {
+  //   icon: tg,
+  //   link: "/",
+  // },
   {
     icon: x,
     link: "https://x.com/NovaSwap_fi",
@@ -23,7 +23,7 @@ export const mediaData = [
   },
   {
     icon: email,
-    link: "/",
+    link: "mailto:pm@novaswap.finance",
   },
 ];
 
@@ -32,7 +32,7 @@ export const nav = [
     title: "Ecodapps",
     children: [
       {
-        href: "/",
+        href: "https://docs.novaswap.fi",
         name: "Document",
         isBlank: true,
       },
@@ -52,7 +52,7 @@ export const nav = [
         isBlank: true,
       },
       {
-        href: "/",
+        href: "https://forms.gle/x8aWGdUPKq17wJGb7",
         name: "Bug Bounty",
         isBlank: true,
       },
@@ -62,17 +62,17 @@ export const nav = [
     title: "Support",
     children: [
       {
-        href: "/",
+        href: "https://docs.novaswap.fi/support/faq",
         name: "FAQ",
         isBlank: true,
       },
       {
-        href: "/",
+        href: "https://docs.novaswap.fi/support/user-guide",
         name: "User Guide",
         isBlank: true,
       },
       {
-        href: "/",
+        href: "https://docs.novaswap.fi/support/contact-us",
         name: "Contact",
         isBlank: true,
       },
