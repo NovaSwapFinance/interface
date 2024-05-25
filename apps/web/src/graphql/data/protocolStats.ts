@@ -14,9 +14,12 @@ import {
   useHistoricalProtocolVolumeQuery,
 } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
 
+import {useNovaSwapDayDatasQuery} from 'graphql/thegraph/__generated__/types-and-hooks'
+
 function mapDataByTimestamp(
   v2Data?: readonly TimestampedAmount[],
-  v3Data?: readonly TimestampedAmount[]
+  v3Data?: readonly TimestampedAmount[],
+  type?: string
 ): Record<number, Record<ProtocolVersion, number>> {
   const dataByTime: Record<number, Record<ProtocolVersion, number>> = {}
   v2Data?.forEach((v2Point) => {
@@ -24,11 +27,11 @@ function mapDataByTimestamp(
     dataByTime[timestamp] = { [ProtocolVersion.V2]: v2Point.value, [ProtocolVersion.V3]: 0 }
   })
   v3Data?.forEach((v3Point) => {
-    const timestamp = v3Point.timestamp
+    const timestamp = v3Point.date
     if (!dataByTime[timestamp]) {
-      dataByTime[timestamp] = { [ProtocolVersion.V2]: 0, [ProtocolVersion.V3]: v3Point.value }
+      dataByTime[timestamp] = {  [ProtocolVersion.V3]: v3Point[type] }
     } else {
-      dataByTime[timestamp][ProtocolVersion.V3] = v3Point.value
+      dataByTime[timestamp][ProtocolVersion.V3] = v3Point[type]
     }
   })
   return dataByTime
@@ -38,18 +41,15 @@ export function useHistoricalProtocolVolume(
   chain: Chain,
   duration: HistoryDuration
 ): ChartQueryResult<StackedHistogramData, ChartType.VOLUME> {
-  const { data: queryData, loading } = useHistoricalProtocolVolumeQuery({
-    variables: { chain, duration },
-  })
+  const { data: queryData, loading } = useNovaSwapDayDatasQuery()
 
   return useMemo(() => {
-    const dataByTime = mapDataByTimestamp(queryData?.v2HistoricalProtocolVolume, queryData?.v3HistoricalProtocolVolume)
+    const dataByTime = mapDataByTimestamp([], queryData?.uniswapDayDatas,'volumeUSD')
 
     const entries = Object.entries(dataByTime).reduce((acc, [timestamp, values]) => {
       acc.push({
         time: Number(timestamp) as UTCTimestamp,
         values: {
-          [PriceSource.SubgraphV2]: values[ProtocolVersion.V2],
           [PriceSource.SubgraphV3]: values[ProtocolVersion.V3],
         },
       })
@@ -58,22 +58,21 @@ export function useHistoricalProtocolVolume(
 
     const dataQuality = checkDataQuality(entries, ChartType.VOLUME, duration)
     return { chartType: ChartType.VOLUME, entries, loading, dataQuality }
-  }, [duration, loading, queryData?.v2HistoricalProtocolVolume, queryData?.v3HistoricalProtocolVolume])
+  }, [loading, queryData?.uniswapDayDatas])
 }
 
 export function useDailyProtocolTVL(chain: Chain): ChartQueryResult<StackedLineData, ChartType.TVL> {
-  const { data: queryData, loading } = useDailyProtocolTvlQuery({
-    variables: { chain },
-  })
+  const { data: queryData, loading } = useNovaSwapDayDatasQuery()
+
 
   return useMemo(() => {
-    const dataByTime = mapDataByTimestamp(queryData?.v2DailyProtocolTvl, queryData?.v3DailyProtocolTvl)
+    const dataByTime = mapDataByTimestamp([], queryData?.uniswapDayDatas,'tvlUSD')
     const entries = Object.entries(dataByTime).map(([timestamp, values]) => ({
       time: Number(timestamp),
-      values: [values[ProtocolVersion.V2], values[ProtocolVersion.V3]],
+      values: [values[ProtocolVersion.V3]],
     })) as StackedLineData[]
 
     const dataQuality = checkDataQuality(entries, ChartType.TVL, HistoryDuration.Year)
     return { chartType: ChartType.TVL, entries, loading, dataQuality }
-  }, [loading, queryData?.v2DailyProtocolTvl, queryData?.v3DailyProtocolTvl])
+  }, [loading, queryData?.uniswapDayDatas])
 }

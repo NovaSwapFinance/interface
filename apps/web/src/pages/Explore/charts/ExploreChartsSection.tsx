@@ -30,7 +30,8 @@ import { HistoryDuration, PriceSource } from 'uniswap/src/data/graphql/uniswap-d
 import { NumberType, useFormatter } from 'utils/formatNumbers'
 
 const EXPLORE_CHART_HEIGHT_PX = 368
-const EXPLORE_PRICE_SOURCES = [PriceSource.SubgraphV2, PriceSource.SubgraphV3]
+// const EXPLORE_PRICE_SOURCES = [PriceSource.SubgraphV2, PriceSource.SubgraphV3]
+const EXPLORE_PRICE_SOURCES = [PriceSource.SubgraphV3]
 
 const TIME_SELECTOR_OPTIONS = [
   { time: TimePeriod.DAY, display: 'D' },
@@ -120,7 +121,7 @@ function VolumeChartSection({ chainId }: { chainId: number }) {
   if (isSmallScreen) {
     return (
       <MinimalStatDisplay
-        title={<Trans>Uniswap volume</Trans>}
+        title={<Trans>Novaswap volume</Trans>}
         value={cumulativeVolume}
         time={<Trans>Past month</Trans>}
       />
@@ -131,15 +132,15 @@ function VolumeChartSection({ chainId }: { chainId: number }) {
     <SectionContainer>
       <RowBetween>
         <SectionTitle>
-          <Trans>Uniswap volume</Trans>
+          <Trans>Novaswap volume</Trans>
         </SectionTitle>
-        <div style={{ position: 'absolute', right: 0 }}>
+        {/* <div style={{ position: 'absolute', right: 0 }}>
           <StyledTimePeriodSelector
             options={TIME_SELECTOR_OPTIONS}
             timePeriod={timePeriod}
             onChangeTimePeriod={setTimePeriod}
           />
-        </div>
+        </div> */}
       </RowBetween>
       {(() => {
         if (dataQuality === DataQuality.INVALID) {
