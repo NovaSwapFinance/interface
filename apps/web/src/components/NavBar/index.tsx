@@ -102,9 +102,9 @@ const Navbar = ({ blur }: { blur: boolean }) => {
   const { account } = useWeb3React()
   const [accountDrawerOpen, toggleAccountDrawer] = useAccountDrawer()
   const handleUniIconClick = useCallback(() => {
-    if (account) {
-      return
-    }
+    // if (account) {
+    //   return
+    // }
     if (accountDrawerOpen) {
       toggleAccountDrawer()
     }
@@ -126,7 +126,7 @@ const Navbar = ({ blur }: { blur: boolean }) => {
                 height="48"
                 data-testid="uniswap-logo"
                 className={styles.logo}
-                clickable={!account}
+                clickable={true}
                 onClick={handleUniIconClick}
               />
             </Box>
