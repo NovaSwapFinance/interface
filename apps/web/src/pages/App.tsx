@@ -29,13 +29,13 @@ import { findRouteByPath, RouteDefinition, routes, useRouterConfig } from './Rou
 // Annotating it with webpackPreload allows it to be ready when requested.
 const AppChrome = lazy(() => import(/* webpackPreload: true */ './AppChrome'))
 
-const BodyWrapper = styled.div<{ bannerIsVisible?: boolean }>`
+const BodyWrapper = styled.div<{ bannerIsVisible?: boolean ,isHomePage?:boolean}>`
   display: flex;
   flex-direction: column;
   position: relative;
   width: 100%;
   min-height: calc(100vh - ${({ bannerIsVisible }) => (bannerIsVisible ? UK_BANNER_HEIGHT : 0)}px);
-  padding: ${({ theme }) => theme.navHeight}px 0px 5rem 0px;
+  padding: ${({ isHomePage }) => (isHomePage ? 0 : 72)}px 0px 5rem 0px;
   align-items: center;
   flex: 1;
 
@@ -123,7 +123,7 @@ export default function App() {
   if (shouldRedirectToAppInstall) {
     return null
   }
-
+  const isHomePage = pathname === '/';
   const shouldBlockPath = isPathBlocked(pathname)
   if (shouldBlockPath && pathname !== '/swap') {
     return <Navigate to="/swap" replace />
@@ -142,7 +142,7 @@ export default function App() {
         </Helmet>
         <UserPropertyUpdater />
         {renderUkBanner && <UkBanner />}
-        <Header />
+        {!isHomePage ?<Header />:null}
         <ResetPageScrollEffect />
         <Body />
         <MobileBottomBar>
@@ -154,11 +154,14 @@ export default function App() {
 }
 
 const Body = memo(function Body() {
+  const location = useLocation()
+  const { pathname } = location
   const routerConfig = useRouterConfig()
   const renderUkBanner = useRenderUkBanner()
-
+  const isHomePage = pathname === '/';
+  console.log('isHomePage===>',isHomePage)
   return (
-    <BodyWrapper bannerIsVisible={renderUkBanner}>
+    <BodyWrapper bannerIsVisible={renderUkBanner} isHomePage={isHomePage}>
       <Suspense>
         <AppChrome />
       </Suspense>
