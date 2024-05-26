@@ -14,34 +14,34 @@ describe('beforeSend', () => {
     test('should remove "/#" from the request URL', () => {
       const event = {
         request: {
-          url: "https://novaswap.finance/#/example",
+          url: "https://novaswap.fi/#/example",
         },
       } as ErrorEvent;
 
       beforeSend(event, {})
-      expect(event.request?.url).toBe("https://novaswap.finance/example");
+      expect(event.request?.url).toBe("https://novaswap.fi/example");
     })
 
     test('should remove trailing slash from the request URL', () => {
       const event = {
         request: {
-          url: "https://novaswap.finance/example/",
+          url: "https://novaswap.fi/example/",
         },
       } as ErrorEvent;
 
       beforeSend(event, {})
-      expect(event.request?.url).toBe("https://novaswap.finance/example");
+      expect(event.request?.url).toBe("https://novaswap.fi/example");
     })
 
     test('should not modify the request URL if no changes are required', () => {
       const event = {
         request: {
-          url: "https://novaswap.finance/example",
+          url: "https://novaswap.fi/example",
         },
       } as ErrorEvent;
 
       beforeSend(event, {})
-      expect(event.request?.url).toBe("https://novaswap.finance/example");
+      expect(event.request?.url).toBe("https://novaswap.fi/example");
     })
   })
 
@@ -142,7 +142,7 @@ describe('beforeSend', () => {
 
     it('filters blocked frame errors', () => {
       const originalException = new Error(
-        'Blocked a frame with origin "https://novaswap.finance" from accessing a cross-origin frame.',
+        'Blocked a frame with origin "https://novaswap.fi" from accessing a cross-origin frame.',
       );
       expect(beforeSend(ERROR, { originalException })).toBeNull()
     })

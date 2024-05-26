@@ -8,7 +8,7 @@
     "contracts": "yarn contracts:compile:abi && yarn contracts:compile:v3",
     "check:deps:usage": "depcheck",
     "graphql:generate": "graphql-codegen --config codegen.ts",
-    "graphql:schema": "get-graphql-schema https://api.uniswap.org/v1/graphql -h Origin=https://novaswap.finance > ./src/data/graphql/uniswap-data-api/schema.graphql",
+    "graphql:schema": "get-graphql-schema https://api.uniswap.org/v1/graphql -h Origin=https://novaswap.fi > ./src/data/graphql/uniswap-data-api/schema.graphql",
     "i18n:generate": "i18next-resources-for-ts interface -i ./src/i18n/locales/source -o ./src/i18n/locales/@types/resources.d.ts",
     "lint": "eslint . --ext ts,tsx --max-warnings=0",
     "lint:fix": "eslint . --ext ts,tsx --fix",

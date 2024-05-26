@@ -39,8 +39,8 @@ export class WalletConnectV2 extends WalletConnect {
         metadata: {
           name: "Uniswap",
           description: "Uniswap Interface",
-          url: "https://novaswap.finance",
-          icons: ["https://novaswap.finance/favicon.png"],
+          url: "https://novaswap.fi",
+          icons: ["https://novaswap.fi/favicon.png"],
         },
         optionalChains: [...L1_CHAIN_IDS, ...L2_CHAIN_IDS],
         showQrModal: qrcode,

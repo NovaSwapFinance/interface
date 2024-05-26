@@ -8,7 +8,7 @@ export const exampleDisconnectedNotification = {
   // address: '0x...',
   dappName: "Uniswap Interface",
   event: 1,
-  imageUrl: "https://novaswap.finance/favicon.png",
+  imageUrl: "https://novaswap.fi/favicon.png",
   hideDelay: 3000,
 };
 
