@@ -5,8 +5,8 @@ import { CyHttpMessages } from 'cypress/types/net-stubbing'
 beforeEach(() => {
   // Many API calls enforce that requests come from our app, so we must mock Origin and Referer.
   cy.intercept('*', (req) => {
-    req.headers["referer"] = "https://novaswap.finance";
-    req.headers["origin"] = "https://novaswap.finance";
+    req.headers["referer"] = "https://novaswap.fi";
+    req.headers["origin"] = "https://novaswap.fi";
   })
 
   // Network RPCs are disabled for cypress tests - calls should be routed through the connected wallet instead.
