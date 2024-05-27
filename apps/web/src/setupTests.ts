@@ -16,7 +16,7 @@ import { TextDecoder, TextEncoder } from 'util'
 
 // Sets origin to the production origin, because some tests depend on this.
 // This prevents each test file from needing to set this manually.
-globalThis.origin = "https://novaswap.finance";
+globalThis.origin = "https://novaswap.fi";
 
 // Polyfill browser APIs (jest is a node.js environment):
 {

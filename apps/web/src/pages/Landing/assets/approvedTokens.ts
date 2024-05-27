@@ -95,7 +95,7 @@ export const approvedERC20: InteractiveToken[] = [
     standard: TokenStandard.ERC20,
     color: "#833ADD",
     logoUrl:
-      "https://novaswap.finance/static/media/matic-token-icon.efed2ee4e843195b44bf68ffc7439403.svg",
+      "https://novaswap.fi/static/media/matic-token-icon.efed2ee4e843195b44bf68ffc7439403.svg",
   },
   {
     name: "Moss Carbon Credit",

@@ -18,6 +18,8 @@ import NFTs from './NFTs'
 import Pools from './Pools'
 import { PortfolioRowWrapper } from './PortfolioRow'
 import Tokens from './Tokens'
+import { isSupportedChain } from 'constants/chains'
+import { useWeb3React } from '@web3-react/core'
 
 const lastPageAtom = atom(0)
 
@@ -99,6 +101,7 @@ const Pages: Array<Page> = [
 ]
 
 export default function MiniPortfolio({ account }: { account: string }) {
+  const {chainId} = useWeb3React()
   const theme = useTheme()
   const isNftPage = useIsNftPage()
   const [lastPage, setLastPage] = useAtom(lastPageAtom)
@@ -109,9 +112,16 @@ export default function MiniPortfolio({ account }: { account: string }) {
   const shouldDisableNFTRoutes = useDisableNFTRoutes()
   const [activityUnread, setActivityUnread] = useState(false)
 
-  const { component: Page, key: currentKey } = Pages[currentPage]
+  const { component: Page, key: currentKey } = isSupportedChain(chainId) ? Pages[currentPage] :Pages[0]
 
   const { hasPendingActivity } = usePendingActivity()
+
+
+  useEffect(() => {
+    if (!isSupportedChain(chainId)) {
+      setCurrentPage(0)
+    }
+  }, [chainId])
 
   useEffect(() => {
     if (hasPendingActivity && currentKey !== 'activity') setActivityUnread(true)
@@ -123,6 +133,7 @@ export default function MiniPortfolio({ account }: { account: string }) {
         <Nav data-testid="mini-portfolio-navbar">
           {Pages.map(({ title, loggingElementName, key }, index) => {
             if (shouldDisableNFTRoutes && loggingElementName.includes('nft')) return null
+            if(!isSupportedChain(chainId)&&key==='pools') return null
             const isUnselectedActivity = key === 'activity' && currentKey !== 'activity'
             const showActivityIndicator = isUnselectedActivity && (hasPendingActivity || activityUnread)
             const handleNavItemClick = () => {

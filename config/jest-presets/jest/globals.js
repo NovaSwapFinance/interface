@@ -24,7 +24,7 @@ module.exports = {
     TRADING_API_URL: "https://api.uniswap.org",
     UNISWAP_API_KEY: "key",
     UNISWAP_API_BASE_URL: "https://api.uniswap.org",
-    UNISWAP_APP_URL: "https://novaswap.finance",
+    UNISWAP_APP_URL: "https://novaswap.fi",
     WALLETCONNECT_PROJECT_ID: 123,
     UNITAGS_API_URL: "https://api.uniswap.org/unitags",
     FIREBASE_APP_CHECK_DEBUG_TOKEN: "token",
