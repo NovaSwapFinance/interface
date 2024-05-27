@@ -29,9 +29,11 @@ function mapDataByTimestamp(
   v3Data?.forEach((v3Point) => {
     const timestamp = v3Point.date
     if (!dataByTime[timestamp]) {
-      dataByTime[timestamp] = {  [ProtocolVersion.V3]: v3Point[type] }
+      const value = v3Point[type];
+      dataByTime[timestamp] = {  [ProtocolVersion.V3]: value? Number(value).toFixed(7):'' }
     } else {
-      dataByTime[timestamp][ProtocolVersion.V3] = v3Point[type]
+      const value = v3Point[type];
+      dataByTime[timestamp][ProtocolVersion.V3] = value? Number(value).toFixed(7):''
     }
   })
   return dataByTime
@@ -50,7 +52,7 @@ export function useHistoricalProtocolVolume(
       acc.push({
         time: Number(timestamp) as UTCTimestamp,
         values: {
-          [PriceSource.SubgraphV3]: values[ProtocolVersion.V3],
+          [PriceSource.SubgraphV3]: Number(values[ProtocolVersion.V3]),
         },
       })
       return acc
@@ -69,7 +71,7 @@ export function useDailyProtocolTVL(chain: Chain): ChartQueryResult<StackedLineD
     const dataByTime = mapDataByTimestamp([], queryData?.uniswapDayDatas,'tvlUSD')
     const entries = Object.entries(dataByTime).map(([timestamp, values]) => ({
       time: Number(timestamp),
-      values: [values[ProtocolVersion.V3]],
+      values: [Number(values[ProtocolVersion.V3])],
     })) as StackedLineData[]
 
     const dataQuality = checkDataQuality(entries, ChartType.TVL, HistoryDuration.Year)
