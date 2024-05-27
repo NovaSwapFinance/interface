@@ -1,4 +1,5 @@
-import React from "react";
+import { user } from "@uniswap/analytics";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 
 const Container = styled.div`
@@ -53,23 +54,126 @@ const Info = styled.div`
   }
 `;
 const StartBuilding = () => {
+  const [tvl, setTvl] = useState(0);
+  const [txCount, setTxCount] = useState(0);
+  const [volumeUSD, setVolumeUSD] = useState(0);
+  const [userCount, setUserCount] = useState(0);
+
+  function formatNumber(num) {
+    if (num >= 1e9) {
+      return (num / 1e9).toFixed(2) + "B";
+    } else if (num >= 1e6) {
+      return (num / 1e6).toFixed(2) + "M";
+    } else if (num >= 1e3) {
+      return (num / 1e3).toFixed(2) + "K";
+    } else {
+      return num.toString();
+    }
+  }
+
+  const fetchTVL = async () => {
+    const response = await fetch("https://api.llama.fi/tvl/novaswap");
+    const data = await response.json();
+    return data ?? 0;
+  };
+
+  const fetchDailyDatas = async () => {
+    const query = `
+  {
+    uniswapDayDatas {
+      txCount
+      volumeUSD
+    }
+  }
+`;
+    const response = await fetch(
+      "https://graph.zklink.io/subgraphs/name/novaswap",
+      {
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          query: query,
+          extensions: {},
+        }),
+        method: "POST",
+      },
+    );
+    const data = await response.json();
+    if (!data.errors) {
+      const { volumeUSD } =
+        data.data.uniswapDayDatas[data.data.uniswapDayDatas.length - 1];
+      const totalTxCount = data.data.uniswapDayDatas.reduce(
+        (total, item) => total + Number(item.txCount),
+        0,
+      );
+      setTxCount(totalTxCount);
+      setVolumeUSD(formatNumber(volumeUSD));
+    }
+  };
+
+  const fetchUserCount = async (id) => {
+    const query = `
+    {
+      swaps(first: 1000, where: {id_gt: "${id}"}) {
+        origin
+        id
+      }
+    }
+  `;
+    const response = await fetch(
+      "https://graph.zklink.io/subgraphs/name/novaswap",
+      {
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          query: query,
+          extensions: {},
+        }),
+        method: "POST",
+      },
+    );
+    const res = await response.json();
+
+    if (res.errors) {
+      console.error("Error:", res.errors);
+      return [];
+    } else {
+      const data = res.data.swaps;
+      console.log(data[data.length - 1].id);
+      if (data.length < 1000) {
+        return data;
+      } else {
+        const nextData = await fetchUserCount(data[data.length - 1].id);
+        return data.concat(nextData);
+      }
+    }
+  };
+
+  useEffect(() => {
+    fetchTVL().then((data) => setTvl(formatNumber(data)));
+    fetchDailyDatas();
+    fetchUserCount("").then((data) => setUserCount(data?.length ?? 0));
+  }, []);
+
   return (
     <Container>
       <Box>
         <Dec>Total Value Locked</Dec>
-        <Info>$318.41M</Info>
+        <Info>{`$${tvl}`}</Info>
       </Box>
       <Box>
         <Dec>24hrs Trading Volume</Dec>
-        <Info>$6.58M</Info>
+        <Info>{`$${volumeUSD}`}</Info>
       </Box>
       <Box>
         <Dec>History Txn</Dec>
-        <Info>2345,678</Info>
+        <Info>{txCount.toLocaleString()}</Info>
       </Box>
       <Box>
         <Dec>History Users</Dec>
-        <Info>12,345</Info>
+        <Info>{userCount.toLocaleString()}</Info>
       </Box>
     </Container>
   );
