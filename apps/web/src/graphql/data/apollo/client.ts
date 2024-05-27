@@ -18,7 +18,7 @@ export const apolloClient = new ApolloClient({
   link: httpLink,
   headers: {
     "Content-Type": "application/json",
-    Origin: "https://novaswap.finance",
+    Origin: "https://novaswap.fi",
   },
   cache: new InMemoryCache({
     typePolicies: {

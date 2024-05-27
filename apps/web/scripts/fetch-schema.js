@@ -10,7 +10,7 @@ const exec = promisify(child_process.exec)
 
 function fetchSchema(url, outputFile) {
   exec(
-    `npx --silent get-graphql-schema -h Origin=https://novaswap.finance ${url}`,
+    `npx --silent get-graphql-schema -h Origin=https://novaswap.fi ${url}`,
   )
     .then(({ stderr, stdout }) => {
       if (stderr) {

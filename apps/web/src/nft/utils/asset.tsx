@@ -80,7 +80,7 @@ export const generateTweetForAsset = (asset: GenieAsset): string => {
     asset.name
       ? encodeURIComponent(asset.name)
       : `${asset.collectionName}%20%23${asset.tokenId}`
-  }%20(${asset.collectionName})%20https://novaswap.finance/nfts/asset/${asset.address}/${asset.tokenId}%20via%20@uniswap`;
+  }%20(${asset.collectionName})%20https://novaswap.fi/nfts/asset/${asset.address}/${asset.tokenId}%20via%20@uniswap`;
 }
 
 export const generateTweetForPurchase = (assets: UpdatedGenieAsset[], txHashUrl: string): string => {
@@ -90,7 +90,7 @@ export const generateTweetForPurchase = (assets: UpdatedGenieAsset[], txHashUrl:
     multipleCollections
       ? `${assets.length} NFTs`
       : `${assets.length} ${assets[0].collectionName ?? "NFT"}`
-  } with @Uniswap 🦄\n\nhttps://novaswap.finance/nfts/${collectionUrl}\n${txHashUrl}`;
+  } with @Uniswap 🦄\n\nhttps://novaswap.fi/nfts/${collectionUrl}\n${txHashUrl}`;
   return `https://twitter.com/intent/tweet?text=${encodeURIComponent(tweetText)}`
 }
 
@@ -122,10 +122,10 @@ export const generateTweetForList = (assets: WalletAsset[]): string => {
           ?.map((market) => market.name)
           .join(
             ", ",
-          )}. Buy it on @Uniswap at https://novaswap.finance/${getAssetHref(assets[0])}`
+          )}. Buy it on @Uniswap at https://novaswap.fi/${getAssetHref(assets[0])}`
       : `I just listed ${
           assets.length
-        } items on @Uniswap at https://novaswap.finance/nfts/profile\n\nCollections: ${mapAssetsToCollections(
+        } items on @Uniswap at https://novaswap.fi/nfts/profile\n\nCollections: ${mapAssetsToCollections(
           assets,
         )
           .map(

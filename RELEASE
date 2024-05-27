@@ -2,11 +2,11 @@ IPFS hash of the deployment:
 - CIDv0: `QmbEmY4ebbPrQirzx9PNZGKqyjK7pgUMVce2F2tMtJHbJ5`
 - CIDv1: `bafybeif7uyvbcyhd5ib6xkikxoyvm4voodg4pgagjckny4m52o7qtclpsy`
 
-The latest release is always mirrored at [app.uniswap.org](https://novaswap.finance).
+The latest release is always mirrored at [app.uniswap.org](https://novaswap.fi).
 
 You can also access the Uniswap Interface from an IPFS gateway.
 **BEWARE**: The Uniswap interface uses [`localStorage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) to remember your settings, such as which tokens you have imported.
-**You should always use an IPFS gateway that enforces origin separation**, or our hosted deployment of the latest release at [app.uniswap.org](https://novaswap.finance).
+**You should always use an IPFS gateway that enforces origin separation**, or our hosted deployment of the latest release at [app.uniswap.org](https://novaswap.fi).
 Your Uniswap settings are never remembered across different URLs.
 
 IPFS gateways:

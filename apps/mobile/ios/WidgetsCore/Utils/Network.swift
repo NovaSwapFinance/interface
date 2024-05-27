@@ -60,7 +60,7 @@ class AuthorizationInterceptor: ApolloInterceptor {
   ) where Operation : GraphQLOperation {
     request.addHeader(name: "X-API-KEY", value: Env.UNISWAP_API_KEY)
     request.addHeader(name: "Content-Type", value: "application/json")
-    request.addHeader(name: "Origin", value: "https://novaswap.finance")
+    request.addHeader(name: "Origin", value: "https://novaswap.fi")
 
     chain.proceedAsync(request: request,
                        response: response,
