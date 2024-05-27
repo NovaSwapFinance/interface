@@ -13,8 +13,9 @@ const Wrap = styled.div`
 
   @media (max-width: 600px) {
     padding: 0 24px;
-    background: url(${bgMobile}) no-repeat center center;
-    background-size: 150% 90%;
+    background: url(${bgMobile}) no-repeat;
+    background-size: cover;
+    background-position: center -50px;
   }
 `;
 const Container = styled.div`
@@ -69,6 +70,7 @@ const ButtonWrap = styled.div`
 const Button = styled(Link)`
   width: 232px;
   height: 56px;
+  font-size: 19px;
   text-align: center;
   line-height: 56px;
   border-radius: 9px;
@@ -96,6 +98,24 @@ const Button = styled(Link)`
 
   @media (max-width: 600px) {
     width: 100%;
+    &.normal,
+    &.bridge {
+      position: fixed;
+      bottom: 20px;
+      z-index: 2;
+      width: 43%;
+      height: 42px;
+      line-height: 42px;
+      font-size: 16px;
+    }
+
+    &.normal {
+      left: 5%;
+    }
+
+    &.bridge {
+      right: 5%;
+    }
   }
 `;
 
@@ -115,7 +135,13 @@ const Index = () => {
           <Button className={"normal"} to={"/swap"}>
             Launch APP
           </Button>
-          <Button to={"https://portal.zklink.io/"}>Bridge Assets</Button>
+          <Button
+            className={"bridge"}
+            to={"https://portal.zklink.io/"}
+            target={"_blank"}
+          >
+            Bridge Assets
+          </Button>
         </ButtonWrap>
       </Container>
     </Wrap>

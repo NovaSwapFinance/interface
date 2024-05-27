@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import adorn from "../../assets/introduce/adorn.png";
 import adorn2 from "../../assets/introduce/adorn2.png";
 import adorn3 from "../../assets/introduce/adorn3.png";
+import { useScreenSize } from "../../../../hooks/useScreenSize";
 
 const Wrap = styled.div`
   display: grid;
@@ -51,8 +52,46 @@ const Item = styled.div`
   }
 
   @media (max-width: 900px) {
+    position: relative;
+    z-index: 1;
     height: 167px;
     padding: 20px 0 24px 24px;
+    background: #181918 !important;
+    &::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      display: block;
+      height: 100%;
+      width: 100%;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      opacity: 0.7;
+      z-index: -1;
+    }
+
+    &:nth-child(1) {
+      &::before {
+        background-image: url(${adorn});
+      }
+    }
+
+    &:nth-child(2) {
+      &::before {
+        background-image: url(${adorn2});
+      }
+    }
+
+    &:nth-child(4) {
+      &::before {
+        background-image: url(${adorn3});
+      }
+    }
+
     &:nth-child(2) {
       max-width: 100%;
     }
@@ -125,13 +164,18 @@ const Button = styled(Link)`
 `;
 
 const Index = () => {
+  const isScreenSize = useScreenSize();
+  const isMobile = !isScreenSize["sm"];
   return (
     <Wrap>
       <Item>
         <Title>Innovation</Title>
-        <Desc>
+        <Desc
+          style={{
+            maxWidth: isMobile ? 242 : 580,
+          }}
+        >
           Trade a diverse array of digital assets originating from multiple
-          <br />
           blockchain networks within a single DEX platform.
         </Desc>
         <Button
@@ -145,12 +189,8 @@ const Index = () => {
           Adopt the well-tested core code of Uniswap v3 in addition to being
           built on zkLink Nova, which inherits the security of Ethereum.
         </Desc>
-        <Button
-          className={"btn"}
-          to={"https://github.com/NovaSwapFinance"}
-          target={"_blank"}
-        >
-          GitHub
+        <Button to={"https://github.com/NovaSwapFinance"} target={"_blank"}>
+          {`GitHub >`}
         </Button>
       </Item>
       <Item>

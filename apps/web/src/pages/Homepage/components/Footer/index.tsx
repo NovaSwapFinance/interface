@@ -7,8 +7,12 @@ import { mediaData, nav } from "./data";
 const Wrap = styled.div`
   display: flex;
   justify-content: space-between;
-  max-width: 1213px;
+  width: 1213px;
   margin: 46px auto 0;
+  @media (max-width: 1213px) {
+    max-width: 1213px;
+    width: inherit;
+  }
   @media (max-width: 900px) {
     flex-direction: column;
     padding: 0 21px;
@@ -42,7 +46,7 @@ const Icon = styled.img`
 
   &.power {
     width: fit-content;
-    height: 32px;
+    height: 26px;
     margin: 9px 0 33px;
   }
 
@@ -57,12 +61,12 @@ const Icon = styled.img`
   }
 `;
 const P = styled.p`
-  margin: 0 165px 0 47px;
   color: #c0c0c0;
   font-size: 16px;
   font-weight: 400;
   line-height: 32px; /* 200% */
   letter-spacing: -0.5px;
+  text-align: center;
   @media (max-width: 900px) {
     margin: 0;
     font-size: 12px;
@@ -90,6 +94,9 @@ const Title = styled.h3`
   font-size: 16px;
   font-weight: 500;
   letter-spacing: -0.5px;
+  @media (max-width: 600px) {
+    font-size: 14px;
+  }
 `;
 const Link = styled.a`
   margin: 0 0 6px;
@@ -98,38 +105,43 @@ const Link = styled.a`
   font-weight: 400;
   letter-spacing: -0.5px;
   text-decoration: none;
+  @media (max-width: 600px) {
+    font-size: 14px;
+  }
 `;
 
 const Index = () => {
   return (
-    <Wrap>
-      <BlockL>
-        <LWrap className={"desc"}>
-          <Icon src={novaIcon} alt={""}></Icon>
-          <P>Swap all the L2’s assets in NovaSwap of zkLink Nova</P>
-        </LWrap>
-        <Icon className={"power"} src={powerIcon} alt={""}></Icon>
-        <LWrap>
-          {mediaData.map((item, idx) => (
-            <A key={idx} href={item.link} target={"_blank"}>
-              <Icon className={"media"} src={item.icon} />
-            </A>
-          ))}
-        </LWrap>
-      </BlockL>
-      <BlockR>
-        {nav.map((v) => (
-          <RWrap key={v.title}>
-            <Title>{v.title}</Title>
-            {v.children.map((item, idx) => (
-              <Link key={idx} href={item.href} target={"_blank"}>
-                {item.name}
-              </Link>
+    <>
+      <Wrap>
+        <BlockL>
+          <LWrap className={"desc"}>
+            <Icon src={novaIcon} alt={""}></Icon>
+          </LWrap>
+          <Icon className={"power"} src={powerIcon} alt={""}></Icon>
+          <LWrap>
+            {mediaData.map((item, idx) => (
+              <A key={idx} href={item.link} target={"_blank"}>
+                <Icon className={"media"} src={item.icon} />
+              </A>
             ))}
-          </RWrap>
-        ))}
-      </BlockR>
-    </Wrap>
+          </LWrap>
+        </BlockL>
+        <BlockR>
+          {nav.map((v) => (
+            <RWrap key={v.title}>
+              <Title>{v.title}</Title>
+              {v.children.map((item, idx) => (
+                <Link key={idx} href={item.href} target={"_blank"}>
+                  {item.name}
+                </Link>
+              ))}
+            </RWrap>
+          ))}
+        </BlockR>
+      </Wrap>
+      <P>Copyright © 2024 NovaSwap. All rights reserved.</P>
+    </>
   );
 };
 

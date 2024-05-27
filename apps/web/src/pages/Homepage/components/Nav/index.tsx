@@ -1,16 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import styled from "styled-components";
-import bg from "../../assets/header/background.webp";
+import { Link } from "react-router-dom";
+import { mediaData, nav, NavProps } from "../Footer/data";
+import { useScreenSize } from "hooks/useScreenSize";
 import NovaSwapPNG from "../../assets/NovaSwap@2x.png";
 import NovaSwapSm from "../../assets/NovaSwapSm.png";
-import { Link } from "react-router-dom";
+import showIcon from "../../assets/nav/show.png";
+import closeIcon from "../../assets/nav/close.png";
+import Menu from "./menu";
 
-import { mediaData } from "../Footer/data";
-import { useScreenSize } from "hooks/useScreenSize";
-
-const Wrap = styled.div`
-  padding: 15px 172px;
-  width: 100vw;
+const Wrap = styled.div<{ isShow: boolean }>`
+  // padding: 15px 172px;
+  max-width: 1330px;
+  width: 100%;
   height: 78px;
   flex-shrink: 0;
   background: #131313;
@@ -18,6 +20,7 @@ const Wrap = styled.div`
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  margin: 0 auto;
 
   @media (max-width: 600px) {
     height: 62px;
@@ -38,16 +41,15 @@ const NavLogo = styled.div`
 `;
 
 const Group = styled.div`
-
-    @media (max-width: 600px) {
-        display: none;
-    }
+  @media (max-width: 600px) {
+    display: none;
+  }
 `;
 
 const LWrap = styled.div`
   display: flex;
   align-items: center;
-  @media (max-width: 900px) {
+  @media (max-width: 600px) {
     display: none;
     &.desc {
       flex-direction: column;
@@ -76,6 +78,11 @@ const Icon = styled.img`
     height: 25px;
   }
 
+  &.menu-toggle {
+    width: 20px;
+    height: 20px;
+  }
+
   @media (max-width: 900px) {
     width: 131px;
     height: 33px;
@@ -102,6 +109,30 @@ const Button = styled(Link)`
     background: #9ceb92;
   }
 
+  &.mobile {
+    position: relative;
+    display: block;
+    width: 100%;
+    height: auto;
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: -0.176px;
+    padding: 12px 0;
+    background: #8cd383;
+
+    &::before {
+      position: absolute;
+      bottom: -28px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 29px;
+      height: 4px;
+      content: "";
+      border-radius: 4px;
+      background: #d9d9d9;
+    }
+  }
+
   &:hover {
     background: #8cd383;
   }
@@ -110,22 +141,39 @@ const Button = styled(Link)`
     background: #80bf78;
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 600px) {
     width: 85px;
     height: 25px;
     line-height: 25px;
     border-radius: 4px;
-    font-size: 13px
+    font-size: 13px;
   }
+`;
+
+const MobileWrap = styled.div`
+  position: fixed;
+  top: 62px;
+  left: 0;
+  width: 100vw;
+  height: calc(100vh - 62px);
+  padding: 0 24px;
+  background: #131313;
+`;
+
+const Mobiles = styled.div`
+  margin: 194px 0 31px;
+  text-align: center;
 `;
 
 const Index = () => {
   const isScreenSize = useScreenSize();
+  const [isShow, setIsShow] = useState(true);
+
   const isMobile = !isScreenSize["sm"];
 
   console.log("isMobile", isMobile);
   return (
-    <Wrap>
+    <Wrap isShow={isShow}>
       <NavLogo />
       <Group />
       <LWrap>
@@ -143,9 +191,36 @@ const Index = () => {
           Launch APP
         </Button>
       </LWrap>
-      {isMobile? <Button className={"normal"} to={"/swap"}>
-          Launch APP
-        </Button>:null}
+      {isMobile ? (
+        <>
+          <Icon
+            onClick={() => {
+              setIsShow(!isShow);
+            }}
+            src={isShow ? showIcon : closeIcon}
+            className={"menu-toggle"}
+            alt={""}
+          />
+        </>
+      ) : null}
+
+      {isMobile && !isShow ? (
+        <MobileWrap>
+          {nav.map((item: NavProps) => (
+            <Menu {...item} />
+          ))}
+          <Mobiles>
+            {mediaData.map((item, idx) => (
+              <A key={idx} href={item.link} target={"_blank"}>
+                <Icon className={"media"} src={item.icon} />
+              </A>
+            ))}
+          </Mobiles>
+          <Button className={"mobile"} to={"/swap"}>
+            Launch APP
+          </Button>
+        </MobileWrap>
+      ) : null}
     </Wrap>
   );
 };

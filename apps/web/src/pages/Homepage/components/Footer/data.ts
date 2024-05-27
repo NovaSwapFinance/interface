@@ -27,9 +27,18 @@ export const mediaData = [
   },
 ];
 
-export const nav = [
+export type NavProps = {
+  title: string;
+  children: {
+    href: string;
+    name: string;
+    isBlank: boolean;
+  }[];
+};
+
+export const nav: NavProps[] = [
   {
-    title: "Ecodapps",
+    title: "About",
     children: [
       {
         href: "https://docs.novaswap.fi",
@@ -44,7 +53,7 @@ export const nav = [
     ],
   },
   {
-    title: "Develpoers",
+    title: "Developers",
     children: [
       {
         href: "https://github.com/NovaSwapFinance",
