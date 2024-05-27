@@ -188,9 +188,9 @@ export function useTopPools(sortState: PoolTableSortState, chainId?: ChainId) {
         if(pool.poolDayData?.length > 0){ 
           volume24h = pool.poolDayData[pool.poolDayData.length -1].volumeUSD
           if (pool.poolDayData.length >= 7) {
-            volumeWeek = pool.poolDayData.slice(-7).reduce((prev, curr) => prev + curr.volumeUSD, 0);
+            volumeWeek = pool.poolDayData.slice(-7).reduce((prev, curr) => prev + Number(curr.volumeUSD), 0);
           } else {
-            volumeWeek = pool.poolDayData.reduce((prev, curr) => prev + curr.volumeUSD, 0);
+            volumeWeek = pool.poolDayData.reduce((prev, curr) => prev + Number(curr.volumeUSD), 0);
           }
         }
         const token0Project = getProjectToken(pool.token0.address);
@@ -203,6 +203,7 @@ export function useTopPools(sortState: PoolTableSortState, chainId?: ChainId) {
           tvl: pool.liquidity,
           volume24h,
           volumeWeek,
+          totalLiquidity:{value:Number(pool.liquidity)},
           oneDayApr: calculateOneDayApr(
             volume24h,
             pool.liquidity,

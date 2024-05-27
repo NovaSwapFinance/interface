@@ -149,3 +149,33 @@ query NovaSwapDayDatas {
     volumeUSDUntracked
   }
 }
+
+query RecentSwaps( $first: Int!)  {
+  swaps(first: $first,orderBy: timestamp, orderDirection: desc) {
+      amount0
+      amount1
+      amountUSD
+      id
+      recipient
+      sender
+      origin
+      timestamp
+      token0 {
+        address:id
+        id
+        name
+        symbol
+        decimals
+      }
+      token1 {
+        address:id
+        decimals
+        id
+        name
+        symbol
+      }
+       transaction {
+        id
+      }
+  }
+}

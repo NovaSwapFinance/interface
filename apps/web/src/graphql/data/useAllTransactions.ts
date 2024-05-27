@@ -8,7 +8,7 @@ import {
 } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
 
 
-import {useTopTransactionsQuery} from 'graphql/thegraph/__generated__/types-and-hooks'
+import {useRecentSwapsQuery} from 'graphql/thegraph/__generated__/types-and-hooks'
 
 export enum TransactionType {
   SWAP = 'Swap',
@@ -33,7 +33,7 @@ export function useAllTransactions(
     loading: loadingV3,
     error: errorV3,
     fetchMore: fetchMoreV3,
-  } = useTopTransactionsQuery({
+  } = useRecentSwapsQuery({
     variables: { chain, first: ALL_TX_DEFAULT_QUERY_SIZE },
   })
 
@@ -69,8 +69,7 @@ export function useAllTransactions(
   const formatterTransactions = (arr) => {
     if(arr.length>0){
       return arr.map((tx) => {
-        const {swaps} = tx;
-        const {id,amount0,amount1,amountUSD,origin,timestamp,token0,token1,transaction} = swaps[0]|| {};
+        const {id,amount0,amount1,amountUSD,origin,timestamp,token0,token1,transaction} = tx|| {};
         const {id:hx} = transaction;
        
         const token0Logo = getProjectToken(token0.address||'');
@@ -90,7 +89,6 @@ export function useAllTransactions(
           usdValue:{value:amountUSD}
         }
 
-        console.log('token0.address',result)
         return result
       })
     }
@@ -110,13 +108,13 @@ export function useAllTransactions(
       querySizeRef.current += ALL_TX_DEFAULT_QUERY_SIZE
       fetchMoreV3({
         variables: {
-          cursor: dataV3?.transactions?.[dataV3.transactions.length - 1]?.timestamp,
+          cursor: dataV3?.swaps?.[dataV3.swaps.length - 1]?.timestamp,
         },
         updateQuery: (prev, { fetchMoreResult }) => {
           if (!fetchMoreResult) return prev
           if (!loadingMoreV2.current || chain !== Chain.Ethereum) onComplete?.()
           const mergedData = {
-            v3Transactions: [...(prev.transactions ?? []), ...(fetchMoreResult.transactions ?? [])],
+            v3Transactions: [...(prev.swaps ?? []), ...(fetchMoreResult.swaps ?? [])],
           }
           loadingMoreV3.current = false
           return mergedData
@@ -138,12 +136,12 @@ export function useAllTransactions(
       //     },
       //   })
     },
-    [chain, dataV3?.transactions, fetchMoreV3]
+    [chain, dataV3?.swaps, fetchMoreV3]
   )
 
   const transactions: PoolTransaction[] = useMemo(() => {
-   return formatterTransactions(dataV3?.transactions||[])
-  }, [dataV3?.transactions, allTokens])
+   return formatterTransactions(dataV3?.swaps||[])
+  }, [dataV3?.swaps, allTokens])
 
 
 
