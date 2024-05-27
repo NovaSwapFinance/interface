@@ -154,7 +154,10 @@ const StartBuilding = () => {
   useEffect(() => {
     fetchTVL().then((data) => setTvl(formatNumber(data)));
     fetchDailyDatas();
-    fetchUserCount("").then((data) => setUserCount(data?.length ?? 0));
+    fetchUserCount("").then((data) => {
+      const uniqueData = data.filter((v, i, a) => a.map(e => e.origin).indexOf(v.origin) === i);
+      setUserCount(uniqueData?.length ?? 0)
+    });
   }, []);
 
   return (
