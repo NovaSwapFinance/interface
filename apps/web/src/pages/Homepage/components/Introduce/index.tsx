@@ -172,7 +172,7 @@ const Index = () => {
         <Title>Innovation</Title>
         <Desc
           style={{
-            maxWidth: isMobile ? 242 : 580,
+            maxWidth: isMobile ? 240 : 580,
           }}
         >
           Trade a diverse array of digital assets originating from multiple
@@ -195,9 +195,12 @@ const Index = () => {
       </Item>
       <Item>
         <Title>Fair Distribution</Title>
-        <Desc>
+        <Desc
+          style={{
+            maxWidth: isMobile ? 240 : 580,
+          }}
+        >
           We’re committed to fostering a fair distribution model via fair launch
-          <br />
           which targets to place community at the forefront of our endeavors
         </Desc>
         <Button

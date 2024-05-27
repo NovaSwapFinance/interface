@@ -7,22 +7,24 @@ import { Link } from "react-router-dom";
 const Wrap = styled.div`
   max-height: 1009px;
   width: 100vw;
-  height: 100vh;
-  background: url(${bg}) no-repeat;
-  background-size: 100% 100%;
+  height: 945px;
+  background-image: url(${bg});
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
 
   @media (max-width: 600px) {
+    height: 695px;
     padding: 0 24px;
-    background: url(${bgMobile}) no-repeat;
-    background-size: cover;
+    background-image: url(${bgMobile});
     background-position: center -50px;
   }
 `;
 const Container = styled.div`
   display: grid;
-  grid-template-rows: 1fr 1fr 1fr;
+  grid-template-rows: auto;
   justify-items: center;
-  padding-top: 157px;
+  padding-top: 137px;
   text-align: center;
 
   @media (max-width: 600px) {
