@@ -206,8 +206,8 @@ const Index = () => {
 
       {isMobile && !isShow ? (
         <MobileWrap>
-          {nav.map((item: NavProps) => (
-            <Menu {...item} />
+          {nav.map((item: NavProps, index) => (
+            <Menu key={index} {...item} />
           ))}
           <Mobiles>
             {mediaData.map((item, idx) => (
