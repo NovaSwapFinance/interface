@@ -130,8 +130,8 @@ const Index = () => {
         </Title>
         <Desc>
           NovaSwap is an innovative multi-chain assets aggregated AMM DEX built
-          on zkLink Nova <br /> that offers ultimate security, multi-layer
-          yields, and fair distribution.
+          on zkLink Nova <br /> that offers ultimate security and multi-layer
+          yields.
         </Desc>
         <ButtonWrap>
           <Button className={"normal"} to={"/swap"}>
