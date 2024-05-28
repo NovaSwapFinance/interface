@@ -45,14 +45,14 @@ const Icon = styled.img`
   height: 46px;
 
   &.power {
-    width: fit-content;
-    height: 26px;
+    width: 183px;
+    height: auto;
     margin: 9px 0 33px;
   }
 
   &.media {
-    width: fit-content;
-    height: 25px;
+    width: 25px;
+    height: auto;
   }
 
   @media (max-width: 900px) {

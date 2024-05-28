@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
 import adorn from "../../assets/introduce/adorn.png";
@@ -10,16 +10,15 @@ const Wrap = styled.div`
   display: grid;
   grid-template-columns: 1fr;
   grid-template-areas:
-    "a  b"
-    "c  b"
-    "d  d";
+    "a"
+    "b"
+    "c";
   gap: 32px;
   @media (max-width: 900px) {
     grid-template-areas:
       "a"
-      "d"
-      "b"
-      "c";
+      "c"
+      "b";
     gap: 20px;
   }
 `;
@@ -37,17 +36,11 @@ const Item = styled.div`
 
   &:nth-child(2) {
     grid-area: b;
-    max-width: 400px;
-    height: auto;
     background: #181918 url(${adorn2}) no-repeat right bottom/contain;
   }
 
   &:nth-child(3) {
     grid-area: c;
-  }
-
-  &:nth-child(4) {
-    grid-area: d;
     background: #181918 url(${adorn3}) no-repeat right center/contain;
   }
 
@@ -86,14 +79,10 @@ const Item = styled.div`
       }
     }
 
-    &:nth-child(4) {
+    &:nth-child(3) {
       &::before {
         background-image: url(${adorn3});
       }
-    }
-
-    &:nth-child(2) {
-      max-width: 100%;
     }
   }
 `;
@@ -192,21 +181,6 @@ const Index = () => {
         <Button to={"https://github.com/NovaSwapFinance"} target={"_blank"}>
           {`GitHub >`}
         </Button>
-      </Item>
-      <Item>
-        <Title>Fair Distribution</Title>
-        <Desc
-          style={{
-            maxWidth: isMobile ? 240 : 580,
-          }}
-        >
-          We’re committed to fostering a fair distribution model via fair launch
-          which targets to place community at the forefront of our endeavors
-        </Desc>
-        <Button
-          to={"https://docs.novaswap.fi/future/tokenomics"}
-          target={"_blank"}
-        >{`Tokenomics >`}</Button>
       </Item>
       <Item>
         <Title>Multi-layer Yields</Title>
