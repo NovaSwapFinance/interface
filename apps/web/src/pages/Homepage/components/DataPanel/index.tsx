@@ -67,7 +67,7 @@ const StartBuilding = () => {
     } else if (num >= 1e3) {
       return (num / 1e3).toFixed(2) + "K";
     } else {
-      return num.toString();
+      return Number(num).toFixed(2);
     }
   }
 
