@@ -95,6 +95,7 @@ const GQL_TESTNET_CHAINS = [
 const UX_SUPPORTED_GQL_CHAINS = [
   ...GQL_MAINNET_CHAINS,
   ...GQL_TESTNET_CHAINS,
+  'Nova Mainnet'
 ] as const;
 type InterfaceGqlChain = (typeof UX_SUPPORTED_GQL_CHAINS)[number];
 
@@ -238,7 +239,7 @@ const CHAIN_NAME_TO_CHAIN_ID: { [key in InterfaceGqlChain]: ChainId } = {
   [Chain.Base]: ChainId.BASE,
   [Chain.Blast]: ChainId.BLAST,
   [Chain.NovaSepolia]: ChainId.NOVA_SEPOLIA,
-  [Chain.NovaMainnet]: ChainId.NOVA_MAINNET,
+  'Nova Mainnet': ChainId.NOVA_MAINNET,
 };
 
 export function isSupportedGQLChain(chain: Chain): chain is InterfaceGqlChain {

@@ -24,6 +24,7 @@ import { MICROSITE_LINK } from 'utils/openDownloadApp'
 import { getCurrentPageFromLocation } from 'utils/urlRoutes'
 import { getCLS, getFCP, getFID, getLCP, Metric } from 'web-vitals'
 import { findRouteByPath, RouteDefinition, routes, useRouterConfig } from './RouteDefinitions'
+import useInitNovaTokenList from 'hooks/useInitNovaTokenList'
 
 // The Chrome is always loaded, but is lazy-loaded because it is not needed without user interaction.
 // Annotating it with webpackPreload allows it to be ready when requested.
@@ -100,6 +101,7 @@ export default function App() {
   const { pathname } = location
   const currentPage = getCurrentPageFromLocation(pathname)
   const renderUkBanner = useRenderUkBanner()
+  useInitNovaTokenList()
 
   const [searchParams] = useSearchParams()
   useEffect(() => {
@@ -156,7 +158,6 @@ export default function App() {
 const Body = memo(function Body() {
   const routerConfig = useRouterConfig()
   const renderUkBanner = useRenderUkBanner()
-
   return (
     <BodyWrapper bannerIsVisible={renderUkBanner}>
       <Suspense>
