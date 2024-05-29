@@ -9,6 +9,8 @@ import { isBrowserRouterEnabled } from 'utils/env'
 import { getDefaultTokensTitle } from './getDefaultTokensTitle'
 import { getExploreTitle } from './getExploreTitle'
 // High-traffic pages (index and /swap) should not be lazy-loaded.
+import Homepage from './Homepage'
+
 import Landing from './Landing'
 import Swap from './Swap'
 
@@ -95,6 +97,13 @@ const SwapTitle = t`NovaSwap | Swap all the L2's assets in NovaSwap of zkLink`;
 export const routes: RouteDefinition[] = [
   createRouteDefinition({
     path: '/',
+    getElement: (args) =>{
+      return args.browserRouterEnabled && args.hash ? <Navigate to={args.hash.replace('#', '')} replace /> :  <Homepage />
+    } ,
+    getTitle: () => SwapTitle,
+  }),
+  createRouteDefinition({
+    path: '/swap',
     getElement: () => <Swap />,
     getTitle: () => SwapTitle,
   }),
