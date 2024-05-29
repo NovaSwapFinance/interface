@@ -57,6 +57,7 @@ import {
   useRouterConfig,
 } from "./RouteDefinitions";
 import HomePageNav from "./Homepage/components/Nav";
+import useInitNovaTokenList from 'hooks/useInitNovaTokenList'
 
 // The Chrome is always loaded, but is lazy-loaded because it is not needed without user interaction.
 // Annotating it with webpackPreload allows it to be ready when requested.
@@ -158,10 +159,11 @@ const useRenderUkBanner = () => {
 export default function App() {
   const [, setShouldDisableNFTRoutes] = useAtom(shouldDisableNFTRoutesAtom);
 
-  const location = useLocation();
-  const { pathname } = location;
-  const currentPage = getCurrentPageFromLocation(pathname);
-  const renderUkBanner = useRenderUkBanner();
+  const location = useLocation()
+  const { pathname } = location
+  const currentPage = getCurrentPageFromLocation(pathname)
+  const renderUkBanner = useRenderUkBanner()
+  useInitNovaTokenList()
 
   const [searchParams] = useSearchParams();
   useEffect(() => {

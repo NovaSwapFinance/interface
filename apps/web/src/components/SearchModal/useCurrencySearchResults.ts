@@ -12,7 +12,7 @@ import {
   useSearchInactiveTokenLists,
   useTokenListToken,
 } from "hooks/Tokens";
-import { useTokenBalances } from "hooks/useTokenBalances";
+import { useNovaTokenBalances } from "hooks/useTokenBalances";
 import { t } from "i18next";
 import { getTokenFilter } from "lib/hooks/useTokenList/filtering";
 import { getSortedPortfolioTokens } from "lib/hooks/useTokenList/sorting";
@@ -31,7 +31,9 @@ import { useFeatureFlag } from "uniswap/src/features/statsig/hooks";
 import { isSameAddress } from "utilities/src/addresses";
 
 import { useCurrencyBalance } from '../../state/connection/hooks'
+import { useNovaBaseTokens }  from 'hooks/useNovaBaseTokens'
 // import { NumberType, useFormatter } from 'utils/formatNumbers'
+import {useSearchNovaTokensWebQuery} from 'hooks/useSearchNovaTokensWebQuery'
 
 interface CurrencySearchParams {
   searchQuery?: string;
@@ -68,30 +70,29 @@ export function useCurrencySearchResults({
 }: CurrencySearchParams): CurrencySearchResults {
   const { chainId,account} = useWeb3React();
 
-  const gqlTokenListsEnabled = useFeatureFlag(FeatureFlags.GqlTokenLists);
+  // const gqlTokenListsEnabled = useFeatureFlag(FeatureFlags.GqlTokenLists);
+  const gqlTokenListsEnabled = true;
 
   /**
    * GraphQL queries for tokens and search results
    */
-  const { data: searchResults, loading: searchResultsLoading } =
-    useSearchTokensWebQuery({
-      variables: {
-        searchQuery: searchQuery ?? "",
-        chains: [chainIdToBackendName(chainId) ?? Chain.Ethereum],
-      },
-      skip: !searchQuery || !gqlTokenListsEnabled,
-    });
-  const { data: popularTokens, loading: popularTokensLoading } =
-    useTopTokensQuery({
-      fetchPolicy: "cache-first",
-      variables: {
-        chain: chainIdToBackendName(chainId) ?? Chain.Ethereum,
-        orderBy: TokenSortableField.Popularity,
-        page: 1,
-        pageSize: 100,
-      },
-      skip: !gqlTokenListsEnabled,
-    });
+  const { data: searchResults, loading: searchResultsLoading } = useSearchNovaTokensWebQuery(searchQuery ?? "");
+  // const { data: popularTokens, loading: popularTokensLoading } =
+  //   useTopTokensQuery({
+  //     fetchPolicy: "cache-first",
+  //     variables: {
+  //       chain: chainIdToBackendName(chainId) ?? Chain.Ethereum,
+  //       orderBy: TokenSortableField.Popularity,
+  //       page: 1,
+  //       pageSize: 100,
+  //     },
+  //     skip: !gqlTokenListsEnabled,
+  //   });
+
+
+  const { data: popularTokens, loading: popularTokensLoading } = useNovaBaseTokens()
+  
+
   const sortedPopularTokens = useMemo(() => {
     if (!popularTokens?.topTokens) {
       return undefined;
@@ -107,7 +108,7 @@ export function useCurrencySearchResults({
     balanceMap,
     balanceList,
     loading: balancesLoading,
-  } = useTokenBalances();
+  } = useNovaTokenBalances();
 
   /**
    * Token-list based results.
@@ -115,7 +116,6 @@ export function useCurrencySearchResults({
 
   // Queries for a single token directly by address, if the query is an address.
   const searchToken = useTokenListToken(searchQuery);
-  console.log('searchToken====>',searchToken)
   const defaultAndUserAddedTokens = useDefaultActiveTokens(chainId);
   const userAddedTokens = useUserAddedTokens();
 
@@ -187,7 +187,7 @@ export function useCurrencySearchResults({
         sortedTokensWithoutPortfolio: fullBaseList,
       };
     }
-
+   
     // Filter out tokens with balances so they aren't duplicated when we merge below.
     const filteredListTokens = fullBaseList.filter((token) => {
       if (token.isNative) {
@@ -196,7 +196,6 @@ export function useCurrencySearchResults({
         return !(token.address?.toLowerCase() in balanceMap);
       }
     });
-
     if (balancesLoading) {
       const sortedCombinedTokens =
         !isEmpty(searchQuery) && !gqlTokenListsEnabled

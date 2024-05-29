@@ -37,3 +37,145 @@ query FeeTierDistribution($token0: String!, $token1: String!) {
     totalValueLockedToken1
   }
 }
+
+query TopPools( $first: Int!) {
+   pools(first: $first) {
+    id
+    liquidity
+    txCount
+    liquidityProviderCount
+    volumeUSD
+    feeTier
+    token0 {
+      address:id
+      decimals
+      feesUSD
+      id
+      name
+      poolCount
+      symbol
+      totalSupply
+      totalValueLocked
+      totalValueLockedUSD
+      totalValueLockedUSDUntracked
+      txCount
+      untrackedVolumeUSD
+      volume
+      volumeUSD
+    }
+    token1 {
+      address:id
+      decimals
+      feesUSD
+      id
+      name
+      poolCount
+      symbol
+      totalSupply
+      totalValueLocked
+      totalValueLockedUSD
+      totalValueLockedUSDUntracked
+      txCount
+      untrackedVolumeUSD
+      volume
+      volumeUSD
+    }
+    poolDayData {
+      volumeUSD
+    }
+  }
+}
+
+query TopTokens( $first: Int!) {
+   tokens(first: $first) {
+      address:id
+      id
+      decimals
+      feesUSD
+      symbol
+      volume
+      volumeUSD
+      derivedETH
+      name
+      poolCount
+      totalValueLockedUSD
+      totalValueLocked
+     }
+}
+query TopTransactions( $first: Int!)  {
+  transactions(first: $first,orderBy: timestamp, orderDirection: desc) {
+    timestamp
+    id
+    swaps {
+      amount0
+      amount1
+      amountUSD
+      id
+      recipient
+      sender
+      origin
+      timestamp
+      token0 {
+        address:id
+        id
+        name
+        symbol
+        decimals
+      }
+      token1 {
+        address:id
+        decimals
+        id
+        name
+        symbol
+      }
+       transaction {
+        id
+      }
+    }
+  }
+}
+
+
+query NovaSwapDayDatas {
+  uniswapDayDatas {
+    tvlUSD
+    date
+    feesUSD
+    id
+    txCount
+    volumeETH
+    volumeUSD
+    volumeUSDUntracked
+  }
+}
+
+query RecentSwaps( $first: Int!)  {
+  swaps(first: $first,orderBy: timestamp, orderDirection: desc) {
+      amount0
+      amount1
+      amountUSD
+      id
+      recipient
+      sender
+      origin
+      timestamp
+      token0 {
+        address:id
+        id
+        name
+        symbol
+        decimals
+      }
+      token1 {
+        address:id
+        decimals
+        id
+        name
+        symbol
+      }
+       transaction {
+        id
+      }
+  }
+}
