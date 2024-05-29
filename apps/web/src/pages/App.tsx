@@ -188,10 +188,10 @@ export default function App() {
     return null;
   }
   const isHomePage = pathname === "/";
-  const shouldBlockPath = isPathBlocked(pathname);
-  if (shouldBlockPath && pathname !== "/swap") {
-    return <Navigate to="/swap" replace />;
-  }
+  // const shouldBlockPath = isPathBlocked(pathname);
+  // if (shouldBlockPath && pathname !== "/swap") {
+  //   return <Navigate to="/swap" replace />;
+  // }
   return (
     <ErrorBoundary>
       <DarkModeQueryParamReader />
