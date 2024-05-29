@@ -67,7 +67,7 @@ export class TVLChartModel extends ChartModel<StackedLineData> {
         visible: isSingleLineChart, // Hide pricescale on multi-line charts
         borderVisible: false,
         scaleMargins: {
-          top: 0.25,
+          top: 0.2,
           bottom: 0,
         },
         autoScale: true,
