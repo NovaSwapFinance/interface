@@ -44,6 +44,7 @@ query TopPools( $first: Int!) {
     liquidity
     txCount
     liquidityProviderCount
+    totalValueLockedUSD
     volumeUSD
     feeTier
     token0 {
