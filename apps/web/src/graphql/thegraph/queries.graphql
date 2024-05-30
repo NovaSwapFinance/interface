@@ -44,6 +44,7 @@ query TopPools( $first: Int!) {
     liquidity
     txCount
     liquidityProviderCount
+    totalValueLockedUSD
     volumeUSD
     feeTier
     token0 {
@@ -100,6 +101,9 @@ query TopTokens( $first: Int!) {
       poolCount
       totalValueLockedUSD
       totalValueLocked
+      tokenDayData {
+        priceUSD
+      }
      }
 }
 query TopTransactions( $first: Int!)  {
