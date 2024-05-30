@@ -135,7 +135,7 @@ const HeaderWrapper = styled.div<{
   top: ${({ bannerIsVisible }) =>
     bannerIsVisible ? Math.max(UK_BANNER_HEIGHT - scrollY, 0) : 0}px;
   z-index: ${Z_INDEX.sticky};
-
+  background: #131313;
   @media only screen and (max-width: ${({ theme }) =>
       `${theme.breakpoint.md}px`}) {
     top: ${({ bannerIsVisible }) =>
@@ -188,10 +188,11 @@ export default function App() {
     return null;
   }
   const isHomePage = pathname === "/";
-  // const shouldBlockPath = isPathBlocked(pathname);
-  // if (shouldBlockPath && pathname !== "/swap") {
-  //   return <Navigate to="/swap" replace />;
-  // }
+  const shouldBlockPath = isPathBlocked(pathname);
+  if (shouldBlockPath && pathname !== "/swap") {
+    console.log(`Blocked path: ${pathname}`);
+    return <Navigate to="/swap" replace />;
+  }
   return (
     <ErrorBoundary>
       <DarkModeQueryParamReader />
@@ -209,7 +210,8 @@ export default function App() {
         </Helmet>
         <UserPropertyUpdater />
         {renderUkBanner && <UkBanner />}
-        {!isHomePage ? <Header /> : <HomePageHeader />}
+        <Header />
+        {isHomePage ? <HomePageHeader /> : null }
         <ResetPageScrollEffect />
         <Body />
         {!isHomePage ? (
@@ -324,7 +326,6 @@ const HomePageHeader = function Header() {
       bannerIsVisible={renderUkBanner}
       scrollY={scrollY}
     >
-      {/* <NavBar blur={isHeaderTransparent} /> */}
       <HomePageNav />
     </HeaderWrapper>
   );
