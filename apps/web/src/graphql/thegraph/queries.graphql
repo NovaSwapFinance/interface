@@ -100,6 +100,9 @@ query TopTokens( $first: Int!) {
       poolCount
       totalValueLockedUSD
       totalValueLocked
+      tokenDayData {
+        priceUSD
+      }
      }
 }
 query TopTransactions( $first: Int!)  {

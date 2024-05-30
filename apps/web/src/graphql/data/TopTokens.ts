@@ -141,11 +141,27 @@ export function useTopTokens(chain: Chain): UseTopTokensReturnValue {
   const addLogoTokens = useMemo(() =>{
     if(data?.tokens && allTokens.length > 0){
       return data.tokens.map((token) => {
+        const {tokenDayData,volumeUSD} = token
         const item = allTokens.find((t) => t.l2Address.toLowerCase() === token.address.toLowerCase());
-        return item?.iconURL ?{
-          ...token,
-          project:{logoUrl: item?.iconURL || ''},
-        } : token
+        let project = null;
+        if(item?.iconURL) {
+          project = {logoUrl: item?.iconURL || ''}
+        }
+        const price = tokenDayData.length > 0 ? tokenDayData[tokenDayData.length -1].priceUSD : 0;
+       const market = {
+        price:{
+          value: price
+        },
+        volume: {
+          value:volumeUSD
+        }
+       };
+       const result = {
+        ...token,
+        project,
+        market
+       };
+        return result
       })
     }
     return []

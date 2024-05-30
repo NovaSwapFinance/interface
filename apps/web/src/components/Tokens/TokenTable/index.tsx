@@ -116,7 +116,7 @@ export const HEADER_DESCRIPTIONS: Record<TokenSortMethod, ReactNode | undefined>
     </Trans>
   ),
   [TokenSortMethod.VOLUME]: (
-    <Trans>Volume is the amount of the asset that has been traded on Uniswap v3 during the selected time frame.</Trans>
+    <Trans>Volume is the amount of the asset that has been traded on Novaswap during the selected time frame.</Trans>
   ),
 }
 
@@ -190,8 +190,7 @@ function TokenTable({
             </>
           ),
           // fdv: token?.project?.markets?.[0]?.fullyDilutedValuation?.value ?? 0,
-          // volume: token?.market?.volume?.value ?? 0,
-          volume: token?.totalValueLocked ?? 0,
+          volume: token?.market?.volume?.value ?? 0,
           // sparkline: (
           //   <SparklineContainer>
           //     <ParentSize>

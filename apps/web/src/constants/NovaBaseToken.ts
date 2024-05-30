@@ -224,7 +224,38 @@ export const NOVA_BASE_TOKEN_SOURCE = [
   },
 ];
 
-export const NOVA_BASE_TOKEN = NOVA_BASE_TOKEN_SOURCE.map((token) => {
+
+
+export const NOVA_TOKEN_LIST_BASE = [{
+    address: "0xDa4AaEd3A53962c83B35697Cd138cc6df43aF71f",
+    decimals: 8,
+    symbol: "WBTC",
+    name: "Nova Wrapped BTC",
+    logurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/4023.png",
+    Source: "Nova",
+    Sourceurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/13039.png",
+  },
+  {
+    address: "0x2F8A25ac62179B31D62D7F80884AE57464699059",
+    decimals: 6,
+    symbol: "USDT",
+    name: "Nova Tether USD",
+    logurl:
+      "https://assets.coingecko.com/coins/images/31271/large/usdt.jpeg?1696530095",
+    Source: "Nova",
+    Sourceurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/13039.png",
+  },
+  {
+    address: "0x1a1A3b2ff016332e866787B311fcB63928464509",
+    decimals: 6,
+    symbol: "USDC",
+    name: "Nova USD Coin",
+    logurl:
+      "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
+    Source: "Nova",
+    Sourceurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/13039.png",
+  },];
+export const NOVA_BASE_TOKEN = NOVA_TOKEN_LIST_BASE.map((token) => {
   const { address, decimals, symbol, name } = token;
   return new Token(ChainId.NOVA_MAINNET, address, decimals, symbol, name);
 });
