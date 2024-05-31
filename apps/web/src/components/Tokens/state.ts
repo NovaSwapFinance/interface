@@ -9,6 +9,7 @@ export enum TokenSortMethod {
   VOLUME = 'Volume',
   HOUR_CHANGE = '1 hour',
   DAY_CHANGE = '1 day',
+  TVL = 'TVL',
 }
 
 export const exploreSearchStringAtom = atomWithReset<string>('')

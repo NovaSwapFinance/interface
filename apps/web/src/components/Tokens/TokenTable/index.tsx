@@ -104,6 +104,7 @@ const HEADER_TEXT: Record<TokenSortMethod, ReactNode> = {
   [TokenSortMethod.VOLUME]: <Trans>Volume</Trans>,
   [TokenSortMethod.HOUR_CHANGE]: <Trans>1 hour</Trans>,
   [TokenSortMethod.DAY_CHANGE]: <Trans>1 day</Trans>,
+  [TokenSortMethod.TVL]: <Trans>TVL</Trans>,
 }
 
 export const HEADER_DESCRIPTIONS: Record<TokenSortMethod, ReactNode | undefined> = {
@@ -191,6 +192,7 @@ function TokenTable({
           ),
           // fdv: token?.project?.markets?.[0]?.fullyDilutedValuation?.value ?? 0,
           volume: token?.market?.volume?.value ?? 0,
+          totalValueLockedUSD:token?.totalValueLockedUSD,
           // sparkline: (
           //   <SparklineContainer>
           //     <ParentSize>
@@ -336,6 +338,24 @@ function TokenTable({
       //     </Cell>
       //   ),
       // }),
+
+      columnHelper.accessor((row) => row.totalValueLockedUSD, {
+        id: 'tvl',
+        header: () => (
+          <Cell width={133} grow>
+            <TokenTableHeader
+              category={TokenSortMethod.TVL}
+              isCurrentSortMethod={sortMethod === TokenSortMethod.TVL}
+              direction={orderDirection}
+            />
+          </Cell>
+        ),
+        cell: (totalValueLockedUSD) => (
+          <Cell width={133} loading={showLoadingSkeleton} grow testId="volume-cell">
+            <ValueText>{formatNumber({ input: totalValueLockedUSD.getValue?.(), type: NumberType.FiatTokenStats })}</ValueText>
+          </Cell>
+        ),
+      }),
       columnHelper.accessor((row) => row.volume, {
         id: 'volume',
         header: () => (

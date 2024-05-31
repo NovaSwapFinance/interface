@@ -37,6 +37,8 @@ const TokenSortMethods = {
     (b?.market?.pricePercentChange1Hour?.value ?? 0) - (a?.market?.pricePercentChange1Hour?.value ?? 0),
   [TokenSortMethod.VOLUME]: (a: TopToken, b: TopToken) =>
     (b?.market?.volume?.value ?? 0) - (a?.market?.volume?.value ?? 0),
+  [TokenSortMethod.TVL]: (a: TopToken, b: TopToken) =>
+    (b?.totalValueLockedUSD ?? 0) - (a?.totalValueLockedUSD ?? 0),
   [TokenSortMethod.FULLY_DILUTED_VALUATION]: (a: TopToken, b: TopToken) =>
     (b?.project?.markets?.[0]?.fullyDilutedValuation?.value ?? 0) -
     (a?.project?.markets?.[0]?.fullyDilutedValuation?.value ?? 0),
