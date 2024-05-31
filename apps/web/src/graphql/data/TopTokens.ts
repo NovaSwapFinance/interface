@@ -148,13 +148,25 @@ export function useTopTokens(chain: Chain): UseTopTokensReturnValue {
           project = {logoUrl: item?.iconURL || ''}
         }
         const price = tokenDayData.length > 0 ? tokenDayData[tokenDayData.length -1].priceUSD : 0;
+        let pricePercentChange1Day = {
+          value: 0
+        };
+        if(tokenDayData.length >1) {
+          const lastPrice = tokenDayData[tokenDayData.length -2].priceUSD;
+          if(Number(lastPrice)!== 0) {
+            pricePercentChange1Day = {
+              value: ((price - lastPrice) / lastPrice) * 100
+            } 
+          }
+        }
        const market = {
         price:{
           value: price
         },
         volume: {
           value:volumeUSD
-        }
+        },
+        pricePercentChange1Day
        };
        const result = {
         ...token,

@@ -39,7 +39,7 @@ query FeeTierDistribution($token0: String!, $token1: String!) {
 }
 
 query TopPools( $first: Int!) {
-   pools(first: $first) {
+   pools(first: $first, where: {totalValueLockedUSD_gte: "5"}) {
     id
     liquidity
     txCount
@@ -88,7 +88,7 @@ query TopPools( $first: Int!) {
 }
 
 query TopTokens( $first: Int!) {
-   tokens(first: $first) {
+   tokens(first: $first,where: {totalValueLockedUSD_gte: "5"}) {
       address:id
       id
       decimals
