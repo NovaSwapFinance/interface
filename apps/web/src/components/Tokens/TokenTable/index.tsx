@@ -287,23 +287,23 @@ function TokenTable({
           </Cell>
         ),
       }),
-      columnHelper.accessor((row) => row.percentChange1hr, {
-        id: 'percentChange1hr',
-        header: () => (
-          <Cell minWidth={133} grow>
-            <TokenTableHeader
-              category={TokenSortMethod.HOUR_CHANGE}
-              isCurrentSortMethod={sortMethod === TokenSortMethod.HOUR_CHANGE}
-              direction={orderDirection}
-            />
-          </Cell>
-        ),
-        cell: (percentChange1hr) => (
-          <Cell loading={showLoadingSkeleton} minWidth={133} grow>
-            {percentChange1hr.getValue?.()}
-          </Cell>
-        ),
-      }),
+      // columnHelper.accessor((row) => row.percentChange1hr, {
+      //   id: 'percentChange1hr',
+      //   header: () => (
+      //     <Cell minWidth={133} grow>
+      //       <TokenTableHeader
+      //         category={TokenSortMethod.HOUR_CHANGE}
+      //         isCurrentSortMethod={sortMethod === TokenSortMethod.HOUR_CHANGE}
+      //         direction={orderDirection}
+      //       />
+      //     </Cell>
+      //   ),
+      //   cell: (percentChange1hr) => (
+      //     <Cell loading={showLoadingSkeleton} minWidth={133} grow>
+      //       {percentChange1hr.getValue?.()}
+      //     </Cell>
+      //   ),
+      // }),
       columnHelper.accessor((row) => row.percentChange1d, {
         id: 'percentChange1d',
         header: () => (
