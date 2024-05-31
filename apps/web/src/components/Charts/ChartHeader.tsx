@@ -132,7 +132,7 @@ export function ChartHeader({
           <HeaderTimeDisplay time={time} timePlaceholder={timePlaceholder} />
         </Row>
       </ChartHeaderLeftDisplay>
-      <ProtocolLegend protocolData={protocolData} />
+      {/* <ProtocolLegend protocolData={protocolData} /> */}
     </ChartHeaderWrapper>
   )
 }

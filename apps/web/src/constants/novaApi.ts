@@ -10,3 +10,9 @@ export const NOVA_API_TOKENS_URL = {
   [ChainId.NOVA_MAINNET]: "https://explorer-api.zklink.io/tokens/tvl",
   [ChainId.NOVA_SEPOLIA]: "https://sepolia.explorer-api.zklink.io/tokens/tvl",
 };
+
+
+export const NOVA_API_TOKEN_INFO_URL = {
+  [ChainId.NOVA_MAINNET]: "https://explorer-api.zklink.io/tokens",
+  [ChainId.NOVA_SEPOLIA]: "https://sepolia.explorer-api.zklink.io/tokens",
+};

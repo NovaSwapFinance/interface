@@ -57,6 +57,7 @@ import {
   useRouterConfig,
 } from "./RouteDefinitions";
 import HomePageNav from "./Homepage/components/Nav";
+import useInitNovaTokenList from 'hooks/useInitNovaTokenList'
 
 // The Chrome is always loaded, but is lazy-loaded because it is not needed without user interaction.
 // Annotating it with webpackPreload allows it to be ready when requested.
@@ -134,7 +135,7 @@ const HeaderWrapper = styled.div<{
   top: ${({ bannerIsVisible }) =>
     bannerIsVisible ? Math.max(UK_BANNER_HEIGHT - scrollY, 0) : 0}px;
   z-index: ${Z_INDEX.sticky};
-
+  background: #131313;
   @media only screen and (max-width: ${({ theme }) =>
       `${theme.breakpoint.md}px`}) {
     top: ${({ bannerIsVisible }) =>
@@ -158,10 +159,11 @@ const useRenderUkBanner = () => {
 export default function App() {
   const [, setShouldDisableNFTRoutes] = useAtom(shouldDisableNFTRoutesAtom);
 
-  const location = useLocation();
-  const { pathname } = location;
-  const currentPage = getCurrentPageFromLocation(pathname);
-  const renderUkBanner = useRenderUkBanner();
+  const location = useLocation()
+  const { pathname } = location
+  const currentPage = getCurrentPageFromLocation(pathname)
+  const renderUkBanner = useRenderUkBanner()
+  useInitNovaTokenList()
 
   const [searchParams] = useSearchParams();
   useEffect(() => {
@@ -188,6 +190,7 @@ export default function App() {
   const isHomePage = pathname === "/";
   const shouldBlockPath = isPathBlocked(pathname);
   if (shouldBlockPath && pathname !== "/swap") {
+    console.log(`Blocked path: ${pathname}`);
     return <Navigate to="/swap" replace />;
   }
   return (
@@ -207,7 +210,8 @@ export default function App() {
         </Helmet>
         <UserPropertyUpdater />
         {renderUkBanner && <UkBanner />}
-        {!isHomePage ? <Header /> : <HomePageHeader />}
+        <Header />
+        {isHomePage ? <HomePageHeader /> : null }
         <ResetPageScrollEffect />
         <Body />
         {!isHomePage ? (
@@ -322,7 +326,6 @@ const HomePageHeader = function Header() {
       bannerIsVisible={renderUkBanner}
       scrollY={scrollY}
     >
-      {/* <NavBar blur={isHeaderTransparent} /> */}
       <HomePageNav />
     </HeaderWrapper>
   );

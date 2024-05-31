@@ -8,7 +8,7 @@ import useDebounce from 'hooks/useDebounce'
 import { useOnClickOutside } from 'hooks/useOnClickOutside'
 import useSelectChain from 'hooks/useSelectChain'
 import useToggle from 'hooks/useToggle'
-import { useTokenBalances } from 'hooks/useTokenBalances'
+import { useNovaTokenBalances } from 'hooks/useTokenBalances'
 import { Trans, t } from 'i18n'
 import useNativeCurrency from 'lib/hooks/useNativeCurrency'
 import tryParseCurrencyAmount from 'lib/utils/tryParseCurrencyAmount'
@@ -100,7 +100,7 @@ export function CurrencySearch({
     otherSelectedCurrency,
   })
 
-  const { balanceMap } = useTokenBalances();
+  const { balanceMap } = useNovaTokenBalances();
 
   const gqlTokenListsEnabled = useFeatureFlag(FeatureFlags.GqlTokenLists);
   const isLoading = Boolean(

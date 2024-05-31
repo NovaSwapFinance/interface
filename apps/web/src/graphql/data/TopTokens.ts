@@ -1,3 +1,4 @@
+import  { useEffect, useState } from 'react'
 import { ApolloError } from '@apollo/client'
 import {
   exploreSearchStringAtom,
@@ -25,6 +26,8 @@ import {
   usePollQueryWhileMounted,
 } from './util'
 
+import {useTopTokensQuery} from 'graphql/thegraph/__generated__/types-and-hooks'
+
 const TokenSortMethods = {
   [TokenSortMethod.PRICE]: (a: TopToken, b: TopToken) =>
     (b?.market?.price?.value ?? 0) - (a?.market?.price?.value ?? 0),
@@ -34,6 +37,8 @@ const TokenSortMethods = {
     (b?.market?.pricePercentChange1Hour?.value ?? 0) - (a?.market?.pricePercentChange1Hour?.value ?? 0),
   [TokenSortMethod.VOLUME]: (a: TopToken, b: TopToken) =>
     (b?.market?.volume?.value ?? 0) - (a?.market?.volume?.value ?? 0),
+  [TokenSortMethod.TVL]: (a: TopToken, b: TopToken) =>
+    (b?.totalValueLockedUSD ?? 0) - (a?.totalValueLockedUSD ?? 0),
   [TokenSortMethod.FULLY_DILUTED_VALUATION]: (a: TopToken, b: TopToken) =>
     (b?.project?.markets?.[0]?.fullyDilutedValuation?.value ?? 0) -
     (a?.project?.markets?.[0]?.fullyDilutedValuation?.value ?? 0),
@@ -83,6 +88,21 @@ interface UseTopTokensReturnValue {
 }
 
 export function useTopTokens(chain: Chain): UseTopTokensReturnValue {
+
+
+
+  const [allTokens,setAllTokens] = useState<any[]>([])
+
+  useEffect(()=>{
+    fetch(`https://explorer-api.zklink.io/tokens?limit=300`).then((res) =>
+      res.json().then((all) => {
+        if(!all.error) {
+          setAllTokens(all.items);
+        }
+      }),
+    );
+  },[])
+
   const chainId = supportedChainIdFromGQLChain(chain)
   const duration = toHistoryDuration(useAtomValue(filterTimeAtom))
 
@@ -109,17 +129,60 @@ export function useTopTokens(chain: Chain): UseTopTokensReturnValue {
     loading: loadingTokens,
     error,
   } = usePollQueryWhileMounted(
-    useTopTokens100Query({
-      variables: { duration, chain },
+    useTopTokensQuery({
+      variables: { first: 30 },
     }),
     PollingInterval.Fast
   )
 
-  const unwrappedTokens = useMemo(
-    () => chainId && data?.topTokens?.map((token) => unwrapToken(chainId, token)),
-    [chainId, data]
-  )
-  const sortedTokens = useSortedTokens(unwrappedTokens)
+  // const unwrappedTokens = useMemo(
+  //   () => chainId && data?.topTokens?.map((token) => unwrapToken(chainId, token)),
+  //   [chainId, data]
+  // )
+
+  const addLogoTokens = useMemo(() =>{
+    if(data?.tokens && allTokens.length > 0){
+      return data.tokens.map((token) => {
+        const {tokenDayData,volumeUSD} = token
+        const item = allTokens.find((t) => t.l2Address.toLowerCase() === token.address.toLowerCase());
+        let project = null;
+        if(item?.iconURL) {
+          project = {logoUrl: item?.iconURL || ''}
+        }
+        const price = tokenDayData.length > 0 ? tokenDayData[tokenDayData.length -1].priceUSD : 0;
+        let pricePercentChange1Day = {
+          value: 0
+        };
+        if(tokenDayData.length >1) {
+          const lastPrice = tokenDayData[tokenDayData.length -2].priceUSD;
+          if(Number(lastPrice)!== 0) {
+            pricePercentChange1Day = {
+              value: ((price - lastPrice) / lastPrice) * 100
+            } 
+          }
+        }
+       const market = {
+        price:{
+          value: price
+        },
+        volume: {
+          value:volumeUSD
+        },
+        pricePercentChange1Day
+       };
+       const result = {
+        ...token,
+        project,
+        market
+       };
+        return result
+      })
+    }
+    return []
+  },[allTokens,data?.tokens])
+
+
+  const sortedTokens = useSortedTokens(addLogoTokens)
   const tokenSortRank = useMemo(
     () =>
       sortedTokens?.reduce((acc, cur, i) => {

@@ -104,6 +104,7 @@ const HEADER_TEXT: Record<TokenSortMethod, ReactNode> = {
   [TokenSortMethod.VOLUME]: <Trans>Volume</Trans>,
   [TokenSortMethod.HOUR_CHANGE]: <Trans>1 hour</Trans>,
   [TokenSortMethod.DAY_CHANGE]: <Trans>1 day</Trans>,
+  [TokenSortMethod.TVL]: <Trans>TVL</Trans>,
 }
 
 export const HEADER_DESCRIPTIONS: Record<TokenSortMethod, ReactNode | undefined> = {
@@ -116,7 +117,7 @@ export const HEADER_DESCRIPTIONS: Record<TokenSortMethod, ReactNode | undefined>
     </Trans>
   ),
   [TokenSortMethod.VOLUME]: (
-    <Trans>Volume is the amount of the asset that has been traded on Uniswap v3 during the selected time frame.</Trans>
+    <Trans>Volume is the amount of the asset that has been traded on Novaswap during the selected time frame.</Trans>
   ),
 }
 
@@ -189,29 +190,30 @@ function TokenTable({
               <DeltaText delta={delta1d}>{formatDelta(delta1d)}</DeltaText>
             </>
           ),
-          fdv: token?.project?.markets?.[0]?.fullyDilutedValuation?.value ?? 0,
+          // fdv: token?.project?.markets?.[0]?.fullyDilutedValuation?.value ?? 0,
           volume: token?.market?.volume?.value ?? 0,
-          sparkline: (
-            <SparklineContainer>
-              <ParentSize>
-                {({ width, height }) =>
-                  sparklines && (
-                    <SparklineChart
-                      width={width}
-                      height={height}
-                      tokenData={token}
-                      pricePercentChange={token?.market?.pricePercentChange?.value}
-                      sparklineMap={sparklines}
-                    />
-                  )
-                }
-              </ParentSize>
-            </SparklineContainer>
-          ),
-          link: getTokenDetailsURL({
-            address: token?.address,
-            chain: chainIdToBackendName(chainId),
-          }),
+          totalValueLockedUSD:token?.totalValueLockedUSD,
+          // sparkline: (
+          //   <SparklineContainer>
+          //     <ParentSize>
+          //       {({ width, height }) =>
+          //         sparklines && (
+          //           <SparklineChart
+          //             width={width}
+          //             height={height}
+          //             tokenData={token}
+          //             pricePercentChange={token?.market?.pricePercentChange?.value}
+          //             sparklineMap={sparklines}
+          //           />
+          //         )
+          //       }
+          //     </ParentSize>
+          //   </SparklineContainer>
+          // ),
+          // link: getTokenDetailsURL({
+          //   address: token?.address,
+          //   chain: chainIdToBackendName(chainId),
+          // }),
           analytics: {
             elementName: InterfaceElementName.TOKENS_TABLE_ROW,
             properties: {
@@ -319,20 +321,38 @@ function TokenTable({
           </Cell>
         ),
       }),
-      columnHelper.accessor((row) => row.fdv, {
-        id: 'fdv',
+      // columnHelper.accessor((row) => row.fdv, {
+      //   id: 'fdv',
+      //   header: () => (
+      //     <Cell width={133} grow>
+      //       <TokenTableHeader
+      //         category={TokenSortMethod.FULLY_DILUTED_VALUATION}
+      //         isCurrentSortMethod={sortMethod === TokenSortMethod.FULLY_DILUTED_VALUATION}
+      //         direction={orderDirection}
+      //       />
+      //     </Cell>
+      //   ),
+      //   cell: (fdv) => (
+      //     <Cell loading={showLoadingSkeleton} width={133} grow testId="fdv-cell">
+      //       <ValueText>{formatNumber({ input: fdv.getValue?.(), type: NumberType.FiatTokenStats })}</ValueText>
+      //     </Cell>
+      //   ),
+      // }),
+
+      columnHelper.accessor((row) => row.totalValueLockedUSD, {
+        id: 'tvl',
         header: () => (
           <Cell width={133} grow>
             <TokenTableHeader
-              category={TokenSortMethod.FULLY_DILUTED_VALUATION}
-              isCurrentSortMethod={sortMethod === TokenSortMethod.FULLY_DILUTED_VALUATION}
+              category={TokenSortMethod.TVL}
+              isCurrentSortMethod={sortMethod === TokenSortMethod.TVL}
               direction={orderDirection}
             />
           </Cell>
         ),
-        cell: (fdv) => (
-          <Cell loading={showLoadingSkeleton} width={133} grow testId="fdv-cell">
-            <ValueText>{formatNumber({ input: fdv.getValue?.(), type: NumberType.FiatTokenStats })}</ValueText>
+        cell: (totalValueLockedUSD) => (
+          <Cell width={133} loading={showLoadingSkeleton} grow testId="volume-cell">
+            <ValueText>{formatNumber({ input: totalValueLockedUSD.getValue?.(), type: NumberType.FiatTokenStats })}</ValueText>
           </Cell>
         ),
       }),

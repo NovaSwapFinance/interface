@@ -1,3 +1,4 @@
+import { ChainId } from "@novaswap/sdk-core";
 import { ApolloError } from '@apollo/client'
 import { createColumnHelper } from '@tanstack/react-table'
 import Row from 'components/Row'
@@ -187,7 +188,7 @@ export default function RecentTransactions() {
         ),
         cell: (makerAddress) => (
           <Cell loading={showLoadingSkeleton} minWidth={150}>
-            <StyledExternalLink href={getExplorerLink(chainId, makerAddress.getValue?.(), ExplorerDataType.ADDRESS)}>
+            <StyledExternalLink href={getExplorerLink(ChainId.NOVA_MAINNET, makerAddress.getValue?.(), ExplorerDataType.ADDRESS)}>
               {shortenAddress(makerAddress.getValue?.())}
             </StyledExternalLink>
           </Cell>

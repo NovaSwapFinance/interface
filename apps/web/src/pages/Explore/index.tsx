@@ -177,11 +177,11 @@ const Explore = ({ initialTab }: { initialTab?: ExploreTab }) => {
               )
             })}
           </TabBar>
-          <FiltersContainer>
+          {/* <FiltersContainer>
             <NetworkFilter />
             {currentKey === ExploreTab.Tokens && <TimeSelector />}
             {currentKey !== ExploreTab.Transactions && <SearchBar tab={currentKey} />}
-          </FiltersContainer>
+          </FiltersContainer> */}
         </NavWrapper>
         <Page />
       </ExploreContainer>
