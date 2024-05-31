@@ -208,10 +208,10 @@ function TokenTable({
           //     </ParentSize>
           //   </SparklineContainer>
           // ),
-          link: getTokenDetailsURL({
-            address: token?.address,
-            chain: chainIdToBackendName(chainId),
-          }),
+          // link: getTokenDetailsURL({
+          //   address: token?.address,
+          //   chain: chainIdToBackendName(chainId),
+          // }),
           analytics: {
             elementName: InterfaceElementName.TOKENS_TABLE_ROW,
             properties: {
@@ -319,23 +319,23 @@ function TokenTable({
           </Cell>
         ),
       }),
-      columnHelper.accessor((row) => row.fdv, {
-        id: 'fdv',
-        header: () => (
-          <Cell width={133} grow>
-            <TokenTableHeader
-              category={TokenSortMethod.FULLY_DILUTED_VALUATION}
-              isCurrentSortMethod={sortMethod === TokenSortMethod.FULLY_DILUTED_VALUATION}
-              direction={orderDirection}
-            />
-          </Cell>
-        ),
-        cell: (fdv) => (
-          <Cell loading={showLoadingSkeleton} width={133} grow testId="fdv-cell">
-            <ValueText>{formatNumber({ input: fdv.getValue?.(), type: NumberType.FiatTokenStats })}</ValueText>
-          </Cell>
-        ),
-      }),
+      // columnHelper.accessor((row) => row.fdv, {
+      //   id: 'fdv',
+      //   header: () => (
+      //     <Cell width={133} grow>
+      //       <TokenTableHeader
+      //         category={TokenSortMethod.FULLY_DILUTED_VALUATION}
+      //         isCurrentSortMethod={sortMethod === TokenSortMethod.FULLY_DILUTED_VALUATION}
+      //         direction={orderDirection}
+      //       />
+      //     </Cell>
+      //   ),
+      //   cell: (fdv) => (
+      //     <Cell loading={showLoadingSkeleton} width={133} grow testId="fdv-cell">
+      //       <ValueText>{formatNumber({ input: fdv.getValue?.(), type: NumberType.FiatTokenStats })}</ValueText>
+      //     </Cell>
+      //   ),
+      // }),
       columnHelper.accessor((row) => row.volume, {
         id: 'volume',
         header: () => (

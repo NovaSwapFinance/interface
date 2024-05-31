@@ -232,7 +232,7 @@ export function PoolsTable({
           volume24h: pool.volume24h,
           volumeWeek: pool.volumeWeek,
           oneDayApr: pool.oneDayApr,
-          link: `/explore/pools/${chainIdToBackendName(chainId).toLowerCase()}/${pool.hash}`,
+          // link: `/explore/pools/${chainIdToBackendName(chainId).toLowerCase()}/${pool.hash}`,
           analytics: {
             elementName: InterfaceElementName.POOLS_TABLE_ROW,
             properties: {

@@ -6,7 +6,7 @@ export const NOVA_BASE_TOKEN_SOURCE = [
     symbol: "AGX",
     name: "AGX",
     decimals: 18,
-    logurl: null,
+    logurl: 'https://agx.xyz/static/media/logo_GMX.46196f814c1701d9ee3cfaf8808b69ca.svg',
   },
   {
     address: "0x000000000000000000000000000000000000800A",
