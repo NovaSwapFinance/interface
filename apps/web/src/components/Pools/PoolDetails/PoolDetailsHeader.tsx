@@ -455,7 +455,7 @@ export function DoubleTokenAndChainLogo({
   return (
     <StyledLogoParentContainer>
       <DoubleTokenLogo tokens={tokens} size={size} />
-      <SquareL2Logo chainId={chainId} size={size} />
+      {/* <SquareL2Logo chainId={chainId} size={size} /> */}
     </StyledLogoParentContainer>
   );
 }

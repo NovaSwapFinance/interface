@@ -113,11 +113,9 @@ export default function PoolDetailsPage() {
     chainName: string
   }>()
   const chain = getValidUrlChainName(chainName)
-  console.log('chain=====>',chain)
   const chainId = chain && supportedChainIdFromGQLChain(chain) || ChainId.NOVA_MAINNET
   const { data: poolData, loading } = usePoolData(poolAddress?.toLowerCase() ?? '', chainId)
 
-  console.log('chain=====>111',poolData)
   const [isReversed, toggleReversed] = useReducer((x) => !x, false)
   const unwrappedTokens = getUnwrappedPoolToken(poolData, chainId)
   const [token0, token1] = isReversed ? [unwrappedTokens?.[1], unwrappedTokens?.[0]] : unwrappedTokens

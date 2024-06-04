@@ -117,8 +117,6 @@ export function usePoolData(
     return item?.iconURL || '';
   }
 
-  console.log('dataV3=====>',dataV3)
-
   return useMemo(() => {
     const anyError = Boolean(
       errorV3
@@ -158,10 +156,10 @@ export function usePoolData(
             address: pool.id,
             txCount: pool.txCount,
             protocolVersion: 'V3',
-            token0: {...pool.token0,project: {logo:{url:token0Project}},chain:"Nova Mainnet"} as Token,
+            token0: {...pool.token0,logoUrl:token0Project, project: {logo:{url:token0Project}},chain:"Nova Mainnet"} as Token,
             tvlToken0: pool.totalValueLockedToken0,
             token0Price: pool.token0Price,
-            token1: {...pool.token1,project:{logo:{url:token1Project}},chain:'Nova Mainnet'} as Token,
+            token1: {...pool.token1,logoUrl:token1Project,project:{logo:{url:token1Project}},chain:'Nova Mainnet'} as Token,
             tvlToken1: pool.totalValueLockedToken1,
             token1Price: pool.token1Price,
             feeTier,

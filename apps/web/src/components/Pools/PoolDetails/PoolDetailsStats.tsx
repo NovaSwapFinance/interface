@@ -143,10 +143,11 @@ const PoolBalanceTokenNames = ({
   const screenIsNotLarge = isScreenSize["lg"];
   const { formatNumber } = useFormatter();
   const unwrappedToken = chainId ? unwrapToken(chainId, token) : token;
-  console.log('unwrappedToken====>',unwrappedToken)
   const isNative = unwrappedToken?.address === NATIVE_CHAIN_ID;
+  // const currency =
+  //   isNative && chainId ? nativeOnChain(chainId) : token.currency;
   const currency =
-    isNative && chainId ? nativeOnChain(chainId) : token.currency;
+    isNative && chainId ? nativeOnChain(chainId) : token;
   return (
     <PoolBalanceTokenNamesContainer>
       {!screenIsNotLarge && (
