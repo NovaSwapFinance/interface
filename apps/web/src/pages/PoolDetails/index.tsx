@@ -1,4 +1,5 @@
 import { InterfacePageName } from '@uniswap/analytics-events'
+import { ChainId } from "@novaswap/sdk-core";
 import { Trace } from 'analytics'
 import Column from 'components/Column'
 import ChartSection from 'components/Pools/PoolDetails/ChartSection'
@@ -112,8 +113,11 @@ export default function PoolDetailsPage() {
     chainName: string
   }>()
   const chain = getValidUrlChainName(chainName)
-  const chainId = chain && supportedChainIdFromGQLChain(chain)
+  console.log('chain=====>',chain)
+  const chainId = chain && supportedChainIdFromGQLChain(chain) || ChainId.NOVA_MAINNET
   const { data: poolData, loading } = usePoolData(poolAddress?.toLowerCase() ?? '', chainId)
+
+  console.log('chain=====>111',poolData)
   const [isReversed, toggleReversed] = useReducer((x) => !x, false)
   const unwrappedTokens = getUnwrappedPoolToken(poolData, chainId)
   const [token0, token1] = isReversed ? [unwrappedTokens?.[1], unwrappedTokens?.[0]] : unwrappedTokens
@@ -185,13 +189,13 @@ export default function PoolDetailsPage() {
             />
           </LeftColumn>
           <RightColumn>
-            <PoolDetailsStatsButtons
+            {/* <PoolDetailsStatsButtons
               chainId={chainId}
               token0={token0}
               token1={token1}
               feeTier={poolData?.feeTier}
               loading={loading}
-            />
+            /> */}
             <PoolDetailsStats poolData={poolData} isReversed={isReversed} chainId={chainId} loading={loading} />
             <TokenDetailsWrapper>
               <TokenDetailsHeader>

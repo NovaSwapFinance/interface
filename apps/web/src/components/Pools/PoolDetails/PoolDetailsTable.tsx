@@ -1,4 +1,5 @@
 import { Pool } from "@novaswap/v3-sdk";
+import { ChainId } from "@novaswap/sdk-core";
 import { useWeb3React } from "@web3-react/core";
 import useMultiChainPositions from "components/AccountDrawer/MiniPortfolio/Pools/useMultiChainPositions";
 import Column from "components/Column";
@@ -48,20 +49,22 @@ export function PoolDetailsTableTab({
   const chainName = validateUrlChainParam(
     useParams<{ chainName?: string }>().chainName,
   );
-  const chainId = supportedChainIdFromGQLChain(chainName);
+  // const chainId = supportedChainIdFromGQLChain(chainName);
+  const chainId = ChainId.NOVA_MAINNET  
   const { account } = useWeb3React();
-  const { positions } = useMultiChainPositions(account ?? "", [chainId]);
+  // const { positions } = useMultiChainPositions(account ?? "", [chainId]);
   const positionsInThisPool = useMemo(
-    () =>
-      positions?.filter(
-        (position) =>
-          Pool.getAddress(
-            position.pool.token0,
-            position.pool.token1,
-            position.pool.fee,
-          ).toLowerCase() === poolAddress.toLowerCase(),
-      ) ?? [],
-    [poolAddress, positions],
+    // () =>
+    //   positions?.filter(
+    //     (position) =>
+    //       Pool.getAddress(
+    //         position.pool.token0,
+    //         position.pool.token1,
+    //         position.pool.fee,
+    //       ).toLowerCase() === poolAddress.toLowerCase(),
+    //   ) ?? [],
+    // [poolAddress, positions],
+    ()=>[],[]
   );
   return (
     <Column gap="lg">
