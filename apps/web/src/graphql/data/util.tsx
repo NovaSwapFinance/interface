@@ -278,6 +278,7 @@ export const BACKEND_SUPPORTED_CHAINS = [
   Chain.Bnb,
   Chain.Celo,
   Chain.Blast,
+  'NovaMainnet'
 ] as const
 export const BACKEND_NOT_YET_SUPPORTED_CHAIN_IDS = [ChainId.AVALANCHE] as const
 
@@ -299,6 +300,7 @@ export function getTokenDetailsURL({
   chain: Chain
   inputAddress?: string | null
 }) {
+  console.log('getTokenDetailsURL====>',chain)
   const chainName = chain.toLowerCase()
   const tokenAddress = address ?? NATIVE_CHAIN_ID
   const inputAddressSuffix = inputAddress ? `?inputCurrency=${inputAddress}` : ''

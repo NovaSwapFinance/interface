@@ -16,7 +16,7 @@ export function TokenDetailsPoolsTable({ chainId, referenceToken }: { chainId: C
     () => ({ sortBy: sortMethod, sortDirection: sortAscending ? OrderDirection.Asc : OrderDirection.Desc }),
     [sortAscending, sortMethod]
   )
-  const { pools, loading, errorV2, errorV3, loadMore } = usePoolsFromTokenAddress(
+  const { pools, loading, errorV2, errorV3 } = usePoolsFromTokenAddress(
     referenceToken.address,
     sortState,
     chainId
@@ -46,7 +46,7 @@ export function TokenDetailsPoolsTable({ chainId, referenceToken }: { chainId: C
         chainId={chainId}
         maxHeight={600}
         hiddenColumns={HIDDEN_COLUMNS}
-        loadMore={loadMore}
+        loadMore={null}
       />
     </div>
   )

@@ -19,7 +19,7 @@ import {
 import { Trans } from 'i18n'
 import { useAtomValue } from 'jotai/utils'
 import { useTDPContext } from 'pages/TokenDetails/TDPContext'
-import { Chain } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
+import { Chain, HistoryDuration } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
 import { AdvancedPriceChartToggle } from './AdvancedPriceChartToggle'
 import { ChartTypeDropdown } from './ChartTypeSelector'
 import { useTDPPriceChartData, useTDPTVLChartData, useTDPVolumeChartData } from './hooks'
@@ -89,8 +89,13 @@ export function useCreateTDPChartState(tokenDBAddress: string | undefined, curre
 
   const [chartType, setChartType] = useState<TokenDetailsChartType>(ChartType.PRICE)
   const [priceChartType, setPriceChartType] = useState<PriceChartType>(PriceChartType.LINE)
+  const getTime =  {
+    [HistoryDuration.Day]:() => Math.floor((new Date().getTime() - 24 * 60 * 60 * 1000) /1000 ),
+    [HistoryDuration.Week]:() => Math.floor((new Date().getTime() - 7 * 24 * 60 * 60 * 1000) /1000 ),
+    [HistoryDuration.Month]:() => Math.floor((new Date().getTime() - 30 * 24 * 60 * 60 * 1000) /1000 ),
+  }
 
-  const variables = { address: tokenDBAddress, chain: currencyChainName, duration: toHistoryDuration(timePeriod) }
+  const variables = { address: tokenDBAddress, time:getTime[toHistoryDuration(timePeriod)]()}
 
   const priceQuery = useTDPPriceChartData(variables, chartType !== ChartType.PRICE, priceChartType)
   const volumeQuery = useTDPVolumeChartData(variables, chartType !== ChartType.VOLUME)
@@ -176,13 +181,13 @@ function ChartControls() {
   return (
     <ChartActionsContainer>
       <ChartTypeSelectorContainer>
-        {activeQuery.chartType === ChartType.PRICE && (
+        {/* {activeQuery.chartType === ChartType.PRICE && (
           <AdvancedPriceChartToggle
             currentChartType={priceChartType}
             onChartTypeChange={setPriceChartType}
             disableCandlestickUI={disableCandlestickUI}
           />
-        )}
+        )} */}
         <ChartTypeDropdown
           options={TDP_CHART_SELECTOR_OPTIONS}
           currentChartType={activeQuery.chartType}
