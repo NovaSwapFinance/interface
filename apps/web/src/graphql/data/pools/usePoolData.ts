@@ -1,3 +1,4 @@
+import { tab } from './../../../nft/components/details/AssetDetails.css';
 import { ChainId } from "@novaswap/sdk-core";
 import { V2_BIPS } from "graphql/data/pools/useTopPools";
 import { chainIdToBackendName } from "graphql/data/util";
@@ -9,6 +10,9 @@ import {
   useV2PairQuery,
   useV3PoolQuery,
 } from "uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks";
+
+import {usePoolDataQuery} from 'graphql/thegraph/__generated__/types-and-hooks'
+import { useNovaTokenList } from "hooks/useNovaTokenList";
 
 export interface PoolData {
   // basic pool info
@@ -65,6 +69,16 @@ function calc24HVolChange(historicalVolume?: (VolumeChange | undefined)[]) {
   return ((volume24h - volume48h) / volume48h) * 100;
 }
 
+
+function calc24hChange(a: number, b: number): number {
+  if (b === 0) {
+    return 100;
+  }
+  return (a - b)/ b * 100;
+}
+
+
+
 /**
  * Queries both v3 and v2 for pool data
  * @param poolAddress
@@ -83,62 +97,86 @@ export function usePoolData(
     loading: loadingV3,
     error: errorV3,
     data: dataV3,
-  } = useV3PoolQuery({
-    variables: { chain: chainIdToBackendName(chainId), address: poolAddress },
-    errorPolicy: "all",
-  });
-  const {
-    loading: loadingV2,
-    error: errorV2,
-    data: dataV2,
-  } = useV2PairQuery({
+  } = usePoolDataQuery({
     variables: { address: poolAddress },
-    skip: chainId !== ChainId.MAINNET,
     errorPolicy: "all",
   });
+
+  const { novaTokenList } = useNovaTokenList()
+  // const {
+  //   loading: loadingV2,
+  //   error: errorV2,
+  //   data: dataV2,
+  // } = useV2PairQuery({
+  //   variables: { address: poolAddress },
+  //   skip: chainId !== ChainId.MAINNET,
+  //   errorPolicy: "all",
+  // });
+  const getProjectToken = (address:string) => {
+    const item = novaTokenList.find((token) => token.l2Address.toLowerCase() === address.toLowerCase());
+    return item?.iconURL || '';
+  }
 
   return useMemo(() => {
     const anyError = Boolean(
-      errorV3 || (errorV2 && chainId === ChainId.MAINNET),
+      errorV3
     );
     const anyLoading = Boolean(
-      loadingV3 || (loadingV2 && chainId === ChainId.MAINNET),
+      loadingV3
     );
 
-    const pool = dataV3?.v3Pool ?? dataV2?.v2Pair ?? undefined;
-    const feeTier = dataV3?.v3Pool?.feeTier ?? V2_BIPS;
+    const pool = dataV3?.pool ?? undefined;
+    const feeTier = dataV3?.pool?.feeTier ?? V2_BIPS;
+    if(!pool) {
+      return {
+        data: undefined,
+        error: anyError,
+        loading: anyLoading,
+      }
+    }
+
+
+    const token0Project = getProjectToken(pool.token0.address);
+    const token1Project = getProjectToken(pool.token1.address);
+    const {poolDayData} = pool;
+    const volume24h = poolDayData?.length > 0 ? poolDayData[0].volumeUSD : 0;
+    let volumeUSD24HChange = 0;
+    let tvlUSDChange = 0
+    if(poolDayData?.length > 1) { 
+      const volume48h = poolDayData[1].volumeUSD;
+      const tvl24h = poolDayData[0].tvlUSD;
+      const tvl48h = poolDayData[1].tvlUSD;
+      volumeUSD24HChange = calc24hChange(volume24h, volume48h);
+      tvlUSDChange = calc24hChange(tvl24h, tvl48h);
+    }
 
     return {
       data: pool
         ? {
-            address: pool.address,
+            address: pool.id,
             txCount: pool.txCount,
-            protocolVersion: pool.protocolVersion,
-            token0: pool.token0 as Token,
-            tvlToken0: pool.token0Supply,
-            token0Price: pool.token0?.project?.markets?.[0]?.price?.value,
-            token1: pool.token1 as Token,
-            tvlToken1: pool.token1Supply,
-            token1Price: pool.token1?.project?.markets?.[0]?.price?.value,
+            protocolVersion: 'V3',
+            token0: {...pool.token0,logoUrl:token0Project, project: {logo:{url:token0Project}},chain:"Nova Mainnet"} as Token,
+            tvlToken0: pool.totalValueLockedToken0,
+            token0Price: pool.token0Price,
+            token1: {...pool.token1,logoUrl:token1Project,project:{logo:{url:token1Project}},chain:'Nova Mainnet'} as Token,
+            tvlToken1: pool.totalValueLockedToken1,
+            token1Price: pool.token1Price,
             feeTier,
-            volumeUSD24H: pool.volume24h?.value,
-            volumeUSD24HChange: calc24HVolChange(
-              pool.historicalVolume?.concat(),
-            ),
-            tvlUSD: pool.totalLiquidity?.value,
-            tvlUSDChange: pool.totalLiquidityPercentChange24h?.value,
+            volumeUSD24H: volume24h,
+            volumeUSD24HChange: volumeUSD24HChange,
+            tvlUSD: pool.totalValueLockedUSD,
+            tvlUSDChange: tvlUSDChange,
           }
         : undefined,
       error: anyError,
       loading: anyLoading,
     };
   }, [
+    novaTokenList,
     chainId,
-    dataV2?.v2Pair,
-    dataV3?.v3Pool,
-    errorV2,
+    dataV3?.pool,
     errorV3,
-    loadingV2,
     loadingV3,
   ]);
 }

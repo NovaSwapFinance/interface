@@ -17,11 +17,9 @@ export default function CurrencyLogo(
 
   const tokenImg = useMemo(() => {
     if(props.currency?.isNative || (props.currency?.address ||props.currency?.wrapped.address||'').toLowerCase() === '0x8280a4e7d5b3b658ec4580d3bc30f5e50454f169') return ETH_LOGO;
-
     let novaBaseToken = novaTokenList.find((token) => token.l2Address.toLowerCase() === (props.currency?.address ||props.currency?.wrapped.address||'').toLowerCase());
-    
     let novaSourceToken = NOVA_BASE_TOKEN_SOURCE.find((token) => token.address.toLowerCase() === (props.currency?.address ||props.currency?.wrapped.address||'').toLowerCase());
-    
+
     return novaBaseToken?.iconURL || novaSourceToken?.logurl || '';
   }, [props.currency,novaTokenList])
   return (
@@ -29,7 +27,7 @@ export default function CurrencyLogo(
       currency={props.currency}
       isNative={props.currency?.isNative}
       chainId={props.currency?.chainId}
-      address={props.currency?.wrapped.address}
+      address={props.currency?.address ||props.currency?.wrapped.address}
       symbol={props.symbol ?? props.currency?.symbol}
       primaryImg={(props.currency as TokenInfo)?.logoURI}
       images={tokenImg?[tokenImg]:[]}

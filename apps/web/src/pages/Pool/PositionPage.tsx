@@ -379,7 +379,8 @@ export function PositionPageUnsupportedContent() {
 
 export default function PositionPage() {
   const { chainId } = useWeb3React()
-  if (isSupportedChain(chainId)) {
+  // if (isSupportedChain(chainId)) {
+    if(true) {
     return <PositionPageContent />
   } else {
     return <PositionPageUnsupportedContent />
@@ -653,6 +654,7 @@ function PositionPageContent() {
   )
 
   if (!positionDetails && !loading) {
+    console.log('positionDetails =====>',positionDetails)
     return <PositionPageUnsupportedContent />
   }
 

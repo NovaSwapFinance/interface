@@ -215,7 +215,7 @@ export default function ChartSection(props: ChartSectionProps) {
       timePeriod,
       tokenA: currencyA.wrapped,
       tokenB: currencyB.wrapped,
-      chainId: supportedChainIdFromGQLChain(props.chain) ?? ChainId.MAINNET,
+      chainId: ChainId.NOVA_MAINNET,
     };
 
     // TODO(WEB-3740): Integrate BE tick query, remove special casing for liquidity chart
@@ -263,12 +263,14 @@ export default function ChartSection(props: ChartSectionProps) {
 
   // BE does not support hourly price data for pools
   const filteredTimeOptions = useMemo(() => {
-    if (activeQuery.chartType === ChartType.PRICE) {
-      return DEFAULT_PILL_TIME_SELECTOR_OPTIONS.filter(
-        (option) => option.value !== TimePeriodDisplay.HOUR,
-      );
-    }
-    return DEFAULT_PILL_TIME_SELECTOR_OPTIONS;
+    // if (activeQuery.chartType === ChartType.PRICE) {
+    //   return DEFAULT_PILL_TIME_SELECTOR_OPTIONS.filter(
+    //     (option) => option.value !== TimePeriodDisplay.HOUR,
+    //   );
+    // }
+    return DEFAULT_PILL_TIME_SELECTOR_OPTIONS.filter(
+      (option) => option.value !== TimePeriodDisplay.HOUR && option.value !== TimePeriodDisplay.YEAR,
+    );;
   }, [activeQuery.chartType]);
 
   return (

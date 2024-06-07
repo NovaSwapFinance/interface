@@ -7,6 +7,8 @@ import {
   sortPools,
 } from "graphql/data/pools/useTopPools";
 import { chainIdToBackendName } from "graphql/data/util";
+import { usePoolsByToken0IdQuery, usePoolsByToken1IdQuery } from "graphql/thegraph/__generated__/types-and-hooks";
+import { useNovaTokenList } from "hooks/useNovaTokenList";
 import { useCallback, useMemo, useRef } from "react";
 import {
   useTopV2PairsQuery,
@@ -20,16 +22,20 @@ export function usePoolsFromTokenAddress(
   sortState: PoolTableSortState,
   chainId?: ChainId,
 ) {
+
+  const {
+    novaTokenList,
+  } = useNovaTokenList();
+
   const {
     loading: loadingV3,
     error: errorV3,
     data: dataV3,
     fetchMore: fetchMoreV3,
-  } = useTopV3PoolsQuery({
+  } = usePoolsByToken0IdQuery({
     variables: {
       first: DEFAULT_QUERY_SIZE,
-      tokenAddress,
-      chain: chainIdToBackendName(chainId),
+      address: tokenAddress?.toLowerCase(),
     },
   });
 
@@ -38,13 +44,13 @@ export function usePoolsFromTokenAddress(
     error: errorV2,
     data: dataV2,
     fetchMore: fetchMoreV2,
-  } = useTopV2PairsQuery({
+  } = usePoolsByToken1IdQuery({
     variables: {
       first: DEFAULT_QUERY_SIZE,
-      tokenAddress,
+      address: tokenAddress?.toLowerCase(),
     },
-    skip: chainId !== ChainId.MAINNET,
   });
+
   const loading = loadingV3 || loadingV2;
 
   const loadingMoreV3 = useRef(false);
@@ -107,42 +113,73 @@ export function usePoolsFromTokenAddress(
     [chainId, dataV2?.topV2Pairs, dataV3?.topV3Pools, fetchMoreV2, fetchMoreV3],
   );
 
+  const getProjectToken = (address:string) => {
+    const item = novaTokenList.find((token) => token.l2Address.toLowerCase() === address.toLowerCase());
+    return item?.iconURL || '';
+  }
+
   return useMemo(() => {
     const topV3Pools: TablePool[] =
-      dataV3?.topV3Pools?.map((pool) => {
+    dataV3?.pools?.map((pool) => {
+      let volume24h = 0;
+      let volumeWeek = 0;
+      if(pool.poolDayData?.length > 0){ 
+        volume24h = pool.poolDayData[pool.poolDayData.length -1].volumeUSD
+        if (pool.poolDayData.length >= 7) {
+          volumeWeek = pool.poolDayData.slice(-7).reduce((prev, curr) => prev + Number(curr.volumeUSD), 0);
+        } else {
+          volumeWeek = pool.poolDayData.reduce((prev, curr) => prev + Number(curr.volumeUSD), 0);
+        }
+      }
+      const token0Project = getProjectToken(pool.token0.address);
+      const token1Project = getProjectToken(pool.token1.address);
+      return {
+        hash: pool.id,
+        token0: {...pool.token0,logoUrl:token0Project},
+        token1:  {...pool.token1,logoUrl:token1Project},
+        txCount: pool.txCount,
+        tvl: pool.totalValueLockedUSD,
+        volume24h,
+        volumeWeek,
+        totalLiquidity:{value:Number(pool.liquidity)},
+        oneDayApr: calculateOneDayApr(
+          volume24h,
+          pool.totalValueLockedUSD,
+          pool.feeTier,
+        ),
+        feeTier: pool.feeTier,
+        protocolVersion: pool.protocolVersion,
+      } as TablePool;
+    }) ?? [];
+    const topV2Pairs: TablePool[] =
+      dataV2?.pools?.map((pool) => {
+        let volume24h = 0;
+        let volumeWeek = 0;
+        if(pool.poolDayData?.length > 0){ 
+          volume24h = pool.poolDayData[pool.poolDayData.length -1].volumeUSD
+          if (pool.poolDayData.length >= 7) {
+            volumeWeek = pool.poolDayData.slice(-7).reduce((prev, curr) => prev + Number(curr.volumeUSD), 0);
+          } else {
+            volumeWeek = pool.poolDayData.reduce((prev, curr) => prev + Number(curr.volumeUSD), 0);
+          }
+        }
+        const token0Project = getProjectToken(pool.token0.address);
+        const token1Project = getProjectToken(pool.token1.address);
         return {
-          hash: pool.address,
-          token0: pool.token0,
-          token1: pool.token1,
+          hash: pool.id,
+          token0: {...pool.token0,logoUrl:token0Project},
+          token1:  {...pool.token1,logoUrl:token1Project},
           txCount: pool.txCount,
-          tvl: pool.totalLiquidity?.value,
-          volume24h: pool.volume24h?.value,
-          volumeWeek: pool.volumeWeek?.value,
+          tvl: pool.totalValueLockedUSD,
+          volume24h,
+          volumeWeek,
+          totalLiquidity:{value:Number(pool.liquidity)},
           oneDayApr: calculateOneDayApr(
-            pool.volume24h?.value,
-            pool.totalLiquidity?.value,
+            volume24h,
+            pool.totalValueLockedUSD,
             pool.feeTier,
           ),
           feeTier: pool.feeTier,
-          protocolVersion: pool.protocolVersion,
-        } as TablePool;
-      }) ?? [];
-    const topV2Pairs: TablePool[] =
-      dataV2?.topV2Pairs?.map((pool) => {
-        return {
-          hash: pool.address,
-          token0: pool.token0,
-          token1: pool.token1,
-          txCount: pool.txCount,
-          tvl: pool.totalLiquidity?.value,
-          volume24h: pool.volume24h?.value,
-          volumeWeek: pool.volumeWeek?.value,
-          oneDayApr: calculateOneDayApr(
-            pool.volume24h?.value,
-            pool.totalLiquidity?.value,
-            V2_BIPS,
-          ),
-          feeTier: V2_BIPS,
           protocolVersion: pool.protocolVersion,
         } as TablePool;
       }) ?? [];
@@ -151,14 +188,14 @@ export function usePoolsFromTokenAddress(
       0,
       sizeRef.current,
     );
-    return { loading, errorV2, errorV3, pools, loadMore };
+    return { loading, errorV2, errorV3, pools };
   }, [
-    dataV2?.topV2Pairs,
-    dataV3?.topV3Pools,
+    dataV2?.pools,
+    dataV3?.pools,
     errorV2,
     errorV3,
-    loadMore,
     loading,
     sortState,
+    novaTokenList
   ]);
 }

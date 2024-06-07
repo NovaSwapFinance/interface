@@ -210,10 +210,10 @@ function TokenTable({
           //     </ParentSize>
           //   </SparklineContainer>
           // ),
-          // link: getTokenDetailsURL({
-          //   address: token?.address,
-          //   chain: chainIdToBackendName(chainId),
-          // }),
+          link: getTokenDetailsURL({
+            address: token?.address,
+            chain: chainIdToBackendName(ChainId.NOVA_MAINNET),
+          }),
           analytics: {
             elementName: InterfaceElementName.TOKENS_TABLE_ROW,
             properties: {

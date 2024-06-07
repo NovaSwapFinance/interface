@@ -72,7 +72,7 @@ export function isPricePoint(p: PricePoint | undefined): p is PricePoint {
 
 const GQL_MAINNET_CHAINS = [
   Chain.Ethereum,
-  Chain.NovaMainnet,
+  'NovaMainnet',
   Chain.Polygon,
   Chain.Celo,
   Chain.Optimism,
@@ -116,7 +116,7 @@ export const CHAIN_ID_TO_BACKEND_NAME: { [key: number]: InterfaceGqlChain } = {
   [ChainId.BASE]: Chain.Base,
   [ChainId.BLAST]: Chain.Blast,
   [ChainId.NOVA_SEPOLIA]: Chain.NovaSepolia,
-  [ChainId.NOVA_MAINNET]: Chain.NovaMainnet,
+  [ChainId.NOVA_MAINNET]: 'NovaMainnet',
 };
 
 export function chainIdToBackendName(chainId: number | undefined) {
@@ -157,16 +157,17 @@ export function gqlToCurrency(
   const chainId = supportedChainIdFromGQLChain(token.chain);
   if (!chainId) return undefined;
   if (
-    token.standard === TokenStandard.Native ||
-    token.address === NATIVE_CHAIN_ID ||
-    !token.address
+    // token.standard === TokenStandard.Native ||
+    // token.address === NATIVE_CHAIN_ID ||
+    // !token.address
+    token.symbol === 'ETH'
   )
     return nativeOnChain(chainId);
   else
     return new Token(
       chainId,
       token.address,
-      token.decimals ?? 18,
+      Number(token.decimals) ?? 18,
       token.symbol ?? undefined,
       token.name ?? token.project?.name ?? undefined,
     );
@@ -183,7 +184,7 @@ const URL_CHAIN_PARAM_TO_BACKEND: { [key: string]: InterfaceGqlChain } = {
   base: Chain.Base,
   blast: Chain.Blast,
   novasepolia: Chain.NovaSepolia,
-  novamainnet: Chain.NovaMainnet,
+  novamainnet: 'NovaMainnet',
 };
 
 /**
@@ -277,6 +278,7 @@ export const BACKEND_SUPPORTED_CHAINS = [
   Chain.Bnb,
   Chain.Celo,
   Chain.Blast,
+  'NovaMainnet'
 ] as const
 export const BACKEND_NOT_YET_SUPPORTED_CHAIN_IDS = [ChainId.AVALANCHE] as const
 
@@ -298,6 +300,7 @@ export function getTokenDetailsURL({
   chain: Chain
   inputAddress?: string | null
 }) {
+  console.log('getTokenDetailsURL====>',chain)
   const chainName = chain.toLowerCase()
   const tokenAddress = address ?? NATIVE_CHAIN_ID
   const inputAddressSuffix = inputAddress ? `?inputCurrency=${inputAddress}` : ''

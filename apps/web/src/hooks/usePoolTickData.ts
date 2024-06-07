@@ -226,7 +226,14 @@ export function usePoolActiveLiquidity(
 
     const ticksProcessed = previousTicks
       .concat(activeTickProcessed)
-      .concat(subsequentTicks);
+      .concat(subsequentTicks).reduce((acc, current) => {
+        const x = acc.find(item => item.tick === current.tick);
+        if (!x) {
+          return acc.concat([current]);
+        } else {
+          return acc;
+        }
+      }, []);
 
     return {
       isLoading,
