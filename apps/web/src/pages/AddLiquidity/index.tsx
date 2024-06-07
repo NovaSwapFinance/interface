@@ -94,7 +94,8 @@ const BLAST_REBASING_TOKENS = [
 
 export default function AddLiquidityWrapper() {
   const { chainId } = useWeb3React()
-  if (isSupportedChain(chainId)) {
+  // if (isSupportedChain(chainId)) {
+    if(true) {
     return <AddLiquidity />
   } else {
     return <PositionPageUnsupportedContent />
@@ -117,8 +118,19 @@ function AddLiquidity() {
 
   console.log('useParams',currencyIdA,currencyIdB)
   const { account, chainId, provider } = useWeb3React()
+  // const chainId = ChainId.NOVA_MAINNET
+  // const switchChain = useSwitchChain()
+  console.log('chainId++++++++++',chainId)
   const theme = useTheme()
   const trace = useTrace()
+
+  // useEffect(() => {
+ 
+  //   if (account && web3ChainId ) {
+  //     console.log('useEffect',account,web3ChainId,chainId)
+  //     // switchChain(connector, chainId)
+  //   } 
+  // },[web3ChainId,connector,account])
 
   const toggleWalletDrawer = useToggleAccountDrawer() // toggle wallet when disconnected
   const addTransaction = useTransactionAdder()

@@ -187,13 +187,13 @@ export default function PoolDetailsPage() {
             />
           </LeftColumn>
           <RightColumn>
-            {/* <PoolDetailsStatsButtons
+            <PoolDetailsStatsButtons
               chainId={chainId}
               token0={token0}
               token1={token1}
               feeTier={poolData?.feeTier}
               loading={loading}
-            /> */}
+            />
             <PoolDetailsStats poolData={poolData} isReversed={isReversed} chainId={chainId} loading={loading} />
             <TokenDetailsWrapper>
               <TokenDetailsHeader>

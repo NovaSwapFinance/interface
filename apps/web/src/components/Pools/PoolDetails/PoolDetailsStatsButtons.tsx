@@ -153,47 +153,48 @@ function findMatchingPosition(positions: PositionInfo[], token0?: Token, token1?
 
 export function PoolDetailsStatsButtons({ chainId, token0, token1, feeTier, loading }: PoolDetailsStatsButtonsProps) {
   const { chainId: walletChainId, connector, account } = useWeb3React()
-  const { positions: userOwnedPositions } = useMultiChainPositions(account ?? '', chainId ? [chainId] : undefined)
-  const position = userOwnedPositions && findMatchingPosition(userOwnedPositions, token0, token1, feeTier)
-  const tokenId = position?.details.tokenId
+  // const { positions: userOwnedPositions } = useMultiChainPositions(account ?? '', chainId ? [chainId] : undefined)
+  // const position = userOwnedPositions && findMatchingPosition(userOwnedPositions, token0, token1, feeTier)
+  // const tokenId = position?.details.tokenId
+  const tokenId = null;
   const switchChain = useSwitchChain()
   const navigate = useNavigate()
   const currency0 = token0 && gqlToCurrency(token0)
   const currency1 = token1 && gqlToCurrency(token1)
 
   // Mobile Balance Data
-  const { data: balanceQuery } = useTokenBalancesQuery()
-  const { balance0, balance1, balance0Fiat, balance1Fiat } = useMemo(() => {
-    const filteredBalances = balanceQuery?.portfolios?.[0]?.tokenBalances?.filter(
-      (tokenBalance) => tokenBalance?.token?.chain === chainIdToBackendName(chainId)
-    )
-    const tokenBalance0 = filteredBalances?.find((tokenBalance) => tokenBalance?.token?.address === token0?.address)
-    const tokenBalance1 = filteredBalances?.find((tokenBalance) => tokenBalance?.token?.address === token1?.address)
-    return {
-      balance0: tokenBalance0?.quantity ?? 0,
-      balance1: tokenBalance1?.quantity ?? 0,
-      balance0Fiat: tokenBalance0?.denominatedValue?.value ?? 0,
-      balance1Fiat: tokenBalance1?.denominatedValue?.value ?? 0,
-    }
-  }, [balanceQuery?.portfolios, chainId, token0?.address, token1?.address])
-  const { formatNumber } = useFormatter()
-  const formattedBalance0 = formatNumber({
-    input: balance0,
-    type: NumberType.TokenNonTx,
-  })
-  const formattedBalance1 = formatNumber({
-    input: balance1,
-    type: NumberType.TokenNonTx,
-  })
-  const totalFiatValue = balance0Fiat + balance1Fiat
-  const formattedFiatValue = formatNumber({
-    input: totalFiatValue,
-    type: NumberType.PortfolioBalance,
-  })
+  // const { data: balanceQuery } = useTokenBalancesQuery()
+  // const { balance0, balance1, balance0Fiat, balance1Fiat } = useMemo(() => {
+  //   const filteredBalances = balanceQuery?.portfolios?.[0]?.tokenBalances?.filter(
+  //     (tokenBalance) => tokenBalance?.token?.chain === chainIdToBackendName(chainId)
+  //   )
+  //   const tokenBalance0 = filteredBalances?.find((tokenBalance) => tokenBalance?.token?.address === token0?.address)
+  //   const tokenBalance1 = filteredBalances?.find((tokenBalance) => tokenBalance?.token?.address === token1?.address)
+  //   return {
+  //     balance0: tokenBalance0?.quantity ?? 0,
+  //     balance1: tokenBalance1?.quantity ?? 0,
+  //     balance0Fiat: tokenBalance0?.denominatedValue?.value ?? 0,
+  //     balance1Fiat: tokenBalance1?.denominatedValue?.value ?? 0,
+  //   }
+  // }, [balanceQuery?.portfolios, chainId, token0?.address, token1?.address])
+  // const { formatNumber } = useFormatter()
+  // const formattedBalance0 = formatNumber({
+  //   input: balance0,
+  //   type: NumberType.TokenNonTx,
+  // })
+  // const formattedBalance1 = formatNumber({
+  //   input: balance1,
+  //   type: NumberType.TokenNonTx,
+  // })
+  // const totalFiatValue = balance0Fiat + balance1Fiat
+  // const formattedFiatValue = formatNumber({
+  //   input: totalFiatValue,
+  //   type: NumberType.PortfolioBalance,
+  // })
 
   const handleAddLiquidity = async () => {
     if (currency0 && currency1) {
-      if (walletChainId !== chainId && chainId) await switchChain(connector, chainId)
+      // if (account && walletChainId !== chainId && chainId) await switchChain(connector, chainId)
       navigate(`/add/${currencyId(currency0)}/${currencyId(currency1)}/${feeTier}${tokenId ? `/${tokenId}` : ''}`)
     }
   }
@@ -219,7 +220,7 @@ export function PoolDetailsStatsButtons({ chainId, token0, token1, feeTier, load
   return (
     <Column gap="lg">
       <PoolDetailsStatsButtonsRow>
-        {account && (
+        {/* {account && (
           <MobileBalance>
             <ThemedText.SubHeaderSmall>
               <Trans>Your balances</Trans>
@@ -235,7 +236,7 @@ export function PoolDetailsStatsButtons({ chainId, token0, token1, feeTier, load
               {Boolean(totalFiatValue) && !isMobile && <ThemedText.Caption>({formattedFiatValue})</ThemedText.Caption>}
             </Row>
           </MobileBalance>
-        )}
+        )} */}
         <PoolButton
           onClick={toggleSwapModalOpen}
           $open={swapModalOpen}
@@ -279,14 +280,14 @@ export function PoolDetailsStatsButtons({ chainId, token0, token1, feeTier, load
           compact
           disableTokenInputs={chainId !== walletChainId}
         />
-        {Boolean(priorityWarning) && (
+        {/* {Boolean(priorityWarning) && (
           <TokenSafetyMessage
             tokenAddress={(priorityWarning === token0Warning ? token0?.address : token1?.address) ?? ''}
             warning={priorityWarning ?? StrongWarning}
             plural={Boolean(token0Warning && token1Warning)}
             tokenSymbol={priorityWarning === token0Warning ? token0?.symbol : token1?.symbol}
           />
-        )}
+        )} */}
       </SwapModalWrapper>
       <Scrim
         $open={swapModalOpen && !screenSizeLargerThanTablet}

@@ -238,16 +238,16 @@ export default function TokenDetailsPage() {
           );
         }
 
-        if (contextValue.tokenQuery.loading) {
-          return <TokenDetailsPageSkeleton />;
-        } else {
-          return (
-            <InvalidTokenDetails
-              pageChainId={pageChainId}
-              isInvalidAddress={!isAddress(contextValue.address)}
-            />
-          );
-        }
+        // if (contextValue.tokenQuery.loading) {
+        //   return <TokenDetailsPageSkeleton />;
+        // } else {
+        //   return (
+        //     <InvalidTokenDetails
+        //       pageChainId={pageChainId}
+        //       isInvalidAddress={!isAddress(contextValue.address)}
+        //     />
+        //   );
+        // }
       })()}
     </ThemeProvider>
   );

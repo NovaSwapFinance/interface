@@ -330,13 +330,14 @@ function StaleBanner() {
   const theme = useTheme()
   // TODO(WEB-3739): Update Chart UI to grayscale when data is stale
   return (
-    <StaleBannerWrapper data-testid="chart-stale-banner">
-      <Row gap="sm">
-        <MissingDataBars color={theme.neutral1} />
-        <ThemedText.BodySmall>
-          <Trans>Data may be outdated</Trans>
-        </ThemedText.BodySmall>
-      </Row>
-    </StaleBannerWrapper>
+    <div />
+    // <StaleBannerWrapper data-testid="chart-stale-banner">
+    //   <Row gap="sm">
+    //     <MissingDataBars color={theme.neutral1} />
+    //     <ThemedText.BodySmall>
+    //       <Trans>Data may be outdated</Trans>
+    //     </ThemedText.BodySmall>
+    //   </Row>
+    // </StaleBannerWrapper>
   )
 }
