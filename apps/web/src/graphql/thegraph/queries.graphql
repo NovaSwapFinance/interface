@@ -237,7 +237,7 @@ query PoolData( $address: ID!) {
 query PoolTransaction($first: Int!,$time:BigInt!, $address: ID!)  {
   pool(id: $address) {
     id
-    swaps(first: $first,orderBy: timestamp, orderDirection: desc,where: {timestamp_lt:$time}) {
+    swaps(first: 1000,orderBy: timestamp, orderDirection: desc,where: {timestamp_lt:$time}) {
         amount0
         amount1
         amountUSD
@@ -311,6 +311,7 @@ query PoolHourData($time:Int!, $address: ID!)  {
   pool(id: $address) {
     id
      poolHourData(
+     first:1000
       where: {periodStartUnix_gte:$time}
       orderBy: periodStartUnix
       orderDirection: asc
