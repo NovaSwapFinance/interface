@@ -3,7 +3,7 @@ import { StackedLineData } from 'components/Charts/StackedLineChart'
 import { SingleHistogramData } from 'components/Charts/VolumeChart/renderer'
 import { ChartType, PriceChartType } from 'components/Charts/utils'
 import { UTCTimestamp } from 'lightweight-charts'
-import { useMemo, useReducer } from 'react'
+import { useEffect, useMemo, useReducer } from 'react'
 import {
   CandlestickOhlcFragment,
   Chain,

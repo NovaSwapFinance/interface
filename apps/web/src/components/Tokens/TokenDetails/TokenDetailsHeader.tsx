@@ -284,7 +284,7 @@ export const TokenDetailsHeader = () => {
                     )}
                   </ThemedText.BodyPrimary>
                 </ActionButton>
-                <ActionButton
+                {/* <ActionButton
                   onClick={() => {
                     toggleActionsModal();
                     openShareTweetWindow(twitterShareName);
@@ -294,7 +294,7 @@ export const TokenDetailsHeader = () => {
                   <ThemedText.BodyPrimary>
                     <Trans>Share to Twitter</Trans>
                   </ThemedText.BodyPrimary>
-                </ActionButton>
+                </ActionButton> */}
               </>
             ) : (
               <ShareButton name={twitterShareName} />

@@ -193,7 +193,7 @@ export default function TokenDetails() {
             <TokenDetailsHeader />
           </TokenInfoContainer>
           <ChartSection />
-          <StatsSection chainId={currency.chainId} address={address} tokenQueryData={tokenQueryData} />
+          {/* <StatsSection chainId={currency.chainId} address={address} tokenQueryData={tokenQueryData} /> */}
           <DividerLine />
           <ActivitySection />
         </LeftPanel>

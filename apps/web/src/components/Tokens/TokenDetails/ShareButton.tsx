@@ -78,7 +78,7 @@ export default function ShareButton({ name }: { name: string }) {
                 {isCopied ? <Trans>Copied</Trans> : <Trans>Copy link</Trans>}
               </ThemedText.BodyPrimary>
             </ShareAction>
-            <ShareAction
+            {/* <ShareAction
               onClick={() => {
                 toggleShare()
                 openShareTweetWindow(name)
@@ -88,7 +88,7 @@ export default function ShareButton({ name }: { name: string }) {
               <ThemedText.BodyPrimary>
                 <Trans>Share to Twitter</Trans>
               </ThemedText.BodyPrimary>
-            </ShareAction>
+            </ShareAction> */}
           </>
         }
         hideChevron

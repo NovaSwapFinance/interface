@@ -103,6 +103,8 @@ export default function StatsSection(props: StatsSectionProps) {
 
   const hasStats = TVL || FDV || marketCap || volume24H;
 
+  return < ></>
+
   if (hasStats) {
     return (
       <StatsWrapper data-testid="token-details-stats">

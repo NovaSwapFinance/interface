@@ -467,6 +467,7 @@ query PoolsByToken1Id($first: Int!,$address: ID!) {
 
 query TokenHourChartData($time:Int!, $address: ID!)  {
   tokenHourDatas(
+      first:1000
       where: {token_: {id: $address},periodStartUnix_gte:$time}
       orderBy: periodStartUnix
       orderDirection: asc

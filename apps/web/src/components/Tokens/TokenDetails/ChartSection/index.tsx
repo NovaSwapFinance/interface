@@ -4,7 +4,7 @@ import { refitChartContentAtom } from 'components/Charts/TimeSelector'
 import { ChartType, PriceChartType } from 'components/Charts/utils'
 import { VolumeChart } from 'components/Charts/VolumeChart'
 import { TimePeriod, toHistoryDuration } from 'graphql/data/util'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 
 import { ChartSkeleton } from 'components/Charts/LoadingState'
@@ -89,13 +89,17 @@ export function useCreateTDPChartState(tokenDBAddress: string | undefined, curre
 
   const [chartType, setChartType] = useState<TokenDetailsChartType>(ChartType.PRICE)
   const [priceChartType, setPriceChartType] = useState<PriceChartType>(PriceChartType.LINE)
-  const getTime =  {
-    [HistoryDuration.Day]:() => Math.floor((new Date().getTime() - 24 * 60 * 60 * 1000) /1000 ),
-    [HistoryDuration.Week]:() => Math.floor((new Date().getTime() - 7 * 24 * 60 * 60 * 1000) /1000 ),
-    [HistoryDuration.Month]:() => Math.floor((new Date().getTime() - 30 * 24 * 60 * 60 * 1000) /1000 ),
-  }
+  const getTime = useMemo(() =>({
+    [HistoryDuration.Day]: Math.floor((new Date().getTime() - 24 * 60 * 60 * 1000) /1000 ),
+    [HistoryDuration.Week]: Math.floor((new Date().getTime() - 7 * 24 * 60 * 60 * 1000) /1000 ),
+    [HistoryDuration.Month]:Math.floor((new Date().getTime() - 30 * 24 * 60 * 60 * 1000) /1000 ),
+  }),[])
+  // console.log('xxxxxxx--->',currencyChainName)
+  // useEffect(() => {
+  //   console.log('xxxxxxx--->',currencyChainName)
+  // },[currencyChainName])
+  const variables = useMemo(() => ({ address: tokenDBAddress, time:getTime[toHistoryDuration(timePeriod)]}),[timePeriod,tokenDBAddress])
 
-  const variables = { address: tokenDBAddress, time:getTime[toHistoryDuration(timePeriod)]()}
 
   const priceQuery = useTDPPriceChartData(variables, chartType !== ChartType.PRICE, priceChartType)
   const volumeQuery = useTDPVolumeChartData(variables, chartType !== ChartType.VOLUME)
