@@ -208,12 +208,12 @@ type LogolessColorSchemes = {
 const logolessColorSchemes: LogolessColorSchemes = {
   // TODO (MOB-2417): update the colors in the global colors file to these and pull from there
   [LOGOLESS_COLORS.PINK]: {
-    light: { foreground: '#FC74FE', background: '#FEF4FF' },
-    dark: { foreground: '#FC74FE', background: '#361A37' },
+    light: { foreground: '#8CD383', background: '#FEF4FF' },
+    dark: { foreground: '#8CD383', background: '#361A37' },
   },
   [LOGOLESS_COLORS.ORANGE]: {
-    light: { foreground: '#FF7715', background: '#FFF2F1' },
-    dark: { foreground: '#FF7715', background: '#2E0805' },
+    light: { foreground: '#8CD383', background: '#FFF2F1' },
+    dark: { foreground: '#8CD383', background: '#2E0805' },
   },
   [LOGOLESS_COLORS.YELLOW]: {
     light: { foreground: '#FFBF17', background: '#FFFCF2' },

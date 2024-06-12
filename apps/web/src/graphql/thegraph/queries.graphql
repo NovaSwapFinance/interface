@@ -484,3 +484,79 @@ query TokenHourChartData($time:Int!, $address: ID!)  {
     }
   }
 }
+
+query AllTx($first: Int!) {
+  transactions(first: $first,orderBy: timestamp, orderDirection: desc) {
+      timestamp
+    id
+    swaps {
+      amount0
+      amount1
+      amountUSD
+      id
+      recipient
+      sender
+      origin
+      timestamp
+      token0 {
+        address: id
+        id
+        name
+        symbol
+        decimals
+      }
+      token1 {
+        address: id
+        decimals
+        id
+        name
+        symbol
+      }
+    }
+    burns {
+      amount0
+      amount1
+      amountUSD
+      id
+      origin
+      timestamp
+      token0 {
+        address: id
+        id
+        name
+        symbol
+        decimals
+      }
+      token1 {
+        address: id
+        decimals
+        id
+        name
+        symbol
+      }
+    }
+    mints {
+      amount0
+      amount1
+      amountUSD
+      id
+      sender
+      origin
+      timestamp
+      token0 {
+        address: id
+        id
+        name
+        symbol
+        decimals
+      }
+      token1 {
+        address: id
+        decimals
+        id
+        name
+        symbol
+      }
+    }
+  }
+}
