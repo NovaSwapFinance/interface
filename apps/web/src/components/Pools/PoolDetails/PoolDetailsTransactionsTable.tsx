@@ -114,7 +114,7 @@ export function PoolDetailsTransactionsTable({
           >
             <TimestampCell
               timestamp={Number(row.getValue?.().timestamp)}
-              link={getExplorerLink(chainId, row.getValue?.().transaction, ExplorerDataType.TRANSACTION)}
+              link={getExplorerLink(ChainId.NOVA_MAINNET, row.getValue?.().transaction, ExplorerDataType.TRANSACTION)}
             />
           </Cell>
         ),

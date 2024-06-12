@@ -92,9 +92,11 @@ const transactions = useMemo(() => {
   if(data && data?.pool) {
     const {burns,swaps,mints } = data.pool;
     const burnsTx = burns.map((burn) => {
+      const {id} = burn;
+      const hx = id?.split('-')[0];
       const item = {
         account:burn.origin,
-        hash:burn.id,
+        hash:hx,
         timestamp:burn.timestamp,
         token0:burn.token0,
         token0Quantity:burn.amount0,
@@ -108,9 +110,11 @@ const transactions = useMemo(() => {
       return item;
     })
     const swapsTx = swaps.map((swap) => {
+      const {id} = swap;
+      const hx = id?.split('-')[0];
       const item = {
         account:swap.origin,
-        hash:swap.id,
+        hash:hx,
         timestamp:swap.timestamp,
         token0:swap.token0,
         token0Quantity:swap.amount0,
@@ -125,9 +129,11 @@ const transactions = useMemo(() => {
     })
 
     const mintsTx = mints.map((mint) => {
+      const {id} = mint;
+      const hx = id?.split('-')[0];
       const item = {
         account:mint.origin,
-        hash:mint.id,
+        hash:hx,
         timestamp:mint.timestamp,
         token0:mint.token0,
         token0Quantity:mint.amount0,
