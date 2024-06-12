@@ -368,6 +368,7 @@ query TokenSwapsTx($address: ID!,$first: Int!, $time:BigInt!)  {
     }
     account:origin
     hash:id
+    id
   }
 }
 

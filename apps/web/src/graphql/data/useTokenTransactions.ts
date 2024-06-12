@@ -2,7 +2,7 @@ import { all } from 'typed-redux-saga';
 import { ChainId } from "@novaswap/sdk-core";
 import { chainIdToBackendName } from "graphql/data/util";
 import { useTokenSwapsTxQuery } from "graphql/thegraph/__generated__/types-and-hooks";
-import { useCallback, useMemo, useRef } from "react";
+import { useCallback, useMemo, useRef, useState } from "react";
 import {
   Chain,
   PoolTransaction,
@@ -17,7 +17,7 @@ export enum TokenTransactionType {
   SELL = "Sell",
 }
 
-const TokenTransactionDefaultQuerySize = 25;
+const TokenTransactionDefaultQuerySize = 1000;
 
 export function useTokenTransactions(
   address: string,
@@ -28,7 +28,7 @@ export function useTokenTransactions(
   ],
 ) {
 
-
+  const [list,setList] = useState<any[]>([]);
   const {novaTokenList} = useNovaTokenList();
   const {
     data: dataV3,
@@ -61,16 +61,18 @@ export function useTokenTransactions(
   const loadMore = useCallback(
     ({ onComplete }: { onComplete?: () => void }) => {
       if (
-        loadingMoreV3.current ||
-        (loadingMoreV2.current && chainId === ChainId.MAINNET)
+        loadingMoreV3.current 
       ) {
         return;
       }
       loadingMoreV3.current = true;
-      loadingMoreV2.current = true;
       querySizeRef.current += TokenTransactionDefaultQuerySize;
+
+     
       fetchMoreV3({
         variables: {
+          address: address.toLowerCase(),
+          first: TokenTransactionDefaultQuerySize,
           time:
             dataV3?.swaps?.[
               dataV3.swaps.length - 1
@@ -88,11 +90,13 @@ export function useTokenTransactions(
             swaps: [...(prev.swaps ?? []), ...(fetchMoreResult.swaps ?? [])],
           };
           loadingMoreV3.current = false;
+          setList(mergedData.swaps)
           return mergedData;
         },
       });
     },
     [
+      setList,
       chainId,
       dataV3?.swaps,
       fetchMoreV3,
@@ -106,7 +110,8 @@ export function useTokenTransactions(
 
   const transactions = useMemo(
     () =>{
-      const swaps = dataV3?.swaps?.map((swap) => {
+      console.log('dataV3?.swaps',dataV3?.swaps)
+      const swaps =(list.length>0?list: dataV3?.swaps)?.map((swap) => {
         const token0Logo = getProjectToken(swap.token0.address||'');
         const token1Logo = getProjectToken(swap.token1.address||'');
         const hash = swap.hash?.split('-')[0];
@@ -136,14 +141,14 @@ export function useTokenTransactions(
           );
         }) ?? []),
       ]
-        .sort((a, b): number =>
-          a?.timestamp && b?.timestamp
-            ? b.timestamp - a.timestamp
-            : a?.timestamp === null
-              ? -1
-              : 1,
-        )
-        .slice(0, querySizeRef.current)
+        // .sort((a, b): number =>
+        //   a?.timestamp && b?.timestamp
+        //     ? b.timestamp - a.timestamp
+        //     : a?.timestamp === null
+        //       ? -1
+        //       : 1,
+        // )
+        // .slice(0, querySizeRef.current)
     },
     [
       address,
