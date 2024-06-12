@@ -67,7 +67,7 @@ export function useAllTransactions(
 
 
   const formatterTransactions = (arr) => {
-    if(arr.length>0){
+    if(arr?.length>0){
       return arr.map((tx) => {
         const {id,amount0,amount1,amountUSD,origin,timestamp,token0,token1,transaction} = tx|| {};
         const {id:hx} = transaction;
@@ -140,8 +140,12 @@ export function useAllTransactions(
   )
 
   const transactions: PoolTransaction[] = useMemo(() => {
-   return formatterTransactions(dataV3?.swaps||[])
-  }, [dataV3?.swaps, allTokens])
+    const transactions = formatterTransactions(dataV3?.swaps) ?? []
+    return transactions?.filter(
+      (tx): tx is PoolTransaction => tx.type && filter.includes(BETypeToTransactionType[tx.type])
+    ) ?? []
+ 
+  }, [dataV3?.swaps, allTokens,filter])
 
 
 

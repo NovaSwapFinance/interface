@@ -109,11 +109,13 @@ export function useTokenTransactions(
       const swaps = dataV3?.swaps?.map((swap) => {
         const token0Logo = getProjectToken(swap.token0.address||'');
         const token1Logo = getProjectToken(swap.token1.address||'');
+        const hash = swap.hash?.split('-')[0];
         return {
           ...swap,
           usdValue:{
             value:swap.usdValue
           },
+          hash,
           token0: token0Logo ?{...swap.token0,project:{logo:{url:token0Logo}}, chain:'NOVAMAINNET',}:{...swap.token0, chain:'NOVAMAINNET',},
           token1: token1Logo? {...swap.token1,project:{logo:{url:token1Logo}}, chain:'NOVAMAINNET',}: {...swap.token1, chain:'NOVAMAINNET',},
         };
@@ -150,8 +152,6 @@ export function useTokenTransactions(
       novaTokenList,
     ],
   );
-
-  console.log('transactions====>',transactions)
 
   return useMemo(() => {
     return {

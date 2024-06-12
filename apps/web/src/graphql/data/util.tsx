@@ -300,7 +300,6 @@ export function getTokenDetailsURL({
   chain: Chain
   inputAddress?: string | null
 }) {
-  console.log('getTokenDetailsURL====>',chain)
   const chainName = chain.toLowerCase()
   const tokenAddress = address ?? NATIVE_CHAIN_ID
   const inputAddressSuffix = inputAddress ? `?inputCurrency=${inputAddress}` : ''
@@ -323,7 +322,7 @@ export function unwrapToken<
 
   const address = token.address.toLowerCase()
   const nativeAddress = WRAPPED_NATIVE_CURRENCY[chainId]?.address.toLowerCase()
-  if (address !== nativeAddress) return token
+  if (address !== nativeAddress || address === '0x8280a4e7d5b3b658ec4580d3bc30f5e50454f169') return token
 
   const nativeToken = nativeOnChain(chainId)
   return {
