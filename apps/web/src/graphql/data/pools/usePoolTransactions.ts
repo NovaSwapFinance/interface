@@ -42,7 +42,7 @@ export interface PoolTableTransaction {
   type: PoolTableTransactionType;
 }
 
-const PoolTransactionDefaultQuerySize = 25;
+const PoolTransactionDefaultQuerySize = 100;
 
 export function usePoolTransactions(
   address: string,
