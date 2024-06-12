@@ -17,7 +17,7 @@ export enum TokenTransactionType {
   SELL = "Sell",
 }
 
-const TokenTransactionDefaultQuerySize = 25;
+const TokenTransactionDefaultQuerySize = 1000;
 
 export function useTokenTransactions(
   address: string,
