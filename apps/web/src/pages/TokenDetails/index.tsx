@@ -18,7 +18,7 @@ import {
 } from "graphql/data/util";
 import { useCurrency } from "hooks/Tokens";
 import { useSrcColor } from "hooks/useColor";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Helmet } from "react-helmet-async/lib/index";
 import { useLocation, useParams } from "react-router-dom";
 import { useTheme } from "styled-components";
@@ -223,13 +223,18 @@ function useCreateTDPContext(): PendingTDPContext | LoadedTDPContext {
 export default function TokenDetailsPage() {
   const pageChainId = ChainId.NOVA_MAINNET;
   const contextValue = useCreateTDPContext();
+  const dom = useMemo(() => {
 
+    return contextValue.currency ? <TDPProvider contextValue={contextValue}>
+    <TokenDetails />
+  </TDPProvider>:null
+  },[contextValue])
   return (
     <ThemeProvider accent1={contextValue.tokenColor ?? undefined}>
       <Helmet>
         <title>{getTokenPageTitle(contextValue?.currency)}</title>
       </Helmet>
-      {(() => {
+      {/* {(() => {
         if (contextValue.currency) {
           return (
             <TDPProvider contextValue={contextValue}>
@@ -248,7 +253,8 @@ export default function TokenDetailsPage() {
         //     />
         //   );
         // }
-      })()}
+      })()} */}
+      {dom}
     </ThemeProvider>
   );
 }
