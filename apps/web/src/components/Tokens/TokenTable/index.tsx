@@ -101,7 +101,7 @@ export function TopTokensTable() {
 const HEADER_TEXT: Record<TokenSortMethod, ReactNode> = {
   [TokenSortMethod.FULLY_DILUTED_VALUATION]: <Trans>FDV</Trans>,
   [TokenSortMethod.PRICE]: <Trans>Price</Trans>,
-  [TokenSortMethod.VOLUME]: <Trans>Volume</Trans>,
+  [TokenSortMethod.VOLUME]: <Trans>Total volume</Trans>,
   [TokenSortMethod.HOUR_CHANGE]: <Trans>1 hour</Trans>,
   [TokenSortMethod.DAY_CHANGE]: <Trans>1 day</Trans>,
   [TokenSortMethod.TVL]: <Trans>TVL</Trans>,
