@@ -105,6 +105,8 @@ const HEADER_TEXT: Record<TokenSortMethod, ReactNode> = {
   [TokenSortMethod.HOUR_CHANGE]: <Trans>1 hour</Trans>,
   [TokenSortMethod.DAY_CHANGE]: <Trans>1 day</Trans>,
   [TokenSortMethod.TVL]: <Trans>TVL</Trans>,
+  [TokenSortMethod.VOLUME1DAY]: <Trans>1 day volume</Trans>,
+  [TokenSortMethod.VOLUME1WEEK]: <Trans>7 day volume</Trans>,
 }
 
 export const HEADER_DESCRIPTIONS: Record<TokenSortMethod, ReactNode | undefined> = {
@@ -117,7 +119,7 @@ export const HEADER_DESCRIPTIONS: Record<TokenSortMethod, ReactNode | undefined>
     </Trans>
   ),
   [TokenSortMethod.VOLUME]: (
-    <Trans>Volume is the amount of the asset that has been traded on Novaswap during the selected time frame.</Trans>
+    <Trans>Volume is the amount of the asset that has been traded on NovaSwap during the selected time frame.</Trans>
   ),
 }
 
@@ -192,6 +194,8 @@ function TokenTable({
           ),
           // fdv: token?.project?.markets?.[0]?.fullyDilutedValuation?.value ?? 0,
           volume: token?.market?.volume?.value ?? 0,
+          volume1Day: token?.market?.volume1Day?? 0,
+          volume1Week: token?.market?.volume1Week?? 0,
           totalValueLockedUSD:token?.totalValueLockedUSD,
           // sparkline: (
           //   <SparklineContainer>
@@ -356,6 +360,40 @@ function TokenTable({
           </Cell>
         ),
       }),
+      columnHelper.accessor((row) => row.volume1Day, {
+        id: 'volume1day',
+        header: () => (
+          <Cell width={133} grow>
+            <TokenTableHeader
+              category={TokenSortMethod.VOLUME1DAY}
+              isCurrentSortMethod={sortMethod === TokenSortMethod.VOLUME1DAY}
+              direction={orderDirection}
+            />
+          </Cell>
+        ),
+        cell: (volume) => (
+          <Cell width={133} loading={showLoadingSkeleton} grow testId="volume-cell">
+            <ValueText>{formatNumber({ input: volume.getValue?.(), type: NumberType.FiatTokenStats })}</ValueText>
+          </Cell>
+        ),
+      }),
+      columnHelper.accessor((row) => row.volume1Week, {
+        id: 'volume1week',
+        header: () => (
+          <Cell width={133} grow>
+            <TokenTableHeader
+              category={TokenSortMethod.VOLUME1WEEK}
+              isCurrentSortMethod={sortMethod === TokenSortMethod.VOLUME1WEEK}
+              direction={orderDirection}
+            />
+          </Cell>
+        ),
+        cell: (volume) => (
+          <Cell width={133} loading={showLoadingSkeleton} grow testId="volume-cell">
+            <ValueText>{formatNumber({ input: volume.getValue?.(), type: NumberType.FiatTokenStats })}</ValueText>
+          </Cell>
+        ),
+      }),
       columnHelper.accessor((row) => row.volume, {
         id: 'volume',
         header: () => (
@@ -373,15 +411,15 @@ function TokenTable({
           </Cell>
         ),
       }),
-      columnHelper.accessor((row) => row.sparkline, {
-        id: 'sparkline',
-        header: () => <Cell minWidth={172} />,
-        cell: (sparkline) => (
-          <Cell minWidth={172} loading={showLoadingSkeleton}>
-            {sparkline.getValue?.()}
-          </Cell>
-        ),
-      }),
+      // columnHelper.accessor((row) => row.sparkline, {
+      //   id: 'sparkline',
+      //   header: () => <Cell minWidth={172} />,
+      //   cell: (sparkline) => (
+      //     <Cell minWidth={172} loading={showLoadingSkeleton}>
+      //       {sparkline.getValue?.()}
+      //     </Cell>
+      //   ),
+      // }),
     ]
   }, [formatFiatPrice, formatNumber, orderDirection, showLoadingSkeleton, sortMethod])
 

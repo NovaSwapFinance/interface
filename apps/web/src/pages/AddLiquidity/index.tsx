@@ -77,6 +77,7 @@ import { maxAmountSpend } from '../../utils/maxAmountSpend'
 import { Dots } from '../Pool/styled'
 import { Review } from './Review'
 import { DynamicSection, MediumOnly, ResponsiveTwoColumns, ScrollablePage, StyledInput, Wrapper } from './styled'
+import { useSwitchChain } from 'hooks/useSwitchChain';
 
 const DEFAULT_ADD_IN_RANGE_SLIPPAGE_TOLERANCE = new Percent(50, 10_000)
 const blastRebasingAlertAtom = atomWithStorage<boolean>('shouldShowBlastRebasingAlert', true)
@@ -117,20 +118,19 @@ function AddLiquidity() {
   }>()
 
   console.log('useParams',currencyIdA,currencyIdB)
-  const { account, chainId, provider } = useWeb3React()
-  // const chainId = ChainId.NOVA_MAINNET
-  // const switchChain = useSwitchChain()
-  console.log('chainId++++++++++',chainId)
+  const { account, chainId, provider,connector } = useWeb3React()
+  const web3ChainId = ChainId.NOVA_MAINNET
+  const switchChain = useSwitchChain()
   const theme = useTheme()
   const trace = useTrace()
 
-  // useEffect(() => {
+  useEffect(() => {
  
-  //   if (account && web3ChainId ) {
-  //     console.log('useEffect',account,web3ChainId,chainId)
-  //     // switchChain(connector, chainId)
-  //   } 
-  // },[web3ChainId,connector,account])
+    if (account && chainId !== web3ChainId ) {
+      // console.log('useEffect',account,web3ChainId,chainId)
+      switchChain(connector, web3ChainId)
+    } 
+  },[connector,account,chainId])
 
   const toggleWalletDrawer = useToggleAccountDrawer() // toggle wallet when disconnected
   const addTransaction = useTransactionAdder()

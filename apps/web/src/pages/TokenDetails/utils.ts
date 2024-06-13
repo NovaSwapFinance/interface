@@ -4,7 +4,7 @@ import { t } from "i18n";
 export const getTokenPageTitle = (currency?: Currency) => {
   const tokenName = currency?.name;
   const tokenSymbol = currency?.symbol;
-  const baseTitle = t`Buy, sell, and trade on Novaswap`;
+  const baseTitle = t`Buy, sell, and trade on NovaSwap`;
   if (!tokenName && !tokenSymbol) {
     return baseTitle;
   }

@@ -103,6 +103,7 @@ query TopTokens( $first: Int!) {
       totalValueLocked
       tokenDayData {
         priceUSD
+        volumeUSD
       }
      }
 }

@@ -89,12 +89,12 @@ export function FOTTooltipContent() {
 function SwapFeeTooltipContent({ hasFee }: { hasFee: boolean }) {
   const message = hasFee ? (
     <Trans>
-      Fees are applied to ensure the best experience with Novaswap, and have
+      Fees are applied to ensure the best experience with NovaSwap, and have
       already been factored into this quote.
     </Trans>
   ) : (
     <Trans>
-      Fees are applied to ensure the best experience with Novaswap. There is no
+      Fees are applied to ensure the best experience with NovaSwap. There is no
       fee associated with this swap.
     </Trans>
   );
