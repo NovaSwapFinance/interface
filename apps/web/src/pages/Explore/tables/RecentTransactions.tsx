@@ -81,7 +81,7 @@ export default function RecentTransactions() {
           <Cell loading={showLoadingSkeleton} minWidth={120} justifyContent="flex-start" grow>
             <TimestampCell
               timestamp={Number(transaction.getValue?.().timestamp)}
-              link={getExplorerLink(chainId, transaction.getValue?.().hash, ExplorerDataType.TRANSACTION)}
+              link={getExplorerLink(ChainId.NOVA_MAINNET, transaction.getValue?.().hash, ExplorerDataType.TRANSACTION)}
             />
           </Cell>
         ),

@@ -41,11 +41,11 @@ export function getTimePeriodFromDisplay(display: TimePeriodDisplay): TimePeriod
 }
 
 export const ORDERED_TIMES: TimePeriod[] = [
-  TimePeriod.HOUR,
+  // TimePeriod.HOUR,
   TimePeriod.DAY,
   TimePeriod.WEEK,
   TimePeriod.MONTH,
-  TimePeriod.YEAR,
+  // TimePeriod.YEAR,
 ]
 
 const StyledMenuFlyout = css`

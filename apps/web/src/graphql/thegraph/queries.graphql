@@ -103,6 +103,7 @@ query TopTokens( $first: Int!) {
       totalValueLocked
       tokenDayData {
         priceUSD
+        volumeUSD
       }
      }
 }
@@ -181,5 +182,408 @@ query RecentSwaps( $first: Int!)  {
        transaction {
         id
       }
+  }
+}
+
+query PoolData( $address: ID!) {
+   pool(id: $address) {
+    id
+    txCount
+    totalValueLockedToken0
+    totalValueLockedToken1
+    token1Price
+    token0Price
+    feeTier
+    totalValueLockedUSD
+    poolDayData(orderBy: id, orderDirection: desc)  {
+      volumeUSD
+      tvlUSD
+    }
+    token0 {
+      address:id
+      decimals
+      feesUSD
+      id
+      name
+      poolCount
+      symbol
+      totalSupply
+      totalValueLocked
+      totalValueLockedUSD
+      totalValueLockedUSDUntracked
+      txCount
+      untrackedVolumeUSD
+      volume
+      volumeUSD
+    }
+    token1 {
+      address:id
+      decimals
+      feesUSD
+      id
+      name
+      poolCount
+      symbol
+      totalSupply
+      totalValueLocked
+      totalValueLockedUSD
+      totalValueLockedUSDUntracked
+      txCount
+      untrackedVolumeUSD
+      volume
+      volumeUSD
+    }
+  }
+}
+query PoolTransaction($first: Int!,$time:BigInt!, $address: ID!)  {
+  pool(id: $address) {
+    id
+    swaps(first: 1000,orderBy: timestamp, orderDirection: desc,where: {timestamp_lt:$time}) {
+        amount0
+        amount1
+        amountUSD
+        id
+        origin
+        timestamp
+        token0 {
+          address:id
+          id
+          name
+          symbol
+          decimals
+        }
+        token1 {
+          address:id
+          decimals
+          id
+          name
+          symbol
+        }
+    }
+    mints(first: $first,orderBy: timestamp, orderDirection: desc, where: {timestamp_lt:$time}) {
+        amount0
+        amount1
+        amountUSD
+        id
+        origin
+        timestamp
+        token0 {
+          address:id
+          id
+          name
+          symbol
+          decimals
+        }
+        token1 {
+          address:id
+          decimals
+          id
+          name
+          symbol
+        }
+    }
+    burns(first: $first,orderBy: timestamp, orderDirection: desc, where: {timestamp_lt:$time}) {
+        amount0
+        amount1
+        amountUSD
+        id
+        origin
+        timestamp
+        token0 {
+          address:id
+          id
+          name
+          symbol
+          decimals
+        }
+        token1 {
+          address:id
+          decimals
+          id
+          name
+          symbol
+        }
+    }
+  }
+}
+
+
+query PoolHourData($time:Int!, $address: ID!)  {
+  pool(id: $address) {
+    id
+     poolHourData(
+     first:1000
+      where: {periodStartUnix_gte:$time}
+      orderBy: periodStartUnix
+      orderDirection: asc
+    ) {
+      token0Price
+      token1Price
+      value:volumeUSD
+      id
+      timestamp:periodStartUnix
+    }
+  }
+}
+
+query TokenWebDoc($address: ID!)  {
+ token(id: $address) {
+    id
+    address:id
+    decimals
+    name
+    symbol
+    totalValueLockedUSD
+    tokenDayData {
+      volumeUSD
+      priceUSD
+    }
+    totalSupply
+  }
+}
+query TokenSwapsTx($address: ID!,$first: Int!, $time:BigInt!)  {
+ token(id: $address) {
+    id
+    address:id
+    decimals
+    name
+    symbol
+  }
+   swaps(first: $first,where: {token0_: {id: $address},timestamp_lt:$time},orderBy: timestamp, orderDirection: desc) {
+    usdValue:amountUSD
+    token1Quantity:amount1
+    token0Quantity:amount0
+    timestamp
+    token0 {
+      id
+      address:id
+      decimals
+      name
+      symbol
+    }
+    token1 {
+      id
+      address:id
+      decimals
+      name
+      symbol
+    }
+    account:origin
+    hash:id
+    id
+  }
+   swaps2:swaps(first: $first,where: {token1_: {id: $address},timestamp_lt:$time},orderBy: timestamp, orderDirection: desc) {
+    usdValue:amountUSD
+    token1Quantity:amount1
+    token0Quantity:amount0
+    timestamp
+    token0 {
+      id
+      address:id
+      decimals
+      name
+      symbol
+    }
+    token1 {
+      id
+      address:id
+      decimals
+      name
+      symbol
+    }
+    account:origin
+    hash:id
+    id
+  }
+}
+
+query PoolsByToken0Id($first: Int!,$address: ID!) {
+  pools(first: $first,where: {token0_: {id: $address},totalValueLockedUSD_gte: "5"}) {
+    address:id
+    id
+    txCount
+    totalValueLockedUSD
+    feeTier
+    token0 {
+      address:id
+      decimals
+      feesUSD
+      id
+      name
+      poolCount
+      symbol
+      totalSupply
+      totalValueLocked
+      totalValueLockedUSD
+      totalValueLockedUSDUntracked
+      txCount
+      untrackedVolumeUSD
+      volume
+      volumeUSD
+    }
+    token1 {
+      address:id
+      decimals
+      feesUSD
+      id
+      name
+      poolCount
+      symbol
+      totalSupply
+      totalValueLocked
+      totalValueLockedUSD
+      totalValueLockedUSDUntracked
+      txCount
+      untrackedVolumeUSD
+      volume
+      volumeUSD
+    }
+    poolDayData(orderBy: date, orderDirection: desc) {
+      volumeUSD
+    }
+  }
+}
+
+query PoolsByToken1Id($first: Int!,$address: ID!) {
+  pools(first: $first,where: {token1_: {id: $address},totalValueLockedUSD_gte: "5"}) {
+    address:id
+    id
+    txCount
+    totalValueLockedUSD
+    feeTier
+    token0 {
+      address:id
+      decimals
+      feesUSD
+      id
+      name
+      poolCount
+      symbol
+      totalSupply
+      totalValueLocked
+      totalValueLockedUSD
+      totalValueLockedUSDUntracked
+      txCount
+      untrackedVolumeUSD
+      volume
+      volumeUSD
+    }
+    token1 {
+      address:id
+      decimals
+      feesUSD
+      id
+      name
+      poolCount
+      symbol
+      totalSupply
+      totalValueLocked
+      totalValueLockedUSD
+      totalValueLockedUSDUntracked
+      txCount
+      untrackedVolumeUSD
+      volume
+      volumeUSD
+    }
+    poolDayData(orderBy: date, orderDirection: desc) {
+      volumeUSD
+    }
+  }
+}
+
+query TokenHourChartData($time:Int!, $address: ID!)  {
+  tokenHourDatas(
+      first:1000
+      where: {token_: {id: $address},periodStartUnix_gte:$time}
+      orderBy: periodStartUnix
+      orderDirection: asc
+   ) {
+    timestamp:periodStartUnix
+    priceUSD
+    totalValueLockedUSD
+    id
+    volumeUSD
+    token {
+      address:id
+      id
+      name
+      symbol
+    }
+  }
+}
+
+query AllTx($first: Int!) {
+  transactions(first: $first,orderBy: timestamp, orderDirection: desc) {
+      timestamp
+    id
+    swaps {
+      amount0
+      amount1
+      amountUSD
+      id
+      recipient
+      sender
+      origin
+      timestamp
+      token0 {
+        address: id
+        id
+        name
+        symbol
+        decimals
+      }
+      token1 {
+        address: id
+        decimals
+        id
+        name
+        symbol
+      }
+    }
+    burns {
+      amount0
+      amount1
+      amountUSD
+      id
+      origin
+      timestamp
+      token0 {
+        address: id
+        id
+        name
+        symbol
+        decimals
+      }
+      token1 {
+        address: id
+        decimals
+        id
+        name
+        symbol
+      }
+    }
+    mints {
+      amount0
+      amount1
+      amountUSD
+      id
+      sender
+      origin
+      timestamp
+      token0 {
+        address: id
+        id
+        name
+        symbol
+        decimals
+      }
+      token1 {
+        address: id
+        decimals
+        id
+        name
+        symbol
+      }
+    }
   }
 }

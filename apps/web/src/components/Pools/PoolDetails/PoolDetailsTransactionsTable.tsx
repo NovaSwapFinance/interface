@@ -1,3 +1,4 @@
+import { ChainId } from '@novaswap/sdk-core'
 import { createColumnHelper } from '@tanstack/react-table'
 import Row from 'components/Row'
 import { Table } from 'components/Table'
@@ -17,7 +18,7 @@ import { useMemo, useReducer, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import styled from 'styled-components'
 import { ExternalLink, ThemedText } from 'theme/components'
-import { ProtocolVersion, Token } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
+import { Chain, ProtocolVersion, Token } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
 import { shortenAddress } from 'utilities/src/addresses'
 import { NumberType, useFormatter } from 'utils/formatNumbers'
 import { ExplorerDataType, getExplorerLink } from 'utils/getExplorerLink'
@@ -66,7 +67,7 @@ export function PoolDetailsTransactionsTable({
   protocolVersion?: ProtocolVersion
 }) {
   const chainName = validateUrlChainParam(useParams<{ chainName?: string }>().chainName)
-  const chainId = supportedChainIdFromGQLChain(chainName)
+  const chainId = ChainId.NOVA_MAINNET
   const activeLocalCurrency = useActiveLocalCurrency()
   const { formatNumber, formatFiatPrice } = useFormatter()
   const [filterModalIsOpen, toggleFilterModal] = useReducer((s) => !s, false)
@@ -113,7 +114,7 @@ export function PoolDetailsTransactionsTable({
           >
             <TimestampCell
               timestamp={Number(row.getValue?.().timestamp)}
-              link={getExplorerLink(chainId, row.getValue?.().transaction, ExplorerDataType.TRANSACTION)}
+              link={getExplorerLink(ChainId.NOVA_MAINNET, row.getValue?.().transaction, ExplorerDataType.TRANSACTION)}
             />
           </Cell>
         ),

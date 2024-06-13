@@ -130,7 +130,7 @@ export function TransactionsTable({ chainId, referenceToken }: { chainId: ChainI
           <Cell loading={showLoadingSkeleton} minWidth={120} justifyContent="flex-start" grow>
             <TimestampCell
               timestamp={Number(row.getValue?.().timestamp)}
-              link={getExplorerLink(chainId, row.getValue?.().hash, ExplorerDataType.TRANSACTION)}
+              link={getExplorerLink(ChainId.NOVA_MAINNET, row.getValue?.().hash, ExplorerDataType.TRANSACTION)}
             />
           </Cell>
         ),

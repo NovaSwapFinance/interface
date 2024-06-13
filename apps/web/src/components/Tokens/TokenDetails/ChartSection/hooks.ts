@@ -3,7 +3,7 @@ import { StackedLineData } from 'components/Charts/StackedLineChart'
 import { SingleHistogramData } from 'components/Charts/VolumeChart/renderer'
 import { ChartType, PriceChartType } from 'components/Charts/utils'
 import { UTCTimestamp } from 'lightweight-charts'
-import { useMemo, useReducer } from 'react'
+import { useEffect, useMemo, useReducer } from 'react'
 import {
   CandlestickOhlcFragment,
   Chain,
@@ -14,6 +14,7 @@ import {
   useTokenPriceQuery,
 } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
 import { ChartQueryResult, DataQuality, checkDataQuality, withUTCTimestamp } from './util'
+import { useTokenHourChartDataQuery } from 'graphql/thegraph/__generated__/types-and-hooks'
 
 type TDPChartQueryVariables = { chain: Chain; address?: string; duration: HistoryDuration }
 
@@ -38,10 +39,24 @@ export function useTDPPriceChartData(
   priceChartType: PriceChartType
 ): ChartQueryResult<PriceChartData, ChartType.PRICE> & { disableCandlestickUI: boolean } {
   const [fallback, enablePriceHistoryFallback] = useReducer(() => true, false)
-  const { data, loading } = useTokenPriceQuery({ variables: { ...variables, fallback }, skip })
+  const { data, loading } = useTokenHourChartDataQuery({ variables: { ...variables}, skip })
 
   return useMemo(() => {
-    const { ohlc, priceHistory, price } = data?.token?.market ?? {}
+    const ohlc = null;
+
+    const priceHistory = data?.tokenHourDatas.map((item)=> {
+
+      return {
+        timestamp: item.timestamp,
+        value: Number(item.priceUSD)
+      }
+    })
+
+    const price = {
+      value: data?.tokenHourDatas?.length> 0 ? Number(data?.tokenHourDatas[data?.tokenHourDatas.length - 1].priceUSD):0
+    }
+
+    // const { ohlc, priceHistory, price } = data?.token?.market ?? {}
     let entries =
       (ohlc
         ? ohlc?.filter((v): v is CandlestickOhlcFragment => v !== undefined).map(toPriceChartData)
@@ -135,22 +150,26 @@ export function useTDPPriceChartData(
 
     const dataQuality = checkDataQuality(entries, ChartType.PRICE, variables.duration)
     return { chartType: ChartType.PRICE, entries, loading, dataQuality, disableCandlestickUI: fallback }
-  }, [data?.token?.market, fallback, loading, priceChartType, variables.duration])
+  }, [data?.tokenHourDatas, fallback, loading, priceChartType, variables.duration])
 }
 
 export function useTDPVolumeChartData(
   variables: TDPChartQueryVariables,
   skip: boolean
 ): ChartQueryResult<SingleHistogramData, ChartType.VOLUME> {
-  const { data, loading } = useTokenHistoricalVolumesQuery({ variables, skip })
+  const { data, loading } = useTokenHourChartDataQuery({ variables, skip })
   return useMemo(() => {
     const entries =
-      data?.token?.market?.historicalVolume
-        ?.filter((v): v is PriceHistoryFallbackFragment => v !== undefined)
+    data?.tokenHourDatas?.map(item => {
+      return {
+        timestamp: item.timestamp,
+        value: Number(item.volumeUSD)
+      }
+    })?.filter((v): v is PriceHistoryFallbackFragment => v !== undefined)
         .map(withUTCTimestamp) ?? []
-    const dataQuality = checkDataQuality(entries, ChartType.VOLUME, variables.duration)
-    return { chartType: ChartType.VOLUME, entries, loading, dataQuality }
-  }, [data?.token?.market?.historicalVolume, loading, variables.duration])
+    // const dataQuality = checkDataQuality(entries, ChartType.VOLUME, variables.duration)
+    return { chartType: ChartType.VOLUME, entries, loading, dataQuality:0 }
+  }, [data?.tokenHourDatas, loading])
 }
 
 function toStackedLineData(entry: { timestamp: number; value: number }): StackedLineData {
@@ -161,12 +180,17 @@ export function useTDPTVLChartData(
   variables: TDPChartQueryVariables,
   skip: boolean
 ): ChartQueryResult<StackedLineData, ChartType.TVL> {
-  const { data, loading } = useTokenHistoricalTvlsQuery({ variables, skip })
+  const { data, loading } = useTokenHourChartDataQuery({ variables, skip })
   return useMemo(() => {
-    const { historicalTvl, totalValueLocked } = data?.token?.market ?? {}
+    const historicalTvl = data?.tokenHourDatas?.map(item => {
+      return {
+        timestamp: item.timestamp,
+        value: Number(item.totalValueLockedUSD)
+      }
+    });
     const entries =
       historicalTvl?.filter((v): v is PriceHistoryFallbackFragment => v !== undefined).map(toStackedLineData) ?? []
-    const currentTvl = totalValueLocked?.value
+    const currentTvl = data?.tokenHourDatas?.length> 0 ? Number(data?.tokenHourDatas[data?.tokenHourDatas.length - 1].totalValueLockedUSD):0
 
     // Append current tvl to end of array to ensure data freshness and that each time period ends with same tvl
     if (currentTvl && entries.length > 1) {
@@ -186,6 +210,6 @@ export function useTDPTVLChartData(
     }
 
     const dataQuality = checkDataQuality(entries, ChartType.TVL, variables.duration)
-    return { chartType: ChartType.TVL, entries, loading, dataQuality }
-  }, [data?.token?.market, loading, variables.duration])
+    return { chartType: ChartType.TVL, entries, loading, dataQuality:0 }
+  }, [data?.tokenHourData, loading ])
 }

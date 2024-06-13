@@ -20,6 +20,8 @@ import {
   usePoolVolumeHistoryQuery,
 } from "uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks";
 
+import {usePoolHourDataQuery} from 'graphql/thegraph/__generated__/types-and-hooks' 
+
 type PDPChartQueryVars = {
   address: string;
   chain: Chain;
@@ -33,20 +35,26 @@ export function usePDPPriceChartData(
   tokenB: Token | undefined,
   isReversed: boolean,
 ): ChartQueryResult<PriceChartData, ChartType.PRICE> {
-  const { data, loading } = usePoolPriceHistoryQuery({ variables });
+  const {address,duration} = variables;
+  const getTime =  {
+    [HistoryDuration.Day]:() => Math.floor((new Date().getTime() - 24 * 60 * 60 * 1000) /1000 ),
+    [HistoryDuration.Week]:() => Math.floor((new Date().getTime() - 7 * 24 * 60 * 60 * 1000) /1000 ),
+    [HistoryDuration.Month]:() => Math.floor((new Date().getTime() - 30 * 24 * 60 * 60 * 1000) /1000 ),
+  }
+  const { data, loading } = usePoolHourDataQuery({variables :{ address , time:getTime[duration]() }});
+
+  console.log('data=======>',duration,data)
 
   return useMemo(() => {
-    const { priceHistory } = data?.v2Pair ?? data?.v3Pool ?? {};
+    const { poolHourData } =  data?.pool ?? {};
     const referenceToken = isReversed ? tokenA : tokenB;
 
     const entries =
-      priceHistory
-        ?.filter((price): price is TimestampedPoolPrice => price !== null)
-        .map((price) => {
+    poolHourData?.map((price) => {
           const value =
             poolData?.token0.address === referenceToken?.address.toLowerCase()
-              ? price?.token0Price
-              : price?.token1Price;
+              ? Number(price?.token0Price)
+              : Number(price?.token1Price);
 
           return {
             time: price.timestamp as UTCTimestamp,
@@ -61,12 +69,11 @@ export function usePDPPriceChartData(
     // TODO(WEB-3769): Append current price based on active tick to entries
     /* const dataQuality = checkDataQuality(entries, ChartType.PRICE, variables.duration) */
     const dataQuality =
-      loading || !priceHistory ? DataQuality.INVALID : DataQuality.VALID;
+      loading || !poolHourData ? DataQuality.INVALID : DataQuality.VALID;
 
     return { chartType: ChartType.PRICE, entries, loading, dataQuality };
   }, [
-    data?.v2Pair,
-    data?.v3Pool,
+    data?.pool,
     isReversed,
     loading,
     poolData?.token0.address,
@@ -78,14 +85,17 @@ export function usePDPPriceChartData(
 export function usePDPVolumeChartData(
   variables: PDPChartQueryVars,
 ): ChartQueryResult<SingleHistogramData, ChartType.VOLUME> {
-  const { data, loading } = usePoolVolumeHistoryQuery({ variables });
+  const {address,duration} = variables;
+  const getTime =  {
+    [HistoryDuration.Day]:() => Math.floor((new Date().getTime() - 24 * 60 * 60 * 1000) /1000 ),
+    [HistoryDuration.Week]:() => Math.floor((new Date().getTime() - 7 * 24 * 60 * 60 * 1000) /1000 ),
+    [HistoryDuration.Month]:() => Math.floor((new Date().getTime() - 30 * 24 * 60 * 60 * 1000) /1000 ),
+  }
+  const { data, loading } = usePoolHourDataQuery({variables :{ address , time:getTime[duration]() }});
 
   return useMemo(() => {
-    const { historicalVolume } = data?.v2Pair ?? data?.v3Pool ?? {};
-    const entries =
-      historicalVolume
-        ?.filter((amt): amt is TimestampedAmount => amt !== null)
-        .map(withUTCTimestamp) ?? [];
+    const { poolHourData } = data?.pool ?? {};
+    const entries = poolHourData?.map(withUTCTimestamp) ?? [];
 
     const dataQuality = checkDataQuality(
       entries,
@@ -94,5 +104,5 @@ export function usePDPVolumeChartData(
     );
 
     return { chartType: ChartType.VOLUME, entries, loading, dataQuality };
-  }, [data?.v2Pair, data?.v3Pool, loading, variables.duration]);
+  }, [data?.pool, loading, variables.duration]);
 }

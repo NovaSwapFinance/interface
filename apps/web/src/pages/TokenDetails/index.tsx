@@ -18,7 +18,7 @@ import {
 } from "graphql/data/util";
 import { useCurrency } from "hooks/Tokens";
 import { useSrcColor } from "hooks/useColor";
-import { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { Helmet } from "react-helmet-async/lib/index";
 import { useLocation, useParams } from "react-router-dom";
 import { useTheme } from "styled-components";
@@ -33,6 +33,7 @@ import {
   TDPProvider,
 } from "./TDPContext";
 import { getTokenPageTitle } from "./utils";
+import { useTokenWebDocQuery } from "graphql/thegraph/__generated__/types-and-hooks";
 
 function useOnChainToken(
   address: string | undefined,
@@ -56,8 +57,8 @@ function useTDPCurrency(
   isNative: boolean,
 ) {
   const { chainId } = useWeb3React();
-  const appChainId = chainId ?? ChainId.MAINNET;
-
+  // const appChainId = chainId ?? ChainId.NOVA_MAINNET;
+  const appChainId = ChainId.NOVA_MAINNET
   const queryCurrency = useMemo(() => {
     if (isNative) return nativeOnChain(currencyChainId);
     if (tokenQuery.data?.token) return gqlToCurrency(tokenQuery.data.token);
@@ -110,18 +111,62 @@ function useCreateTDPContext(): PendingTDPContext | LoadedTDPContext {
       "Invalid token details route: token address URL param is undefined",
     );
   const currencyChain = validateUrlChainParam(chainName);
-  const currencyChainId = supportedChainIdFromGQLChain(currencyChain);
-
+  // const currencyChainId = supportedChainIdFromGQLChain(currencyChain);
+  const currencyChainId = ChainId.NOVA_MAINNET;
   const isNative = tokenAddress === NATIVE_CHAIN_ID;
 
   const tokenDBAddress = isNative
     ? getNativeTokenDBAddress(currencyChain)
     : tokenAddress;
 
-  const tokenQuery = useTokenWebQuery({
-    variables: { address: tokenDBAddress, chain: currencyChain },
-    errorPolicy: "all",
+  const tokenResult = useTokenWebDocQuery({
+    variables: { address: tokenDBAddress},
   });
+  const tokenQuery = useMemo(() => {
+    if(tokenResult.data) {
+      const { token } = tokenResult.data;
+      const {tokenDayData} = token;
+      const price = tokenDayData?.length>0?tokenDayData[tokenDayData.length -1].priceUSD:0;
+      const volumeUSD24H = tokenDayData?.length>0?tokenDayData[tokenDayData.length -1].volumeUSD:0;
+      const market = {
+        price:{
+          currency:"USD",
+          value:price
+        },
+        totalValueLocked:{
+          value: token.totalValueLockedUSD,
+          currency:"USD",
+        },
+        volume24H:{
+          currency:"USD",
+          value:volumeUSD24H
+        }
+      }
+      const projectMt = {
+        fullyDilutedValuation:{
+          currency:"USD",
+          value:token.totalSupply*price
+        },
+        marketCap:{
+          currency:"USD",
+          value:token.totalSupply*price
+        }
+      }
+      const project = {
+        markets:[projectMt],
+      }
+      const formatterToken = {
+        ...token,
+        standard:token.symbol === 'ETH' ? 'NATIVE' : 'ERC20',
+        chain: 'Nova Mainnet',
+        market,
+        project
+      }
+      tokenResult.data.token = formatterToken;
+      return tokenResult
+    }
+    return { data : undefined}
+  }, [tokenResult]);
   const chartState = useCreateTDPChartState(tokenDBAddress, currencyChain);
 
   const multiChainMap = useMultiChainMap(tokenQuery);
@@ -176,15 +221,20 @@ function useCreateTDPContext(): PendingTDPContext | LoadedTDPContext {
 }
 
 export default function TokenDetailsPage() {
-  const pageChainId = useWeb3React().chainId ?? ChainId.MAINNET;
+  const pageChainId = ChainId.NOVA_MAINNET;
   const contextValue = useCreateTDPContext();
+  const dom = useMemo(() => {
 
+    return contextValue.currency ? <TDPProvider contextValue={contextValue}>
+    <TokenDetails />
+  </TDPProvider>:null
+  },[contextValue])
   return (
     <ThemeProvider accent1={contextValue.tokenColor ?? undefined}>
       <Helmet>
         <title>{getTokenPageTitle(contextValue?.currency)}</title>
       </Helmet>
-      {(() => {
+      {/* {(() => {
         if (contextValue.currency) {
           return (
             <TDPProvider contextValue={contextValue}>
@@ -193,17 +243,18 @@ export default function TokenDetailsPage() {
           );
         }
 
-        if (contextValue.tokenQuery.loading) {
-          return <TokenDetailsPageSkeleton />;
-        } else {
-          return (
-            <InvalidTokenDetails
-              pageChainId={pageChainId}
-              isInvalidAddress={!isAddress(contextValue.address)}
-            />
-          );
-        }
-      })()}
+        // if (contextValue.tokenQuery.loading) {
+        //   return <TokenDetailsPageSkeleton />;
+        // } else {
+        //   return (
+        //     <InvalidTokenDetails
+        //       pageChainId={pageChainId}
+        //       isInvalidAddress={!isAddress(contextValue.address)}
+        //     />
+        //   );
+        // }
+      })()} */}
+      {dom}
     </ThemeProvider>
   );
 }

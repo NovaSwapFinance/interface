@@ -112,12 +112,16 @@ function FeesTooltipDisplay({ data, feeTier }: { data: SingleHistogramData; feeT
   return (
     <>
       <ThemedText.BodySmall>
-        {t(`Fees: {{amount}}`, {
+        {/* {t(`Fees: {{amount}}`, {
           amount: formatFiatPrice({
             price: fees,
             type: NumberType.ChartFiatValue,
           }),
-        })}
+        })} */}
+        {`Fees: ${formatFiatPrice({
+            price: fees,
+            type: NumberType.ChartFiatValue,
+          })}`}
       </ThemedText.BodySmall>
     </>
   )

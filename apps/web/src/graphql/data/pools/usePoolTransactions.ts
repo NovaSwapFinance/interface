@@ -11,6 +11,10 @@ import {
   useV3PoolTransactionsQuery,
 } from "uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks";
 
+import {usePoolTransactionQuery} from 'graphql/thegraph/__generated__/types-and-hooks'
+import { use } from "i18next";
+import { timestamp } from "nft/components/explore/Explore.css";
+
 export enum PoolTableTransactionType {
   BUY = "Buy",
   SELL = "Sell",
@@ -38,7 +42,7 @@ export interface PoolTableTransaction {
   type: PoolTableTransactionType;
 }
 
-const PoolTransactionDefaultQuerySize = 25;
+const PoolTransactionDefaultQuerySize = 100;
 
 export function usePoolTransactions(
   address: string,
@@ -55,38 +59,100 @@ export function usePoolTransactions(
   first = PoolTransactionDefaultQuerySize,
 ) {
   const {
-    loading: loadingV3,
-    error: errorV3,
-    data: dataV3,
-    fetchMore: fetchMoreV3,
-  } = useV3PoolTransactionsQuery({
-    variables: { first, chain: chainIdToBackendName(chainId), address },
+    loading,
+    error,
+    data,
+    fetchMore
+  } = usePoolTransactionQuery({
+    variables: { first, time: Math.floor(new Date().getTime() / 1000), address },
     skip: protocolVersion !== ProtocolVersion.V3,
   });
-  const {
-    loading: loadingV2,
-    error: errorV2,
-    data: dataV2,
-    fetchMore: fetchMoreV2,
-  } = useV2PairTransactionsQuery({
-    variables: { first, address },
-    skip: protocolVersion !== ProtocolVersion.V2 || chainId !== ChainId.MAINNET,
-  });
+  // const {
+  //   loading: loadingV2,
+  //   error: errorV2,
+  //   data: dataV2,
+  //   fetchMore: fetchMoreV2,
+  // } = useV2PairTransactionsQuery({
+  //   variables: { first, address },
+  //   skip: protocolVersion !== ProtocolVersion.V2 || chainId !== ChainId.MAINNET,
+  // });
   const loadingMore = useRef(false);
-  const { transactions, loading, fetchMore, error } =
-    protocolVersion === ProtocolVersion.V3
-      ? {
-          transactions: dataV3?.v3Pool?.transactions,
-          loading: loadingV3,
-          fetchMore: fetchMoreV3,
-          error: errorV3,
+  // const { transactions, loading, fetchMore, error } =
+  //   {
+  //         transactions: dataV3?.v3Pool?.transactions,
+  //         loading: loadingV3,
+  //         fetchMore: fetchMoreV3,
+  //         error: errorV3,
+  //       };
+
+  
+
+const transactions = useMemo(() => {
+
+  if(data && data?.pool) {
+    const {burns,swaps,mints } = data.pool;
+    const burnsTx = burns.map((burn) => {
+      const {id} = burn;
+      const hx = id?.split('-')[0];
+      const item = {
+        account:burn.origin,
+        hash:hx,
+        timestamp:burn.timestamp,
+        token0:burn.token0,
+        token0Quantity:burn.amount0,
+        token1:burn.token1,
+        token1Quantity:burn.amount1,
+        type:PoolTransactionType.Remove,
+        usdValue:{
+          value:burn.amountUSD
         }
-      : {
-          transactions: dataV2?.v2Pair?.transactions,
-          loading: loadingV2,
-          fetchMore: fetchMoreV2,
-          error: errorV2,
-        };
+      }
+      return item;
+    })
+    const swapsTx = swaps.map((swap) => {
+      const {id} = swap;
+      const hx = id?.split('-')[0];
+      const item = {
+        account:swap.origin,
+        hash:hx,
+        timestamp:swap.timestamp,
+        token0:swap.token0,
+        token0Quantity:swap.amount0,
+        token1:swap.token1,
+        token1Quantity:swap.amount1,
+        type:PoolTransactionType.Swap,
+        usdValue:{
+          value:swap.amountUSD
+        }
+      }
+      return item;
+    })
+
+    const mintsTx = mints.map((mint) => {
+      const {id} = mint;
+      const hx = id?.split('-')[0];
+      const item = {
+        account:mint.origin,
+        hash:hx,
+        timestamp:mint.timestamp,
+        token0:mint.token0,
+        token0Quantity:mint.amount0,
+        token1:mint.token1,
+        token1Quantity:mint.amount1,
+        type:PoolTransactionType.Add,
+        usdValue:{
+          value:mint.amountUSD
+        }
+      }
+      return item;
+    })
+    const transactions = burnsTx.concat(swapsTx).concat(mintsTx).sort((a,b) => b.timestamp - a.timestamp);
+    return transactions;
+  }
+
+  return [];
+}, [data])
+
 
   const loadMore = useCallback(
     ({ onComplete }: { onComplete?: () => void }) => {
@@ -96,30 +162,25 @@ export function usePoolTransactions(
       loadingMore.current = true;
       fetchMore({
         variables: {
-          cursor: transactions?.[transactions.length - 1]?.timestamp,
+          time: transactions?.[transactions.length - 1]?.timestamp,
         },
         updateQuery: (prev, { fetchMoreResult }: any) => {
           if (!fetchMoreResult) return prev;
           onComplete?.();
-          const mergedData =
-            protocolVersion === ProtocolVersion.V3
-              ? {
-                  v3Pool: {
+          const mergedData ={
+                  pool: {
                     ...fetchMoreResult.v3Pool,
-                    transactions: [
-                      ...((prev as V3PoolTransactionsQuery).v3Pool
-                        ?.transactions ?? []),
-                      ...fetchMoreResult.v3Pool.transactions,
+                    swaps: [
+                      ...(prev.pool?.swaps ?? []),
+                      ...fetchMoreResult.pool.swaps,
                     ],
-                  },
-                }
-              : {
-                  v2Pair: {
-                    ...fetchMoreResult.v2Pair,
-                    transactions: [
-                      ...((prev as V2PairTransactionsQuery).v2Pair
-                        ?.transactions ?? []),
-                      ...fetchMoreResult.v2Pair.transactions,
+                    mints: [
+                      ...(prev.pool?.mints ?? []),
+                      ...fetchMoreResult.pool.mints,
+                    ],
+                    burns: [
+                      ...(prev.pool?.burns ?? []),
+                      ...fetchMoreResult.pool.burns,
                     ],
                   },
                 };

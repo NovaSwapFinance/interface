@@ -169,11 +169,11 @@ export function TokenDescription() {
         )}
       </TokenButtonRow>
       <TokenDescriptionContainer>
-        {!description && (
+        {/* {!description && (
           <NoInfoAvailable>
             <Trans>No token information available</Trans>
           </NoInfoAvailable>
-        )}
+        )} */}
         {description && (
           <>
             <DescriptionVisibilityWrapper

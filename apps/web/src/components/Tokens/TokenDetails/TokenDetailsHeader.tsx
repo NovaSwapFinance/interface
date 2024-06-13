@@ -17,7 +17,7 @@ import useCopyClipboard from "hooks/useCopyClipboard";
 import { useOnClickOutside } from "hooks/useOnClickOutside";
 import { useScreenSize } from "hooks/useScreenSize";
 import { Trans, t } from "i18n";
-import { useReducer, useRef } from "react";
+import { useMemo, useReducer, useRef } from "react";
 import { Link } from "react-feather";
 import styled, { useTheme } from "styled-components";
 import {
@@ -32,6 +32,8 @@ import { ExplorerDataType, getExplorerLink } from "utils/getExplorerLink";
 
 import { useTDPContext } from "pages/TokenDetails/TDPContext";
 import { TokenNameCell } from "./Skeleton";
+import { useNovaTokenList } from "hooks/useNovaTokenList";
+import { ETH_LOGO, NOVA_BASE_TOKEN_SOURCE } from "constants/NovaBaseToken";
 
 const HeaderActionsContainer = styled.div`
   display: flex;
@@ -143,6 +145,15 @@ export const TokenDetailsHeader = () => {
     shareMenuRef,
     isShareModalOpen ? toggleShareModal : undefined,
   );
+  const {novaTokenList} = useNovaTokenList();
+
+  const tokenImg = useMemo(() => {
+    if(address?.toLowerCase() === '0x8280a4e7d5b3b658ec4580d3bc30f5e50454f169') return ETH_LOGO;
+    let novaBaseToken = novaTokenList.find((token) => token.l2Address.toLowerCase() === address?.toLowerCase());
+    let novaSourceToken = NOVA_BASE_TOKEN_SOURCE.find((token) => token.address.toLowerCase() === address?.toLowerCase());
+
+    return novaBaseToken?.iconURL || novaSourceToken?.logurl || '';
+  }, [address,novaTokenList])
 
   const tokenSymbolName = currency.symbol ?? <Trans>Symbol not found</Trans>;
 
@@ -171,6 +182,7 @@ export const TokenDetailsHeader = () => {
           currencies={[currency]}
           chainId={currency.chainId}
           size="32px"
+          images={tokenImg?[tokenImg]:[]}
         />
         <TokenTitle>
           <TokenName>
@@ -272,7 +284,7 @@ export const TokenDetailsHeader = () => {
                     )}
                   </ThemedText.BodyPrimary>
                 </ActionButton>
-                <ActionButton
+                {/* <ActionButton
                   onClick={() => {
                     toggleActionsModal();
                     openShareTweetWindow(twitterShareName);
@@ -282,7 +294,7 @@ export const TokenDetailsHeader = () => {
                   <ThemedText.BodyPrimary>
                     <Trans>Share to Twitter</Trans>
                   </ThemedText.BodyPrimary>
-                </ActionButton>
+                </ActionButton> */}
               </>
             ) : (
               <ShareButton name={twitterShareName} />
