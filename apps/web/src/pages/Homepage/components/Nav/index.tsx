@@ -74,7 +74,7 @@ const Icon = styled.img`
   }
 
   &.media {
-    width: fit-content;
+    width: 25px;
     height: 25px;
   }
 
