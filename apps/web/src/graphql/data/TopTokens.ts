@@ -37,6 +37,10 @@ const TokenSortMethods = {
     (b?.market?.pricePercentChange1Hour?.value ?? 0) - (a?.market?.pricePercentChange1Hour?.value ?? 0),
   [TokenSortMethod.VOLUME]: (a: TopToken, b: TopToken) =>
     (b?.market?.volume?.value ?? 0) - (a?.market?.volume?.value ?? 0),
+  [TokenSortMethod.VOLUME1DAY]: (a: TopToken, b: TopToken) =>
+    (b?.market?.volume1Day ?? 0) - (a?.market?.volume1Day ?? 0),
+  [TokenSortMethod.VOLUME1WEEK]: (a: TopToken, b: TopToken) =>
+    (b?.market?.volume1Week ?? 0) - (a?.market?.volume1Week ?? 0),
   [TokenSortMethod.TVL]: (a: TopToken, b: TopToken) =>
     (b?.totalValueLockedUSD ?? 0) - (a?.totalValueLockedUSD ?? 0),
   [TokenSortMethod.FULLY_DILUTED_VALUATION]: (a: TopToken, b: TopToken) =>
@@ -150,6 +154,10 @@ export function useTopTokens(chain: Chain): UseTopTokensReturnValue {
           project = {logoUrl: item?.iconURL || ''}
         }
         const price = tokenDayData.length > 0 ? tokenDayData[tokenDayData.length -1].priceUSD : 0;
+        const volume1Day = tokenDayData.length > 0 ? tokenDayData[tokenDayData.length -1].volumeUSD : 0;
+        const lastSeven = (tokenDayData||[]).slice(Math.max(tokenDayData.length - 7, 0));
+        const volume1Week = lastSeven.reduce((acc, current) => Number(acc) + Number(current.volumeUSD), 0);
+        
         let pricePercentChange1Day = {
           value: 0
         };
@@ -168,7 +176,9 @@ export function useTopTokens(chain: Chain): UseTopTokensReturnValue {
         volume: {
           value:volumeUSD
         },
-        pricePercentChange1Day
+        pricePercentChange1Day,
+        volume1Day,
+        volume1Week
        };
        const result = {
         ...token,
@@ -181,6 +191,7 @@ export function useTopTokens(chain: Chain): UseTopTokensReturnValue {
     return []
   },[allTokens,data?.tokens])
 
+  console.log('addLogoTokens=====>',addLogoTokens)
 
   const sortedTokens = useSortedTokens(addLogoTokens)
   const tokenSortRank = useMemo(
