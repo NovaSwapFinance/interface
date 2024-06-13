@@ -17,7 +17,7 @@ export enum TokenTransactionType {
   SELL = "Sell",
 }
 
-const TokenTransactionDefaultQuerySize = 1000;
+const TokenTransactionDefaultQuerySize = 500;
 
 export function useTokenTransactions(
   address: string,
@@ -74,8 +74,8 @@ export function useTokenTransactions(
           address: address.toLowerCase(),
           first: TokenTransactionDefaultQuerySize,
           time:
-            dataV3?.swaps?.[
-              dataV3.swaps.length - 1
+            dataV3?.swaps2?.[
+              dataV3.swaps2.length - 1
             ]?.timestamp,
         },
         updateQuery: (prev, { fetchMoreResult }) => {
@@ -88,9 +88,10 @@ export function useTokenTransactions(
               ...prev.token,
             },
             swaps: [...(prev.swaps ?? []), ...(fetchMoreResult.swaps ?? [])],
+            swaps2: [...(prev.swaps2 ?? []), ...(fetchMoreResult.swaps2 ?? [])]
           };
           loadingMoreV3.current = false;
-          setList(mergedData.swaps)
+          setList([...mergedData.swaps,...mergedData.swaps2])
           return mergedData;
         },
       });
@@ -110,8 +111,9 @@ export function useTokenTransactions(
 
   const transactions = useMemo(
     () =>{
-      console.log('dataV3?.swaps',dataV3?.swaps)
-      const swaps =(list.length>0?list: dataV3?.swaps)?.map((swap) => {
+      // console.log('dataV3?.swaps',dataV3?.swaps)
+      const swapMerge = list.length>0?list:[...(dataV3?.swaps||[]),...(dataV3?.swaps2||[])].sort((a, b) => b.timestamp - a.timestamp);
+      const swaps =swapMerge?.map((swap) => {
         const token0Logo = getProjectToken(swap.token0.address||'');
         const token1Logo = getProjectToken(swap.token1.address||'');
         const hash = swap.hash?.split('-')[0];
@@ -152,7 +154,7 @@ export function useTokenTransactions(
     },
     [
       address,
-      dataV3?.swaps,
+      dataV3,
       filter,
       novaTokenList,
     ],

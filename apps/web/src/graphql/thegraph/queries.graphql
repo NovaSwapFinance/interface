@@ -372,6 +372,29 @@ query TokenSwapsTx($address: ID!,$first: Int!, $time:BigInt!)  {
     hash:id
     id
   }
+   swaps2:swaps(first: $first,where: {token1_: {id: $address},timestamp_lt:$time},orderBy: timestamp, orderDirection: desc) {
+    usdValue:amountUSD
+    token1Quantity:amount1
+    token0Quantity:amount0
+    timestamp
+    token0 {
+      id
+      address:id
+      decimals
+      name
+      symbol
+    }
+    token1 {
+      id
+      address:id
+      decimals
+      name
+      symbol
+    }
+    account:origin
+    hash:id
+    id
+  }
 }
 
 query PoolsByToken0Id($first: Int!,$address: ID!) {
