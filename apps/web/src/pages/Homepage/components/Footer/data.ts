@@ -45,11 +45,11 @@ export const nav: NavProps[] = [
         name: "Document",
         isBlank: true,
       },
-      {
-        href: "https://docs.novaswap.fi/future/tokenomics",
-        name: "Tokenomics",
-        isBlank: true,
-      },
+      // {
+      //   href: "https://docs.novaswap.fi/future/tokenomics",
+      //   name: "Tokenomics",
+      //   isBlank: true,
+      // },
     ],
   },
   {
