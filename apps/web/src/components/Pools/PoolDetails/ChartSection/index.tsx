@@ -428,16 +428,18 @@ function LiquidityTooltipDisplay({
   return (
     <>
       <ThemedText.BodySmall>
-        {t(`{{token}} liquidity: {{name}}`, {
+        {/* {t(`{{token}} liquidity: {{name}}`, {
           token: tokenADescriptor,
           name: displayValue0,
-        })}
+        })} */}
+        {`${tokenADescriptor} liquidity: ${displayValue0}`}
       </ThemedText.BodySmall>
       <ThemedText.BodySmall>
-        {t(`{{token}} liquidity: {{name}}`, {
+        {/* {t(`{{token}} liquidity: {{name}}`, {
           token: tokenBDescriptor,
           name: displayValue1,
-        })}
+        })} */}
+         {`${tokenBDescriptor} liquidity: ${displayValue1}`}
       </ThemedText.BodySmall>
     </>
   );
