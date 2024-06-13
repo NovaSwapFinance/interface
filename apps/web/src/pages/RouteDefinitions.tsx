@@ -83,7 +83,7 @@ export interface RouteDefinition {
 function createRouteDefinition(route: Partial<RouteDefinition>): RouteDefinition {
   return {
     getElement: () => null,
-    getTitle: () => 'Novaswap Interface',
+    getTitle: () => 'NovaSwap Interface',
     enabled: () => true,
     path: '/',
     nestedPaths: [],
@@ -115,7 +115,7 @@ export const routes: RouteDefinition[] = [
   }),
   createRouteDefinition({
     path: '/explore/tokens/:chainName/:tokenAddress',
-    getTitle: () => t`Buy & sell on Novaswap`,
+    getTitle: () => t`Buy & sell on NovaSwap`,
     getElement: () => <TokenDetails />,
   }),
   createRouteDefinition({
@@ -135,7 +135,7 @@ export const routes: RouteDefinition[] = [
   }),
   createRouteDefinition({
     path: '/explore/pools/:chainName/:poolAddress',
-    getTitle: () => t`Explore pools on Novaswap`,
+    getTitle: () => t`Explore pools on NovaSwap`,
     getElement: () => (
       <Suspense fallback={null}>
         <PoolDetails />
@@ -144,7 +144,7 @@ export const routes: RouteDefinition[] = [
   }),
   createRouteDefinition({
     path: '/vote/*',
-    getTitle: () => t`Vote on governance proposals on Novaswap`,
+    getTitle: () => t`Vote on governance proposals on NovaSwap`,
     getElement: () => (
       <Suspense fallback={<LazyLoadSpinner />}>
         <Vote />
@@ -153,13 +153,13 @@ export const routes: RouteDefinition[] = [
   }),
   createRouteDefinition({
     path: '/create-proposal',
-    getTitle: () => t`Create a new governance proposal on Novaswap`,
+    getTitle: () => t`Create a new governance proposal on NovaSwap`,
     getElement: () => <Navigate to="/vote/create-proposal" replace />,
   }),
   createRouteDefinition({
     path: '/send',
     getElement: () => <Swap />,
-    getTitle: () => t`Send tokens on Novaswap`,
+    getTitle: () => t`Send tokens on NovaSwap`,
   }),
   createRouteDefinition({
     path: '/limits',
@@ -178,48 +178,48 @@ export const routes: RouteDefinition[] = [
   createRouteDefinition({
     path: '/pool/v2/find',
     getElement: () => <PoolFinder />,
-    getTitle: () => t`Explore top liquidity pools (v2) on Novaswap`,
+    getTitle: () => t`Explore top liquidity pools (v2) on NovaSwap`,
   }),
   createRouteDefinition({
     path: '/pool/v2',
     getElement: () => <PoolV2 />,
-    getTitle: () => t`Provide liquidity to pools (v2) on Novaswap`,
+    getTitle: () => t`Provide liquidity to pools (v2) on NovaSwap`,
   }),
   createRouteDefinition({
     path: '/pool',
     getElement: () => <Pool />,
-    getTitle: () => t`Manage & provide pool liquidity on Novaswap`,
+    getTitle: () => t`Manage & provide pool liquidity on NovaSwap`,
   }),
   createRouteDefinition({
     path: '/pool/:tokenId',
     getElement: () => <PositionPage />,
-    getTitle: () => t`Manage pool liquidity on Novaswap`,
+    getTitle: () => t`Manage pool liquidity on NovaSwap`,
   }),
   createRouteDefinition({
     path: '/pools/v2/find',
     getElement: () => <PoolFinder />,
-    getTitle: () => t`Explore top liquidity pools (v2) on Novaswap`,
+    getTitle: () => t`Explore top liquidity pools (v2) on NovaSwap`,
   }),
   createRouteDefinition({
     path: '/pools/v2',
     getElement: () => <PoolV2 />,
-    getTitle: () => t`Manage & provide v2 pool liquidity on Novaswap`,
+    getTitle: () => t`Manage & provide v2 pool liquidity on NovaSwap`,
   }),
   createRouteDefinition({
     path: '/pools',
     getElement: () => <Pool />,
-    getTitle: () => t`Manage & provide pool liquidity on Novaswap`,
+    getTitle: () => t`Manage & provide pool liquidity on NovaSwap`,
   }),
   createRouteDefinition({
     path: '/pools/:tokenId',
     getElement: () => <PositionPage />,
-    getTitle: () => t`Manage pool liquidity on Novaswap`,
+    getTitle: () => t`Manage pool liquidity on NovaSwap`,
   }),
   createRouteDefinition({
     path: '/add/v2',
     nestedPaths: [':currencyIdA', ':currencyIdA/:currencyIdB'],
     getElement: () => <AddLiquidityV2WithTokenRedirects />,
-    getTitle: () => t`Provide liquidity to pools (v2) on Novaswap`,
+    getTitle: () => t`Provide liquidity to pools (v2) on NovaSwap`,
   }),
   createRouteDefinition({
     path: '/add',
@@ -230,27 +230,27 @@ export const routes: RouteDefinition[] = [
       ':currencyIdA/:currencyIdB/:feeAmount/:tokenId',
     ],
     getElement: () => <AddLiquidityWithTokenRedirects />,
-    getTitle: () => t`Provide liquidity to pools on Novaswap`,
+    getTitle: () => t`Provide liquidity to pools on NovaSwap`,
   }),
   createRouteDefinition({
     path: '/remove/v2/:currencyIdA/:currencyIdB',
     getElement: () => <RemoveLiquidity />,
-    getTitle: () => t`Manage v2 pool liquidity on Novaswap`,
+    getTitle: () => t`Manage v2 pool liquidity on NovaSwap`,
   }),
   createRouteDefinition({
     path: '/remove/:tokenId',
     getElement: () => <RemoveLiquidityV3 />,
-    getTitle: () => t`Manage pool liquidity on Novaswap`,
+    getTitle: () => t`Manage pool liquidity on NovaSwap`,
   }),
   createRouteDefinition({
     path: '/migrate/v2',
     getElement: () => <MigrateV2 />,
-    getTitle: () => t`Migrate v2 pool liquidity to Novaswap v3`,
+    getTitle: () => t`Migrate v2 pool liquidity to NovaSwap v3`,
   }),
   createRouteDefinition({
     path: '/migrate/v2/:address',
     getElement: () => <MigrateV2Pair />,
-    getTitle: () => t`Migrate v2 pool liquidity to Novaswap v3`,
+    getTitle: () => t`Migrate v2 pool liquidity to NovaSwap v3`,
   }),
   createRouteDefinition({
     path: '/nfts',
@@ -260,7 +260,7 @@ export const routes: RouteDefinition[] = [
       </Suspense>
     ),
     enabled: (args) => !args.shouldDisableNFTRoutes,
-    getTitle: () => t`Trade NFTs across OpenSea & other top marketplaces on Novaswap`,
+    getTitle: () => t`Trade NFTs across OpenSea & other top marketplaces on NovaSwap`,
   }),
   createRouteDefinition({
     path: '/nfts/asset/:contractAddress/:tokenId',
@@ -270,7 +270,7 @@ export const routes: RouteDefinition[] = [
       </Suspense>
     ),
     enabled: (args) => !args.shouldDisableNFTRoutes,
-    getTitle: () => t`Explore NFTs on Novaswap`,
+    getTitle: () => t`Explore NFTs on NovaSwap`,
   }),
   createRouteDefinition({
     path: '/nfts/profile',
@@ -280,7 +280,7 @@ export const routes: RouteDefinition[] = [
       </Suspense>
     ),
     enabled: (args) => !args.shouldDisableNFTRoutes,
-    getTitle: () => t`Explore NFTs on Novaswap`,
+    getTitle: () => t`Explore NFTs on NovaSwap`,
   }),
   createRouteDefinition({
     path: '/nfts/collection/:contractAddress',
@@ -290,7 +290,7 @@ export const routes: RouteDefinition[] = [
       </Suspense>
     ),
     enabled: (args) => !args.shouldDisableNFTRoutes,
-    getTitle: () => t`Explore NFTs on Novaswap`,
+    getTitle: () => t`Explore NFTs on NovaSwap`,
   }),
   createRouteDefinition({
     path: '/nfts/collection/:contractAddress/activity',
@@ -300,7 +300,7 @@ export const routes: RouteDefinition[] = [
       </Suspense>
     ),
     enabled: (args) => !args.shouldDisableNFTRoutes,
-    getTitle: () => t`Explore NFTs on Novaswap`,
+    getTitle: () => t`Explore NFTs on NovaSwap`,
   }),
   createRouteDefinition({ path: '*', getElement: () => <Navigate to="/not-found" replace /> }),
   createRouteDefinition({ path: '/not-found', getElement: () => <NotFound /> }),

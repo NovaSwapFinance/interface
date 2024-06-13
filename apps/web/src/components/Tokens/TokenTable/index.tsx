@@ -105,8 +105,8 @@ const HEADER_TEXT: Record<TokenSortMethod, ReactNode> = {
   [TokenSortMethod.HOUR_CHANGE]: <Trans>1 hour</Trans>,
   [TokenSortMethod.DAY_CHANGE]: <Trans>1 day</Trans>,
   [TokenSortMethod.TVL]: <Trans>TVL</Trans>,
-  [TokenSortMethod.VOLUME1DAY]: <Trans>Volume 1 day</Trans>,
-  [TokenSortMethod.VOLUME1WEEK]: <Trans>Volume 1 week</Trans>,
+  [TokenSortMethod.VOLUME1DAY]: <Trans>1 day volume</Trans>,
+  [TokenSortMethod.VOLUME1WEEK]: <Trans>7 day volume</Trans>,
 }
 
 export const HEADER_DESCRIPTIONS: Record<TokenSortMethod, ReactNode | undefined> = {
@@ -119,7 +119,7 @@ export const HEADER_DESCRIPTIONS: Record<TokenSortMethod, ReactNode | undefined>
     </Trans>
   ),
   [TokenSortMethod.VOLUME]: (
-    <Trans>Volume is the amount of the asset that has been traded on Novaswap during the selected time frame.</Trans>
+    <Trans>Volume is the amount of the asset that has been traded on NovaSwap during the selected time frame.</Trans>
   ),
 }
 
