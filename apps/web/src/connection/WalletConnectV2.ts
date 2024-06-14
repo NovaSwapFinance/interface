@@ -37,8 +37,8 @@ export class WalletConnectV2 extends WalletConnect {
         projectId: process.env.REACT_APP_WALLET_CONNECT_PROJECT_ID as string,
         chains: [defaultChainId],
         metadata: {
-          name: "Uniswap",
-          description: "Uniswap Interface",
+          name: "NovaSwap",
+          description: "NovaSwap Interface",
           url: "https://novaswap.fi",
           icons: ["https://novaswap.fi/favicon.png"],
         },
