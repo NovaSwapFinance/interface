@@ -7028,16 +7028,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@novaswap/permit2-sdk@npm:1.2.0-beta.0":
-  version: 1.2.0-beta.0
-  resolution: "@novaswap/permit2-sdk@npm:1.2.0-beta.0"
-  dependencies:
-    ethers: ^5.3.1
-    tiny-invariant: ^1.3.1
-  checksum: 4994d35e50a0352f279d8ac72d1d10f4620aa36d16b70edf22bf974dca98c04b4cd8921d9efd801709c16ccb851d008929c32c5ab60b25369126e94143f8ce72
-  languageName: node
-  linkType: hard
-
 "@novaswap/router-sdk@npm:1.9.1":
   version: 1.9.1
   resolution: "@novaswap/router-sdk@npm:1.9.1"
@@ -7051,22 +7041,22 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@novaswap/router-sdk@npm:1.9.1-beta.1":
-  version: 1.9.1-beta.1
-  resolution: "@novaswap/router-sdk@npm:1.9.1-beta.1"
+"@novaswap/router-sdk@npm:5.9.1":
+  version: 5.9.1
+  resolution: "@novaswap/router-sdk@npm:5.9.1"
   dependencies:
     "@ethersproject/abi": ^5.5.0
-    "@novaswap/sdk-core": 4.2.0-beta.0
-    "@novaswap/v2-sdk": 4.3.0-beta.0
-    "@novaswap/v3-sdk": 3.11.2-beta.1
+    "@novaswap/sdk-core": 5.2.0
+    "@novaswap/v2-sdk": 5.3.0
+    "@novaswap/v3-sdk": 5.11.2
     "@uniswap/swap-router-contracts": ^1.1.0
-  checksum: 7936c80150ded2783b74aa797e29fdf91ccc054c9cada9b1494b009ff0b33e8da2fef3e0b4073b2a00894dc3ab45f5bfd726f2e041c92f8756578eba2f8774f6
+  checksum: 2ef5a40fe3d8429514115649dfb766d4e3ca113f1516e1ec3cfe7306ea4c28736650ec013982203b490fecf008eb3300355df13e39053d724879ac43f828fef1
   languageName: node
   linkType: hard
 
-"@novaswap/sdk-core@npm:4.2.0-beta.0":
-  version: 4.2.0-beta.0
-  resolution: "@novaswap/sdk-core@npm:4.2.0-beta.0"
+"@novaswap/sdk-core@npm:5.2.0":
+  version: 5.2.0
+  resolution: "@novaswap/sdk-core@npm:5.2.0"
   dependencies:
     "@ethersproject/address": ^5.0.2
     big.js: ^5.2.2
@@ -7074,20 +7064,20 @@ __metadata:
     jsbi: ^3.1.4
     tiny-invariant: ^1.1.0
     toformat: ^2.0.0
-  checksum: 62d5de1bf85c273a15a33ae763fbc5234a2a6aceaa0f0a3c07449c296b0bc53f7be847571b34911a9ee441559bcb39dbb0cdaced213ec57c5dafc407dc110847
+  checksum: f20ce053da0a17e9707a43b11eba6b1be0e8f041a224d64495c7e1bf8435728a5fd0c92fc79bd23f45a7510f4193de4c1c42959630d382e8877b5ddd1f81e4bd
   languageName: node
   linkType: hard
 
-"@novaswap/smart-order-router@npm:3.3.0-beta.0":
-  version: 3.3.0-beta.0
-  resolution: "@novaswap/smart-order-router@npm:3.3.0-beta.0"
+"@novaswap/smart-order-router@npm:5.3.0":
+  version: 5.3.0
+  resolution: "@novaswap/smart-order-router@npm:5.3.0"
   dependencies:
     "@eth-optimism/sdk": ^3.2.2
-    "@novaswap/router-sdk": 1.9.1-beta.1
-    "@novaswap/sdk-core": 4.2.0-beta.0
-    "@novaswap/universal-router-sdk": 1.9.3-beta.0
-    "@novaswap/v2-sdk": 4.3.0-beta.0
-    "@novaswap/v3-sdk": 3.11.2-beta.1
+    "@novaswap/router-sdk": 5.9.1
+    "@novaswap/sdk-core": 5.2.0
+    "@novaswap/universal-router-sdk": 5.9.3
+    "@novaswap/v2-sdk": 5.3.0
+    "@novaswap/v3-sdk": 5.11.2
     "@types/brotli": ^1.3.4
     "@uniswap/default-token-list": ^11.13.0
     "@uniswap/permit2-sdk": ^1.2.0
@@ -7111,36 +7101,36 @@ __metadata:
     zksync-web3: ^0.17.1
   peerDependencies:
     jsbi: ^3.2.0
-  checksum: 3b746dc981136772044f42668f8095149ac39f788cd783643a3836e4c5e7565c05721dd7dad84e6789d52513ff0c5d654dbb2239ee88a9d018511c31b787cc11
+  checksum: fbb2c942a80528200cf66d6b529b48ab8befef1ef8604dfba68dfffce2f9b270cbdcb7a8f426a427ec525b0b81f4675c321af1e3248253bbe1e6fcd2bf1a9593
   languageName: node
   linkType: hard
 
-"@novaswap/universal-router-sdk@npm:1.9.3-beta.0":
-  version: 1.9.3-beta.0
-  resolution: "@novaswap/universal-router-sdk@npm:1.9.3-beta.0"
+"@novaswap/universal-router-sdk@npm:5.9.3":
+  version: 5.9.3
+  resolution: "@novaswap/universal-router-sdk@npm:5.9.3"
   dependencies:
-    "@novaswap/router-sdk": 1.9.1-beta.1
-    "@novaswap/sdk-core": 4.2.0-beta.0
-    "@novaswap/v2-sdk": 4.3.0-beta.0
-    "@novaswap/v3-sdk": 3.11.2-beta.1
+    "@novaswap/router-sdk": 5.9.1
+    "@novaswap/sdk-core": 5.2.0
+    "@novaswap/v2-sdk": 5.3.0
+    "@novaswap/v3-sdk": 5.11.2
     "@uniswap/permit2-sdk": ^1.2.0
     "@uniswap/universal-router": 1.6.0
     bignumber.js: ^9.0.2
     ethers: ^5.3.1
-  checksum: 602b089837ed50cf33d031c50b2921b38f775aafe53fcc3dab2c3c7eaa93890047e0656e92ab0c54f36e373b78064807de8695dd287b39b1403d15854044a1bc
+  checksum: 746ef3683a8f353c9bf2d150cf2367e81d92836b81264203e077b23c1ab915dde81343f47007008bee69b4f9ca444d02a8afd56ade3e273481c715e06c22fe40
   languageName: node
   linkType: hard
 
-"@novaswap/v2-sdk@npm:4.3.0-beta.0":
-  version: 4.3.0-beta.0
-  resolution: "@novaswap/v2-sdk@npm:4.3.0-beta.0"
+"@novaswap/v2-sdk@npm:5.3.0":
+  version: 5.3.0
+  resolution: "@novaswap/v2-sdk@npm:5.3.0"
   dependencies:
     "@ethersproject/address": ^5.0.0
     "@ethersproject/solidity": ^5.0.0
-    "@novaswap/sdk-core": 4.2.0-beta.0
+    "@novaswap/sdk-core": 5.2.0
     tiny-invariant: ^1.1.0
     tiny-warning: ^1.0.3
-  checksum: 63386a170e9183ad263e674052950c62ad4542798e43b2bfe1f937083b30ff5a74e9c8af972cefbef06bcb906fd484616a98a4995bfb96d41f0658562b244e53
+  checksum: 13fd313bf4510000828e10ed4d102712d16c25b715180d4eec4113b698c9415046e27a42fe6ed450e4cb0e84a629c7aed8e3852eba7b6909e716fda00c88aa87
   languageName: node
   linkType: hard
 
@@ -7163,13 +7153,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@novaswap/v3-sdk@npm:3.11.2-beta.1":
-  version: 3.11.2-beta.1
-  resolution: "@novaswap/v3-sdk@npm:3.11.2-beta.1"
+"@novaswap/v3-sdk@npm:5.11.2":
+  version: 5.11.2
+  resolution: "@novaswap/v3-sdk@npm:5.11.2"
   dependencies:
     "@ethersproject/abi": ^5.0.12
     "@ethersproject/solidity": ^5.0.9
-    "@novaswap/sdk-core": 4.2.0-beta.0
+    "@novaswap/sdk-core": 5.2.0
     "@uniswap/swap-router-contracts": ^1.2.1
     "@uniswap/v3-periphery": ^1.1.1
     "@uniswap/v3-staker": 1.0.0
@@ -7178,7 +7168,7 @@ __metadata:
     tiny-warning: ^1.0.3
     zksync-ethers: 5
     zksync-web3: ^0.17.1
-  checksum: 8b5dfbcca1cc8acb0bfcaf966cbb6adad2adbd5e3b332e68362f53cc3dafa017ea017df71f46e81aa0d4e1c4de7d0bfc2fd34581784ae25910ee9448826c7aaf
+  checksum: 9d445ca51582e9f2af97da6bd5bc2a303b8101ed5514a4a2f3f38b7e8402c48d4d3cc77b89d2091478e26f8ec415f3202f1ff1e21e1ad0d12bd1cb788bbecaf9
   languageName: node
   linkType: hard
 
@@ -14205,13 +14195,13 @@ __metadata:
     "@juggle/resize-observer": 3.4.0
     "@looksrare/sdk": 0.10.4
     "@metamask/jazzicon": 2.0.0
-    "@novaswap/permit2-sdk": 1.2.0-beta.0
-    "@novaswap/router-sdk": 1.9.1-beta.1
-    "@novaswap/sdk-core": 4.2.0-beta.0
-    "@novaswap/smart-order-router": 3.3.0-beta.0
-    "@novaswap/universal-router-sdk": 1.9.3-beta.0
-    "@novaswap/v2-sdk": 4.3.0-beta.0
-    "@novaswap/v3-sdk": 3.11.2-beta.1
+    "@novaswap/permit2-sdk": 1.2.0
+    "@novaswap/router-sdk": 5.9.1
+    "@novaswap/sdk-core": 5.2.0
+    "@novaswap/smart-order-router": 5.3.0
+    "@novaswap/universal-router-sdk": 5.9.3
+    "@novaswap/v2-sdk": 5.3.0
+    "@novaswap/v3-sdk": 5.11.2
     "@opensea/seaport-js": 1.3.0
     "@popperjs/core": 2.11.8
     "@reach/dialog": 0.10.5

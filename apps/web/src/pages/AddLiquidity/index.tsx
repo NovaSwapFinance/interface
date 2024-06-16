@@ -119,16 +119,16 @@ function AddLiquidity() {
 
   console.log('useParams',currencyIdA,currencyIdB)
   const { account, chainId, provider,connector } = useWeb3React()
-  const web3ChainId = ChainId.NOVA_MAINNET
+  const web3ChainId = [ChainId.NOVA_MAINNET,ChainId.NOVA_SEPOLIA]
   const switchChain = useSwitchChain()
   const theme = useTheme()
   const trace = useTrace()
 
   useEffect(() => {
  
-    if (account && chainId !== web3ChainId ) {
+    if (account && !web3ChainId.includes(chainId) ) {
       // console.log('useEffect',account,web3ChainId,chainId)
-      switchChain(connector, web3ChainId)
+      switchChain(connector, ChainId.NOVA_MAINNET)
     } 
   },[connector,account,chainId])
 
