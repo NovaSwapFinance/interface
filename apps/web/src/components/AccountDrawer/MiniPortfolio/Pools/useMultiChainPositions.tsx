@@ -5,7 +5,7 @@ import {
   V3_CORE_FACTORY_ADDRESSES,
 } from "@novaswap/sdk-core";
 import IUniswapV3PoolStateJSON from "@uniswap/v3-core/artifacts/contracts/interfaces/pool/IUniswapV3PoolState.sol/IUniswapV3PoolState.json";
-import { Pool, Position, computePoolAddress } from "@novaswap/v3-sdk";
+import { Pool, Position } from "@novaswap/v3-sdk";
 import { BigNumber } from "ethers/lib/ethers";
 import { Interface } from "ethers/lib/utils";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -30,6 +30,8 @@ import {
   usePoolPriceMap,
   useV3ManagerContracts,
 } from "./hooks";
+import { computePoolAddress } from "providers/computePoolAddress";
+
 
 function createPositionInfo(
   owner: string,

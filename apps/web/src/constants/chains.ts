@@ -4,11 +4,12 @@ import {
   V2_ROUTER_ADDRESSES,
 } from "@novaswap/sdk-core";
 
-const SUPPORTED_CHAINS = [ChainId.NOVA_SEPOLIA, ChainId.NOVA_MAINNET];
+const SUPPORTED_CHAINS = [ChainId.SEPOLIA,ChainId.NOVA_SEPOLIA, ChainId.NOVA_MAINNET];
 
 export const CHAIN_IDS_TO_NAMES = {
   [ChainId.NOVA_SEPOLIA]: "nova_sepolia",
   [ChainId.NOVA_MAINNET]: "nova_mainnet",
+  [ChainId.SEPOLIA]: "sepolia",
 } as const;
 
 // Include ChainIds in this array if they are not supported by the UX yet, but are already in the SDK.
@@ -35,6 +36,7 @@ export type SupportedInterfaceChain = Exclude<
 export declare const SUPPORTED_CHAINS_NOVA: readonly [
   ChainId.NOVA_SEPOLIA,
   ChainId.NOVA_MAINNET,
+  ChainId.SEPOLIA,
 ];
 export declare type NovaSupportedChainsType =
   (typeof SUPPORTED_CHAINS_NOVA)[number];

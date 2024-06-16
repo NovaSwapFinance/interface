@@ -1,6 +1,6 @@
 import { BigNumber } from "@ethersproject/bignumber";
 import { ChainId, Token } from "@novaswap/sdk-core";
-import { FeeAmount, Pool, computePoolAddress } from "@novaswap/v3-sdk";
+import { FeeAmount, Pool } from "@novaswap/v3-sdk";
 import retry, { Options as RetryOptions } from "async-retry";
 import _ from "lodash";
 
@@ -16,6 +16,7 @@ import { ProviderConfig } from "./provider";
 import { IMulticallProvider, Result } from "./multicall-provider";
 import { poolToString } from "./utils/route";
 import { V3_CORE_FACTORY_ADDRESSES } from "./utils/addresses";
+import { computePoolAddress } from "./computePoolAddress";
 
 console.log("V3PoolProvider-Build-1");
 

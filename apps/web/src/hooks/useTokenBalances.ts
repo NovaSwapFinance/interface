@@ -56,6 +56,7 @@ export function useNovaTokenBalances() {
   const [allTokens, setAllTokens] = useState({ balances: {} });
   const [loading, setLoading] = useState(false);
   const { account,chainId } = useWeb3React();
+  return { balanceMap:{}, balanceList:[], loading:false }
 
   const url = NOVA_API_ADDRESS_URL[chainId]?NOVA_API_ADDRESS_URL[chainId]:NOVA_API_ADDRESS_URL[ChainId.NOVA_MAINNET];
 

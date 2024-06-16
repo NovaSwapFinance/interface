@@ -93,7 +93,7 @@ import {
   V2SubgraphPool,
 } from "providers/v2/subgraph-provider";
 import { ITokenListProvider } from "providers/caching-token-list-provider";
-import { DAI_NOVA_MAINNET, USDC_NOVA_MAINNET } from "constants/tokens";
+import { DAI_NOVA_MAINNET, USDC_NOVA_MAINNET, USDT_SEPOLIA } from "constants/tokens";
 
 export type PoolId = { id: string };
 export type CandidatePoolsBySelectionCriteria = {
@@ -164,7 +164,7 @@ const baseTokensByChain: { [chainId in ChainId]?: Token[] } = {
     USDT_OPTIMISM,
     WBTC_OPTIMISM,
   ],
-  [ChainId.SEPOLIA]: [DAI_SEPOLIA, USDC_SEPOLIA],
+  [ChainId.SEPOLIA]: [USDT_SEPOLIA],
   [ChainId.OPTIMISM_GOERLI]: [
     DAI_OPTIMISM_GOERLI,
     USDC_OPTIMISM_GOERLI,

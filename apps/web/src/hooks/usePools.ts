@@ -7,7 +7,7 @@ import {
   V3_CORE_FACTORY_ADDRESSES,
 } from "@novaswap/sdk-core";
 import IUniswapV3PoolStateJSON from "@uniswap/v3-core/artifacts/contracts/interfaces/pool/IUniswapV3PoolState.sol/IUniswapV3PoolState.json";
-import { FeeAmount, Pool, computePoolAddress } from "@novaswap/v3-sdk";
+import { FeeAmount, Pool } from "@novaswap/v3-sdk";
 import { useWeb3React } from "@web3-react/core";
 import { useContractMultichain } from "components/AccountDrawer/MiniPortfolio/Pools/hooks";
 import JSBI from "jsbi";
@@ -15,6 +15,7 @@ import { useMultipleContractSingleData } from "lib/hooks/multicall";
 import { useEffect, useMemo, useState } from "react";
 import { IUniswapV3PoolStateInterface } from "uniswap/src/abis/types/v3/IUniswapV3PoolState";
 import { UniswapV3Pool } from "uniswap/src/abis/types/v3/UniswapV3Pool";
+import { computePoolAddress } from 'providers/computePoolAddress';
 
 const POOL_STATE_INTERFACE = new Interface(
   IUniswapV3PoolStateJSON.abi,

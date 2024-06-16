@@ -21,4 +21,5 @@ function getAppProvider(chainId: NovaSupportedChainsType) {
 export const RPC_PROVIDERS = {
   [ChainId.NOVA_SEPOLIA]: getAppProvider(ChainId.NOVA_SEPOLIA),
   [ChainId.NOVA_MAINNET]: getAppProvider(ChainId.NOVA_MAINNET),
+  [ChainId.SEPOLIA]: getAppProvider(ChainId.SEPOLIA),
 } satisfies Record<NovaSupportedChainsType, AppJsonRpcProvider>;

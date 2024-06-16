@@ -76,6 +76,7 @@ import {
 } from "../entities/route-with-valid-quote";
 import { CurrencyAmount } from "providers/utils/amounts";
 import { WRAPPED_NATIVE_CURRENCY } from "providers/utils/chains";
+import { USDT_SEPOLIA } from "constants/tokens";
 
 // When adding new usd gas tokens, ensure the tokens are ordered
 // from tokens with highest decimals to lowest decimals. For example,
@@ -107,7 +108,7 @@ export const usdGasTokensByChain: { [chainId in ChainId]?: Token[] } = {
   [ChainId.ARBITRUM_GOERLI]: [USDC_ARBITRUM_GOERLI],
   [ChainId.ARBITRUM_SEPOLIA]: [USDC_ARBITRUM_SEPOLIA],
   [ChainId.GOERLI]: [DAI_GOERLI, USDC_GOERLI, USDT_GOERLI, WBTC_GOERLI],
-  [ChainId.SEPOLIA]: [USDC_SEPOLIA, DAI_SEPOLIA],
+  [ChainId.SEPOLIA]: [USDT_SEPOLIA],
   [ChainId.POLYGON]: [USDC_POLYGON, USDC_NATIVE_POLYGON],
   [ChainId.POLYGON_MUMBAI]: [DAI_POLYGON_MUMBAI],
   [ChainId.CELO]: [CUSD_CELO, USDC_CELO, USDC_NATIVE_CELO, USDC_WORMHOLE_CELO],

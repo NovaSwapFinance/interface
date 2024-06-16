@@ -33,6 +33,13 @@ export const USDC_SEPOLIA = new Token(
   "USDC",
   "USD//C",
 );
+export const USDT_SEPOLIA = new Token(
+  ChainId.SEPOLIA,
+  "0xaA8E23Fb1079EA71e0a56F48a2aA51851D8433D0",
+  6,
+  "USDT",
+  "Tether USD",
+);
 export const USDC_NOVA_SEPOLIA = new Token(
   ChainId.NOVA_SEPOLIA,
   "0x461fE851Cd66e82A274570ED5767c873bE9Ae1ff",
@@ -706,7 +713,7 @@ const STABLECOINS: { [chainId in ChainId]: Token[] } = {
   [ChainId.CELO]: [USDC_CELO],
   [ChainId.CELO_ALFAJORES]: [USDC_CELO],
   [ChainId.GOERLI]: [USDC_GOERLI],
-  [ChainId.SEPOLIA]: [USDC_SEPOLIA],
+  [ChainId.SEPOLIA]: [USDT_SEPOLIA],
   [ChainId.AVALANCHE]: [USDC_AVALANCHE],
   [ChainId.GNOSIS]: [],
   [ChainId.MOONBEAM]: [],
