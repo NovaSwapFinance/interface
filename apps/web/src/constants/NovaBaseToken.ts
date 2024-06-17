@@ -16,8 +16,8 @@ export const NOVA_BASE_TOKEN_SOURCE = [
     name: "Nova Ether",
     logurl:
       "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1696501628",
-    Source: "Nova",
-    Sourceurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/13039.png",
+    networkKey: "Nova",
+    networkKeyurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/13039.png",
   },
   {
     address: "0x8280a4e7D5B3B658ec4580d3Bc30f5e50454F169",
@@ -34,8 +34,8 @@ export const NOVA_BASE_TOKEN_SOURCE = [
     symbol: "WBTC",
     name: "Nova Wrapped BTC",
     logurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/4023.png",
-    Source: "Nova",
-    Sourceurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/13039.png",
+    networkKey: "Nova",
+    networkKeyurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/13039.png",
   },
   {
     address: "0x2F8A25ac62179B31D62D7F80884AE57464699059",
@@ -44,8 +44,8 @@ export const NOVA_BASE_TOKEN_SOURCE = [
     name: "Nova Tether USD",
     logurl:
       "https://assets.coingecko.com/coins/images/31271/large/usdt.jpeg?1696530095",
-    Source: "Nova",
-    Sourceurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/13039.png",
+    networkKey: "Nova",
+    networkKeyurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/13039.png",
   },
   {
     address: "0x1a1A3b2ff016332e866787B311fcB63928464509",
@@ -54,8 +54,8 @@ export const NOVA_BASE_TOKEN_SOURCE = [
     name: "Nova USD Coin",
     logurl:
       "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
-    Source: "Nova",
-    Sourceurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/13039.png",
+    networkKey: "Nova",
+    networkKeyurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/13039.png",
   },
   {
     address: "0x1B49eCf1A8323Db4abf48b2F5EFaA33F7DdAB3FC",
@@ -63,8 +63,8 @@ export const NOVA_BASE_TOKEN_SOURCE = [
     symbol: "pufETH",
     name: "pufETH",
     logurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/29325.png",
-    Source: "Ethereum",
-    Sourceurl:
+    networkKey: "ethereum",
+    networkKeyurl:
       "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1696501628",
   },
   {
@@ -73,8 +73,8 @@ export const NOVA_BASE_TOKEN_SOURCE = [
     symbol: "WBTC.eth",
     name: "Wrapped BTC",
     logurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/3717.png",
-    Source: "Ethereum",
-    Sourceurl:
+    networkKey: "ethereum",
+    networkKeyurl:
       "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1696501629",
   },
   {
@@ -84,8 +84,8 @@ export const NOVA_BASE_TOKEN_SOURCE = [
     name: "Node ETH",
     logurl:
       "https://web3-public.s3.ap-northeast-1.amazonaws.com/oss/console/1711358488472.png",
-    Source: "Ethereum",
-    Sourceurl:
+    networkKey: "ethereum",
+    networkKeyurl:
       "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1696501630",
   },
   {
@@ -94,8 +94,8 @@ export const NOVA_BASE_TOKEN_SOURCE = [
     symbol: "rnETH",
     name: "Restaking Node ETH",
     logurl: "https://zklink.io/images/token/rneth.png",
-    Source: "Ethereum",
-    Sourceurl:
+    networkKey: "ethereum",
+    networkKeyurl:
       "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1696501631",
   },
   {
@@ -105,8 +105,8 @@ export const NOVA_BASE_TOKEN_SOURCE = [
     name: "Manta Pacific StakeStone Ether",
     logurl:
       "https://assets.coingecko.com/coins/images/33103/large/200_200.png?1702602672",
-    Source: "Manta Pacific",
-    Sourceurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/13631.png",
+    networkKey: "manta",
+    networkKeyurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/13631.png",
   },
   {
     address: "0x86339d32837345974609c66c52884fcb26a76b8c",
@@ -115,8 +115,8 @@ export const NOVA_BASE_TOKEN_SOURCE = [
     name: "Wrapped Mantle",
     logurl:
       "https://assets.coingecko.com/coins/images/30983/large/mantle.jpeg?1696529822",
-    Source: "Ethereum",
-    Sourceurl:
+    networkKey: "ethereum",
+    networkKeyurl:
       "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1696501631",
   },
   {
@@ -126,8 +126,8 @@ export const NOVA_BASE_TOKEN_SOURCE = [
     name: "Manta",
     logurl:
       "https://assets.coingecko.com/coins/images/34289/large/manta.jpg?1704468717",
-    Source: "Manta Pacific",
-    Sourceurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/13631.png",
+    networkKey: "manta",
+    networkKeyurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/13631.png",
   },
   {
     address: "0x3fdb1939dab8e2d4f7a04212f142469cd52d6402",
@@ -136,8 +136,8 @@ export const NOVA_BASE_TOKEN_SOURCE = [
     name: "Arbitrum One Renzo Restaked ETH",
     logurl:
       "https://assets.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496404",
-    Source: "Arbitrum One",
-    Sourceurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/11841.png",
+    networkKey: "arbitrum",
+    networkKeyurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/11841.png",
   },
   {
     address: "0xda7fa837112511f6e353091d7e388a4c45ce7d6c",
@@ -146,8 +146,8 @@ export const NOVA_BASE_TOKEN_SOURCE = [
     name: "Ethereum Renzo Restaked ETH",
     logurl:
       "https://assets.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496405",
-    Source: "Ethereum",
-    Sourceurl:
+    networkKey: "ethereum",
+    networkKeyurl:
       "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1696501631",
   },
   {
@@ -157,8 +157,8 @@ export const NOVA_BASE_TOKEN_SOURCE = [
     name: "Linea Renzo Restaked ETH",
     logurl:
       "https://assets.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496406",
-    Source: "Linea",
-    Sourceurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/27657.png",
+    networkKey: "primary",
+    networkKeyurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/27657.png",
   },
   {
     address: "0xB5B8C247C740d53b6Fbab10f1C17922788baeD54",
@@ -166,8 +166,8 @@ export const NOVA_BASE_TOKEN_SOURCE = [
     symbol: "mmETH",
     name: "mmETH",
     logurl: "https://etherscan.io/token/images/mmeth_32.png",
-    Source: "Ethereum",
-    Sourceurl:
+    networkKey: "ethereum",
+    networkKeyurl:
       "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1696501631",
   },
   {
@@ -177,8 +177,8 @@ export const NOVA_BASE_TOKEN_SOURCE = [
     name: "Wrapped eETH",
     logurl:
       "https://assets.coingecko.com/coins/images/33033/large/weETH.png?1701438396",
-    Source: "Ethereum",
-    Sourceurl:
+    networkKey: "ethereum",
+    networkKeyurl:
       "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1696501631",
   },
   {
@@ -188,8 +188,8 @@ export const NOVA_BASE_TOKEN_SOURCE = [
     name: "Arbitrum",
     logurl:
       "https://assets.coingecko.com/coins/images/16547/large/photo_2023-03-29_21.47.00.jpeg?1696516109",
-    Source: "Arbitrum One",
-    Sourceurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/11841.png",
+    networkKey: "arbitrum",
+    networkKeyurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/11841.png",
   },
   {
     address: "0x380dd3344288bd6efd7c3597b2b6114b722a0e65",
@@ -198,8 +198,8 @@ export const NOVA_BASE_TOKEN_SOURCE = [
     name: "ARPA Token",
     logurl:
       "https://assets.coingecko.com/coins/images/8506/large/9u0a23XY_400x400.jpg?1696508685",
-    Source: "Ethereum",
-    Sourceurl:
+    networkKey: "ethereum",
+    networkKeyurl:
       "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1696501631",
   },
   {
@@ -208,8 +208,8 @@ export const NOVA_BASE_TOKEN_SOURCE = [
     symbol: "mswETH",
     name: "mswETH",
     logurl: "https://etherscan.io/token/images/msweth_32.png",
-    Source: "Ethereum",
-    Sourceurl:
+    networkKey: "ethereum",
+    networkKeyurl:
       "https://assets.coingecko.com/coins/images/279/large/ethereum.png?1696501631",
   },
   {
@@ -219,8 +219,8 @@ export const NOVA_BASE_TOKEN_SOURCE = [
     name: "Wrapped Mountain Protocol USD",
     logurl:
       "https://assets.coingecko.com/coins/images/33785/large/wUSDM_PNG_240px.png?1702981552",
-    Source: "Manta Pacific",
-    Sourceurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/13631.png",
+    networkKey: "manta",
+    networkKeyurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/13631.png",
   },
 ];
 
@@ -232,8 +232,8 @@ export const NOVA_TOKEN_LIST_BASE = [{
     symbol: "WBTC",
     name: "Nova Wrapped BTC",
     logurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/4023.png",
-    Source: "Nova",
-    Sourceurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/13039.png",
+    networkKey: "Nova",
+    networkKeyurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/13039.png",
   },
   {
     address: "0x2F8A25ac62179B31D62D7F80884AE57464699059",
@@ -242,8 +242,8 @@ export const NOVA_TOKEN_LIST_BASE = [{
     name: "Nova Tether USD",
     logurl:
       "https://assets.coingecko.com/coins/images/31271/large/usdt.jpeg?1696530095",
-    Source: "Nova",
-    Sourceurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/13039.png",
+    networkKey: "Nova",
+    networkKeyurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/13039.png",
   },
   {
     address: "0x1a1A3b2ff016332e866787B311fcB63928464509",
@@ -252,8 +252,8 @@ export const NOVA_TOKEN_LIST_BASE = [{
     name: "Nova USD Coin",
     logurl:
       "https://assets.coingecko.com/coins/images/6319/large/usdc.png?1696506694",
-    Source: "Nova",
-    Sourceurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/13039.png",
+    networkKey: "Nova",
+    networkKeyurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/13039.png",
   },];
 export const NOVA_BASE_TOKEN = NOVA_TOKEN_LIST_BASE.map((token) => {
   const { address, decimals, symbol, name } = token;

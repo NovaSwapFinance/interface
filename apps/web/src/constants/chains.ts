@@ -174,3 +174,23 @@ export function getChainPriority(chainId: ChainId): number {
 export function isUniswapXSupportedChain(chainId: number) {
   return chainId === ChainId.MAINNET;
 }
+
+
+export const sourceChainMap = {
+  ethereum: '',
+  polygon: 'Polygon',
+  celo:'Celo',
+  arbitrum: 'Arbitrum',
+  optimism: 'Optimism',
+  'Binance Smart Chain': 'Bnb',
+  avalanche: 'Avax',
+  base: 'Base',
+  blast: 'Blast',
+  zksync:'Zksync',
+  BounceBit:'BounceBit',
+  merlin:'Merlin',
+  tron:'Tron',
+  manta:'Manta',
+  scroll:'Scroll',
+  primary:'Linea'
+}
