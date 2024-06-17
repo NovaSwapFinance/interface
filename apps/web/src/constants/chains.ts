@@ -191,6 +191,7 @@ export const sourceChainMap = {
   merlin:'Merlin',
   tron:'Tron',
   manta:'Manta',
+  mantle:'Mantle',
   scroll:'Scroll',
   primary:'Linea'
 }
