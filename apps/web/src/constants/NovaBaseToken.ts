@@ -70,7 +70,7 @@ export const NOVA_BASE_TOKEN_SOURCE = [
   {
     address: "0xebc45ef3b6d7e31573daa9be81825624725939f9",
     decimals: 8,
-    symbol: "WBTC.eth",
+    symbol: "WBTC",
     name: "Wrapped BTC",
     logurl: "https://s2.coinmarketcap.com/static/img/coins/64x64/3717.png",
     networkKey: "ethereum",
@@ -132,7 +132,7 @@ export const NOVA_BASE_TOKEN_SOURCE = [
   {
     address: "0x3fdb1939dab8e2d4f7a04212f142469cd52d6402",
     decimals: 18,
-    symbol: "ezETH.arb",
+    symbol: "ezETH",
     name: "Arbitrum One Renzo Restaked ETH",
     logurl:
       "https://assets.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496404",
@@ -142,7 +142,7 @@ export const NOVA_BASE_TOKEN_SOURCE = [
   {
     address: "0xda7fa837112511f6e353091d7e388a4c45ce7d6c",
     decimals: 18,
-    symbol: "ezETH.eth",
+    symbol: "ezETH",
     name: "Ethereum Renzo Restaked ETH",
     logurl:
       "https://assets.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496405",
@@ -153,7 +153,7 @@ export const NOVA_BASE_TOKEN_SOURCE = [
   {
     address: "0x8fee71ab3ffd6f8aec8cd2707da20f4da2bf583d",
     decimals: 18,
-    symbol: "ezETH.linea",
+    symbol: "ezETH",
     name: "Linea Renzo Restaked ETH",
     logurl:
       "https://assets.coingecko.com/coins/images/34753/large/Ezeth_logo_circle.png?1713496406",

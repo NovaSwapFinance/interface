@@ -177,7 +177,7 @@ export function isUniswapXSupportedChain(chainId: number) {
 
 
 export const sourceChainMap = {
-  ethereum: '',
+  ethereum: 'Ethereum',
   polygon: 'Polygon',
   celo:'Celo',
   arbitrum: 'Arbitrum',
