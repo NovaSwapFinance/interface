@@ -114,7 +114,7 @@ function TokenRow({
     >
       <PortfolioRow
         left={<PortfolioLogo images={[token?.iconURL]} size="40px" />}
-        title={<TokenNameText>{token?.symbol}</TokenNameText>}
+        title={<TokenNameText>{token?.name}</TokenNameText>}
         descriptor={
           <TokenBalanceText>
             {/* {formatNumber({
