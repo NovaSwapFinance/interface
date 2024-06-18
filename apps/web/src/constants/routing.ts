@@ -39,6 +39,7 @@ import {
   USDT_BSC,
   USDT_OPTIMISM,
   USDT_POLYGON,
+  USDT_SEPOLIA,
   WBTC,
   WBTC_ARBITRUM_ONE,
   WBTC_CELO,
@@ -50,7 +51,7 @@ import {
   WRAPPED_NATIVE_CURRENCY,
   nativeOnChain,
 } from "./tokens";
-import { USDT_NOVA_MAINNET } from "providers/token-provider";
+import { USDC_SEPOLIA, USDT_NOVA_MAINNET } from "providers/token-provider";
 
 import {NOVA_BASE_TOKEN} from './NovaBaseToken'
 
@@ -87,6 +88,8 @@ export const COMMON_BASES: ChainCurrencyList = {
   [ChainId.SEPOLIA]: [
     nativeOnChain(ChainId.SEPOLIA),
     WRAPPED_NATIVE_CURRENCY[ChainId.SEPOLIA] as Token,
+    USDC_SEPOLIA,
+    USDT_SEPOLIA
   ],
 
   [ChainId.ARBITRUM_ONE]: [

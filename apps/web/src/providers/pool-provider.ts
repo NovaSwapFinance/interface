@@ -239,7 +239,7 @@ export class V3PoolProvider implements IV3PoolProvider {
       tokenB: token1,
       fee: feeAmount,
     });
-    console.log("poolAddress", poolAddress);
+    console.log("poolAddress--->", poolAddress);
 
     this.POOL_ADDRESS_CACHE[cacheKey] = poolAddress;
 

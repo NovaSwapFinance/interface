@@ -47,17 +47,7 @@ export const PUBLIC_RPC_URLS: Record<NovaSupportedChainsType, string[]> = {
     "wss://sepolia.rpc.zklink.io",
   ],
   [ChainId.NOVA_MAINNET]: ["https://rpc.zklink.io", "wss://rpc.zklink.io"],
-  [ChainId.SEPOLIA]: [
-    // "Safe" URLs
-    "https://rpc.sepolia.dev/",
-    // "Fallback" URLs
-    "https://rpc.sepolia.org/",
-    "https://rpc2.sepolia.org/",
-    "https://rpc.sepolia.online/",
-    "https://www.sepoliarpc.space/",
-    "https://rpc-sepolia.rockx.com/",
-    "https://rpc.bordel.wtf/sepolia",
-  ],
+  [ChainId.SEPOLIA]: ["https://rpc2.sepolia.org"],
 };
 
 /**
@@ -68,10 +58,6 @@ export const APP_RPC_URLS: Record<NovaSupportedChainsType, string[]> = {
   [ChainId.NOVA_SEPOLIA]: ["https://sepolia.rpc.zklink.io"],
   [ChainId.NOVA_MAINNET]: ["https://rpc.zklink.io"],
   [ChainId.SEPOLIA]: [
-    // "Safe" URLs
-    "https://rpc.sepolia.dev/",
-    // "Fallback" URLs
-    "https://rpc.sepolia.org/",
     "https://rpc2.sepolia.org/",
     "https://rpc.sepolia.online/",
     "https://www.sepoliarpc.space/",

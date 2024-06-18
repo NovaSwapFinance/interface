@@ -37,12 +37,18 @@ export function computePoolAddress({
   initCodeHashManualOverride?: string
 }): string {
   const [token0, token1] = tokenA.sortsBefore(tokenB) ? [tokenA, tokenB] : [tokenB, tokenA] // does safety checks
+  console.log(factoryAddress,token0,token1,tokenA,tokenB,'factoryAddress--->')
   return getCreate2Address(
     factoryAddress,
     keccak256(
-      ['bytes'],
-      [defaultAbiCoder.encode(['address', 'address', 'uint24'], [token0.address, token1.address, fee])]
+      ["bytes"],
+      [
+        defaultAbiCoder.encode(
+          ["address", "address", "uint24"],
+          [token0.address, token1.address, fee],
+        ),
+      ],
     ),
-    initCodeHashManualOverride ?? POOL_INIT_CODE_HASH
-  )
+    initCodeHashManualOverride ?? POOL_INIT_CODE_HASH,
+  );
 }

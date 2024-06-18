@@ -164,7 +164,7 @@ const baseTokensByChain: { [chainId in ChainId]?: Token[] } = {
     USDT_OPTIMISM,
     WBTC_OPTIMISM,
   ],
-  [ChainId.SEPOLIA]: [USDT_SEPOLIA],
+  [ChainId.SEPOLIA]: [USDC_SEPOLIA,USDT_SEPOLIA],
   [ChainId.OPTIMISM_GOERLI]: [
     DAI_OPTIMISM_GOERLI,
     USDC_OPTIMISM_GOERLI,

@@ -28,7 +28,7 @@ export const USDC_GOERLI = new Token(
 );
 export const USDC_SEPOLIA = new Token(
   ChainId.SEPOLIA,
-  "0x6f14C02Fc1F78322cFd7d707aB90f18baD3B54f5",
+  "0x94a9D9AC8a22534E3FaCa9F4e7F2E2cf85d5E4C8",
   6,
   "USDC",
   "USD//C",
@@ -713,7 +713,7 @@ const STABLECOINS: { [chainId in ChainId]: Token[] } = {
   [ChainId.CELO]: [USDC_CELO],
   [ChainId.CELO_ALFAJORES]: [USDC_CELO],
   [ChainId.GOERLI]: [USDC_GOERLI],
-  [ChainId.SEPOLIA]: [USDT_SEPOLIA],
+  [ChainId.SEPOLIA]: [USDC_SEPOLIA, USDT_SEPOLIA],
   [ChainId.AVALANCHE]: [USDC_AVALANCHE],
   [ChainId.GNOSIS]: [],
   [ChainId.MOONBEAM]: [],
