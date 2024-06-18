@@ -184,6 +184,7 @@
     "@novaswap/universal-router-sdk": "1.9.3-beta.0",
     "@novaswap/v2-sdk": "4.3.0-beta.0",
     "@novaswap/v3-sdk": "3.11.2-beta.1",
+    "@okwallet/web3-react-okxwallet": "0.0.6",
     "@opensea/seaport-js": "1.3.0",
     "@popperjs/core": "2.11.8",
     "@reach/dialog": "0.10.5",

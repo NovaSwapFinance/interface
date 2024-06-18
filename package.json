@@ -2,6 +2,7 @@
   "name": "universe",
   "version": "0.0.0",
   "dependencies": {
+    "@binance/w3w-web3-connector": "1.2.1",
     "@commitlint/cli": "^17.4.2",
     "@commitlint/config-conventional": "^17.4.2",
     "@crowdin/cli": "3.14.0",
@@ -16,7 +17,8 @@
     "stats-lite": "2.2.0",
     "syncpack": "^8.5.14",
     "turbo": "1.10.16",
-    "turbo-ignore": "^1.11.3"
+    "turbo-ignore": "^1.11.3",
+    "uglifyjs-webpack-plugin": "2.2.0"
   },
   "engines": {
     "node": "=18.12.1",
