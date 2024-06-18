@@ -62,7 +62,6 @@ function getOrderedConnections(
     // Place recent connection at top of list
     isRecent ? list.unshift(option) : list.push(option)
   }
-  console.log('List=====>' ,list)
 
   return list
 }
