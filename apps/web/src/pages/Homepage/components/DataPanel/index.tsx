@@ -72,33 +72,9 @@ const StartBuilding = () => {
   }
 
   const fetchTVL = async () => {
-    const query = `
-    {
-      uniswapDayDatas(orderBy: date, orderDirection: desc) {
-        tvlUSD
-        date
-      }
-    }
-  `;
-      const response = await fetch(
-        "https://graph.zklink.io/subgraphs/name/novaswap",
-        {
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify({
-            query: query,
-            extensions: {},
-          }),
-          method: "POST",
-        },
-      );
-      const data = await response.json();
-      if (!data.errors) {
-        const { tvlUSD } =
-          data.data.uniswapDayDatas[0];
-          setTvl(formatNumber(tvlUSD));
-      }
+    const response = await fetch("https://api.llama.fi/tvl/novaswap");
+    const data = await response.json();
+    return data ?? 0;
   };
 
   const fetchDailyDatas = async () => {
@@ -176,7 +152,7 @@ const StartBuilding = () => {
   };
 
   useEffect(() => {
-    fetchTVL();
+    fetchTVL().then((data) => setTvl(formatNumber(data)));
     fetchDailyDatas();
     fetchUserCount("").then((data) => {
       const uniqueData = data.filter((v, i, a) => a.map(e => e.origin).indexOf(v.origin) === i);

@@ -720,8 +720,7 @@ export class AlphaRouter
           chainId,
           new URISubgraphProvider(
             chainId,
-            '',
-            // `https://cloudflare-ipfs.com/ipns/api.uniswap.org/v1/pools/v2/${chainName}.json`,
+            `https://cloudflare-ipfs.com/ipns/api.uniswap.org/v1/pools/v2/${chainName}.json`,
             undefined,
             0,
           ),
@@ -739,8 +738,7 @@ export class AlphaRouter
           chainId,
           new URISubgraphProvider(
             chainId,
-            '',
-            // `https://cloudflare-ipfs.com/ipns/api.uniswap.org/v1/pools/v3/${chainName}.json`,
+            `https://cloudflare-ipfs.com/ipns/api.uniswap.org/v1/pools/v3/${chainName}.json`,
             undefined,
             0,
           ),
