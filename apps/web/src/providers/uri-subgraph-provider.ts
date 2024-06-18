@@ -48,7 +48,8 @@ export class URISubgraphProvider<
 
         /* eslint-disable no-useless-catch */
         try {
-          response = await Promise.race([axios.get(this.uri), timerPromise]);
+          // response = await Promise.race([axios.get(this.uri), timerPromise]);
+          response = {};
         } catch (err) {
           throw err;
         } finally {
