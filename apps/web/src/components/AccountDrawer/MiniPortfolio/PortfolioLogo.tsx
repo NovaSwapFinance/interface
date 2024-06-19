@@ -236,6 +236,16 @@ function getLogo({
     return <CircleLogoImage size={size} src={images[0] ?? blankTokenUrl} />;
   }
 
+  if (images && images?.length >= 2) {
+    return (
+      <DoubleLogo
+        logo1={images[0]}
+        logo2={images[images.length - 1]}
+        size={size}
+      />
+    );
+  }
+
   if (currencies && currencies.length) {
     return (
       <DoubleCurrencyLogo
@@ -246,14 +256,6 @@ function getLogo({
     );
   }
 
-  if (images && images?.length >= 2) {
-    return (
-      <DoubleLogo
-        logo1={images[0]}
-        logo2={images[images.length - 1]}
-        size={size}
-      />
-    );
-  }
+
   return <UnknownContract width={size} height={size} />;
 }
