@@ -240,7 +240,7 @@ export const bnwalletWCV2ConnectConnection: Connection = {
   hooks: web3WCV2BNwalletConnectHooks,
   type: ConnectionType.BINANCE_WALLET_V2,
   shouldDisplay: () =>
-    Boolean(!getIsInjectedMobileBrowser() && !isNonSupportedDevice),
+    Boolean(!isMobile && !getIsInjectedMobileBrowser() && !isNonSupportedDevice),
 };
 
 
@@ -288,8 +288,9 @@ const coinbaseWalletConnection: Connection = {
     ),
   // If on a mobile browser that isn't the coinbase wallet browser, deeplink to the coinbase wallet app
   overrideActivate: () => {
+    const url = encodeURIComponent('https://novaswap.fi')
     if (isMobile && !getIsInjectedMobileBrowser()) {
-      window.open("https://go.cb-w.com/mtUDhEZPy1", "cbwallet");
+      window.open(`https://go.cb-w.com/dapp?cb_url=${url}`, "cbwallet");
       return true;
     }
     return false;
