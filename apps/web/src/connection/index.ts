@@ -1,3 +1,4 @@
+import { bnWalConnection } from './index';
 import { ChainId } from "@novaswap/sdk-core";
 import { CoinbaseWallet } from "@web3-react/coinbase-wallet";
 import { initializeConnector } from "@web3-react/core";
@@ -10,6 +11,8 @@ import NOVASWAP_LOGO from "assets/svg/logo.svg";
 import COINBASE_ICON from "assets/wallets/coinbase-icon.svg";
 import UNIWALLET_ICON from "assets/wallets/uniswap-wallet-icon.png";
 import WALLET_CONNECT_ICON from "assets/wallets/walletconnect-icon.svg";
+import OKXWALLET_ICON from "assets/images/okxwallet.png";
+import BNWALLET_ICON from "assets/images/bnwallet.png";
 import { t } from "i18n";
 import { useSyncExternalStore } from "react";
 import {
@@ -31,8 +34,14 @@ import {
 } from "./utils";
 import {
   UniwalletConnect as UniwalletWCV2Connect,
+  BnwalletConnect,
   WalletConnectV2,
 } from "./WalletConnectV2";
+
+import { OKXWallet } from '@okwallet/web3-react-okxwallet'
+import { getWeb3Connector } from '@binance/w3w-web3-connector'
+
+
 
 function onError(error: Error) {
   console.debug(`web3-react error: ${error}`);
@@ -121,6 +130,21 @@ export const deprecatedInjectedConnection: Connection = {
     return false;
   },
 };
+
+
+
+export const [okxWallet, hooks] = initializeConnector<OKXWallet>((actions) => new OKXWallet({ actions }))
+export const okxWalletConnection: Connection = {
+  getProviderInfo: () => ({ name: "OKX Wallet", icon: OKXWALLET_ICON }),
+  connector: okxWallet,
+  hooks: hooks,
+  type:  ConnectionType.INJECTED,
+  shouldDisplay: () =>
+    getIsMetaMaskWallet() ||
+    getShouldAdvertiseMetaMask() ||
+    getIsGenericInjector(),
+}
+
 const [web3GnosisSafe, web3GnosisSafeHooks] = initializeConnector<GnosisSafe>(
   (actions) => new GnosisSafe({ actions }),
 );
@@ -204,6 +228,23 @@ export const walletConnectV2Connection: Connection = new (class
   }
 })();
 
+const [web3WCV2BNwalletConnect, web3WCV2BNwalletConnectHooks] =
+  initializeConnector<BnwalletConnect>(
+    (actions) => new BnwalletConnect({ actions, onError }),
+  );
+
+
+export const bnwalletWCV2ConnectConnection: Connection = {
+  getProviderInfo: () => ({ name: "Binance Wallet", icon: BNWALLET_ICON }),
+  connector: web3WCV2BNwalletConnect,
+  hooks: web3WCV2BNwalletConnectHooks,
+  type: ConnectionType.BINANCE_WALLET_V2,
+  shouldDisplay: () =>
+    Boolean(!isMobile && !getIsInjectedMobileBrowser() && !isNonSupportedDevice),
+};
+
+
+
 const [web3WCV2UniwalletConnect, web3WCV2UniwalletConnectHooks] =
   initializeConnector<UniwalletWCV2Connect>(
     (actions) => new UniwalletWCV2Connect({ actions, onError }),
@@ -247,8 +288,9 @@ const coinbaseWalletConnection: Connection = {
     ),
   // If on a mobile browser that isn't the coinbase wallet browser, deeplink to the coinbase wallet app
   overrideActivate: () => {
+    const url = encodeURIComponent('https://novaswap.fi')
     if (isMobile && !getIsInjectedMobileBrowser()) {
-      window.open("https://go.cb-w.com/mtUDhEZPy1", "cbwallet");
+      window.open(`https://go.cb-w.com/dapp?cb_url=${url}`, "cbwallet");
       return true;
     }
     return false;
@@ -256,6 +298,7 @@ const coinbaseWalletConnection: Connection = {
 };
 
 export const connections = [
+  okxWalletConnection,
   gnosisSafeConnection,
   deprecatedInjectedConnection,
   walletConnectV2Connection,
@@ -263,6 +306,7 @@ export const connections = [
   eip6963Connection,
   // network connector should be last in the list, as it should be the fallback if no other connector is active
   networkConnection,
+  bnwalletWCV2ConnectConnection
 ];
 
 export function getConnection(c: Connector | ConnectionType) {

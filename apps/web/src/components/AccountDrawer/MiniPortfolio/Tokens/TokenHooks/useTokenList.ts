@@ -4,7 +4,7 @@ import { formatUnits } from "viem";
 import bignumber from "bignumber.js";
 import { useMemo, useEffect, useState } from "react";
 import { ChainId } from "@novaswap/sdk-core";
-
+import { sourceChainMap} from "constants/chains";
 import { NOVA_API_ADDRESS_URL} from "constants/novaApi";
 
 // TODO change fetchUrl and ChainId hainId.NOVA_SEPOLIA,
@@ -53,16 +53,23 @@ export const useTokenBalanceList = () => {
     const hasBalanceList = Object.values(allTokens?.balances||{})
       .filter((balances) => balances.token)
       .map((balances) => {
+        const {symbol, networkKey} = balances.token;
+        const sourceSuffix = networkKey ? sourceChainMap[networkKey] :undefined
+      const sourceSymbol = `${symbol}${sourceSuffix? `.${sourceSuffix}`:''}`
+      const formattedBalance = formatBalance(
+        balances.balance ?? 0n,
+        balances.token.decimals,
+      );
+      const balanceText = formattedBalance >= 0.001 ? formattedBalance.toFixed(3) : '<0.001';
         const token = {
           id: balances.token.l2Address,
           chainId: [ChainId.NOVA_SEPOLIA, ChainId.NOVA_MAINNET].includes(chainId)?chainId :ChainId.NOVA_MAINNET,
           address: balances.token.l2Address,
-          formattedBalance: formatBalance(
-            balances.balance ?? 0n,
-            balances.token.decimals,
-          ),
+          formattedBalance,
+          balanceText,
           usdValue:0,
           ...balances.token,
+          symbol:sourceSymbol
         };
         if (token.usdPrice) {
           const usdValue = token.formattedBalance * token.usdPrice || 0;

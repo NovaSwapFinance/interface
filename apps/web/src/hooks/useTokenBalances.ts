@@ -8,6 +8,7 @@ import bignumber from "bignumber.js";
 import { formatUnits } from "viem";
 import { PortfolioTokenBalancePartsFragment } from 'uniswap/src/data/graphql/uniswap-data-api/__generated__/types-and-hooks'
 import {NOVA_API_ADDRESS_URL} from 'constants/novaApi'
+import { sourceChainMap } from 'constants/chains';
 
 
 function formatBalance(balance: bigint, decimals: number, fixed: number = 8) {
@@ -67,15 +68,17 @@ export function useNovaTokenBalances() {
       if(!balanceInfo.token || !balanceInfo.token?.usdPrice) continue;
       
       // Create Token object
-     
+  
         const tokenData = balanceInfo.token;
+        const sourceSuffix = tokenData.networkKey ? sourceChainMap[tokenData.networkKey] :undefined
+        const symbol = `${tokenData.symbol}${sourceSuffix? `.${sourceSuffix}`:''}`
         const token = {
           __typename: "Token",
           id: tokenData.l2Address,
           address: tokenData.l2Address,
           standard: tokenData.symbol === 'ETH' ? "NATIVE" : "ERC20",
           chain: "Nova Mainnet",
-          symbol: tokenData.symbol,
+          symbol,
           name: tokenData.name,
           decimals: tokenData.decimals,
           project: tokenData.project ? {

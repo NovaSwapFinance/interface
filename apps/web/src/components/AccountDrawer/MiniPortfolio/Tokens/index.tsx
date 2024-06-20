@@ -121,8 +121,8 @@ function TokenRow({
               input: quantity,
               type: NumberType.TokenNonTx,
             })}{' '} */}
-            {token?.formattedBalance}
-            {token?.symbol}
+            {`${token?.balanceText} ${token?.symbol}`}
+            
           </TokenBalanceText>
         }
         onClick={navigateToTokenDetails}
