@@ -118,3 +118,36 @@ export class UniwalletConnect extends WalletConnectV2 {
     return super.deactivate();
   }
 }
+
+
+export class BnwalletConnect extends WalletConnectV2 {
+  ANALYTICS_EVENT = "Binance Wallet QR Scan";
+  static BN_URI_AVAILABLE = "bn_uri_available";
+
+  constructor({
+    actions,
+    onError,
+  }: Omit<WalletConnectConstructorArgs, "options">) {
+
+    super({ actions, defaultChainId: ChainId.NOVA_MAINNET, qrcode: false, onError });
+
+    this.events.once(URI_AVAILABLE, () => {
+      this.provider?.events.on("disconnect", this.deactivate);
+    });
+
+    this.events.on(URI_AVAILABLE, (uri) => {
+      if (!uri) return;
+
+      // Emits custom wallet connect code, parseable by the Uniswap Wallet
+      this.events.emit(
+        BnwalletConnect.BN_URI_AVAILABLE,
+        uri,
+      );
+    });
+  }
+
+  deactivate() {
+    this.events.emit(URI_AVAILABLE);
+    return super.deactivate();
+  }
+}

@@ -56,14 +56,17 @@ export const useTokenBalanceList = () => {
         const {symbol, networkKey} = balances.token;
         const sourceSuffix = networkKey ? sourceChainMap[networkKey] :undefined
       const sourceSymbol = `${symbol}${sourceSuffix? `.${sourceSuffix}`:''}`
+      const formattedBalance = formatBalance(
+        balances.balance ?? 0n,
+        balances.token.decimals,
+      );
+      const balanceText = formattedBalance >= 0.001 ? formattedBalance.toFixed(3) : '<0.001';
         const token = {
           id: balances.token.l2Address,
           chainId: [ChainId.NOVA_SEPOLIA, ChainId.NOVA_MAINNET].includes(chainId)?chainId :ChainId.NOVA_MAINNET,
           address: balances.token.l2Address,
-          formattedBalance: formatBalance(
-            balances.balance ?? 0n,
-            balances.token.decimals,
-          ),
+          formattedBalance,
+          balanceText,
           usdValue:0,
           ...balances.token,
           symbol:sourceSymbol

@@ -521,7 +521,7 @@ export const WRAPPED_NATIVE_CURRENCY: { [chainId in ChainId]: Token } = {
   ),
   [ChainId.NOVA_SEPOLIA]: new Token(
     ChainId.NOVA_SEPOLIA,
-    "0x6e42d10eB474a17b14f3cfeAC2590bfa604313C7",
+    "0x13208D4923b9358cF4ccC450bB79ad98bA108D63",
     18,
     "WETH",
     "Wrapped Ether",

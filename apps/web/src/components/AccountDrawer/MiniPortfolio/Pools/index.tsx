@@ -22,6 +22,8 @@ import { useToggleAccountDrawer } from '../hooks'
 import { PositionInfo } from './cache'
 import { useFeeValues } from './hooks'
 import useMultiChainPositions from './useMultiChainPositions'
+import { useNovaTokenList } from 'hooks/useNovaTokenList';
+import {ETH_LOGO} from 'constants/NovaBaseToken'
 
 /**
  * Takes an array of PositionInfo objects (format used by the Uniswap Labs gql API).
@@ -121,6 +123,7 @@ function calculateLiquidityValue(price0: number | undefined, price1: number | un
 
 function PositionListItem({ positionInfo }: { positionInfo: PositionInfo }) {
   const { formatNumber } = useFormatter()
+  const { novaTokenList } = useNovaTokenList()
 
   const { chainId, position, pool, details, inRange, closed } = positionInfo
 
@@ -147,6 +150,20 @@ function PositionListItem({ positionInfo }: { positionInfo: PositionInfo }) {
     [chainId, pool.token0.address, pool.token0.symbol, pool.token1.address, pool.token1.symbol]
   )
 
+
+  const images = useMemo(() => {
+   const result =  [pool.token0, pool.token1].map((token) => {
+      if(token?.isNative || (token?.address ||token?.wrapped.address||'').toLowerCase() === '0x8280a4e7d5b3b658ec4580d3bc30f5e50454f169') {
+        return ETH_LOGO;
+      } else {
+        let novaBaseToken = novaTokenList.find((novaToken) => novaToken.l2Address.toLowerCase() === (token?.address ||token?.wrapped.address||'').toLowerCase());
+        return  novaBaseToken?.iconURL || '';
+      }
+    })
+   return result;
+
+  },[pool.token0, pool.token1,novaTokenList])
+
   return (
     <TraceEvent
       events={[BrowserEvent.onClick]}
@@ -156,7 +173,7 @@ function PositionListItem({ positionInfo }: { positionInfo: PositionInfo }) {
     >
       <PortfolioRow
         onClick={onClick}
-        left={<PortfolioLogo chainId={chainId} currencies={[pool.token0, pool.token1]} />}
+        left={<PortfolioLogo chainId={chainId} currencies={[pool.token0, pool.token1]} images={images}/>}
         title={
           <Row>
             <ThemedText.SubHeader>

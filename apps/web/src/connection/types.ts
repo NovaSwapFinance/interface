@@ -10,6 +10,7 @@ export enum ConnectionType {
   NETWORK = "NETWORK",
   GNOSIS_SAFE = "GNOSIS_SAFE",
   EIP_6963_INJECTED = "EIP_6963_INJECTED",
+  BINANCE_WALLET_V2 = "BINANCE_WALLET_V2",
 }
 
 export interface ProviderInfo {
