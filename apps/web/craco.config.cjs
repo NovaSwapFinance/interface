@@ -6,7 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const path = require("path");
 const { IgnorePlugin, ProvidePlugin } = require('webpack')
 const { RetryChunkLoadPlugin } = require('webpack-retry-chunk-load-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+// const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -83,16 +83,16 @@ module.exports = {
         // - react-markdown requires process.cwd
         process: 'process/browser.js',
       }),
-      new UglifyJsPlugin({
-        uglifyOptions:{
-            compress:{
-                drop_console:isProduction
-            }
-        },
-        sourceMap:true,
-        parallel:true    
+      // new UglifyJsPlugin({
+      //   uglifyOptions:{
+      //       compress:{
+      //           drop_console:isProduction
+      //       }
+      //   },
+      //   sourceMap:true,
+      //   parallel:true    
     
-      }),
+      // }),
       new VanillaExtractPlugin(),
       new RetryChunkLoadPlugin({
         cacheBust: `function() {

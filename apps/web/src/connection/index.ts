@@ -38,8 +38,7 @@ import {
   WalletConnectV2,
 } from "./WalletConnectV2";
 
-import { OKXWallet } from '@okwallet/web3-react-okxwallet'
-import { getWeb3Connector } from '@binance/w3w-web3-connector'
+// import { OKXWallet } from '@okwallet/web3-react-okxwallet'
 
 
 
@@ -133,11 +132,11 @@ export const deprecatedInjectedConnection: Connection = {
 
 
 
-export const [okxWallet, hooks] = initializeConnector<OKXWallet>((actions) => new OKXWallet({ actions }))
+// export const [okxWallet, hooks] = initializeConnector<OKXWallet>((actions) => new OKXWallet({ actions }))
 export const okxWalletConnection: Connection = {
   getProviderInfo: () => ({ name: "OKX Wallet", icon: OKXWALLET_ICON }),
-  connector: okxWallet,
-  hooks: hooks,
+  connector: web3Injected,
+  hooks: web3InjectedHooks,
   type:  ConnectionType.INJECTED,
   shouldDisplay: () =>
     getIsMetaMaskWallet() ||
