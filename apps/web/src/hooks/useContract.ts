@@ -41,6 +41,9 @@ import { V3Migrator } from 'uniswap/src/abis/types/v3/V3Migrator'
 import WETH_ABI from 'uniswap/src/abis/weth.json'
 import { getContract } from 'utilities/src/contracts/getContract'
 
+const LEGACY_V3_NFT_POSITION_MANAGER_ADDRESS =
+  "0x18bC9fcD4C14DDdd0086FF4b661D97CF42505075";
+
 const { abi: IUniswapV2PairABI } = IUniswapV2PairJson
 const { abi: IUniswapV2Router02ABI } = IUniswapV2Router02Json
 const { abi: MulticallABI } = UniswapInterfaceMulticallJson
@@ -152,6 +155,32 @@ export function useMainnetInterfaceMulticall() {
     MulticallABI
   ) as UniswapInterfaceMulticall
 }
+
+export function useLegacyV3NFTPositionManagerContract(
+  withSignerIfPossible?: boolean,
+): NonfungiblePositionManager | null {
+  const { account, chainId } = useWeb3React();
+  const contract = useContract<NonfungiblePositionManager>(
+    LEGACY_V3_NFT_POSITION_MANAGER_ADDRESS, //hotfixed legacy v3 position manager address
+    NFTPositionManagerABI,
+    withSignerIfPossible,
+  );
+  useEffect(() => {
+    if (contract && account) {
+      sendAnalyticsEvent(InterfaceEventName.WALLET_PROVIDER_USED, {
+        source: "useV3NFTPositionManagerContract",
+        contract: {
+          name: "V3NonfungiblePositionManager",
+          address: contract.address,
+          withSignerIfPossible,
+          chainId,
+        },
+      });
+    }
+  }, [account, chainId, contract, withSignerIfPossible]);
+  return contract;
+}
+
 
 export function useV3NFTPositionManagerContract(withSignerIfPossible?: boolean): NonfungiblePositionManager | null {
   const { account, chainId } = useWeb3React()

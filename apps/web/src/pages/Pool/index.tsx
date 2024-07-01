@@ -11,11 +11,11 @@ import { SwitchLocaleLink } from 'components/SwitchLocaleLink'
 import { isSupportedChain } from 'constants/chains'
 import { useFilterPossiblyMaliciousPositions } from 'hooks/useFilterPossiblyMaliciousPositions'
 import { useNetworkSupportsV2 } from 'hooks/useNetworkSupportsV2'
-import { useV3Positions } from 'hooks/useV3Positions'
+import { useLegacyV3Positions, useV3Positions } from 'hooks/useV3Positions'
 import { Trans } from 'i18n'
 import { PoolVersionMenu } from 'pages/Pool/shared'
 import { useMemo } from 'react'
-import { AlertTriangle, BookOpen, ChevronDown, ChevronsRight, Inbox, Layers } from 'react-feather'
+import { AlertTriangle, BookOpen, ChevronDown, ChevronsRight, Inbox, Info, Layers, X } from 'react-feather'
 import { Link } from 'react-router-dom'
 import { ApplicationModal } from 'state/application/reducer'
 import { useUserHideClosedPositions } from 'state/user/hooks'
@@ -138,6 +138,94 @@ const MainContentWrapper = styled.main`
   overflow: hidden;
 `
 
+const NoticeContainer = styled.div`
+  background-color: #2c1a1a;
+  border: 1px solid #4b2b2b;
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: flex-start;
+  max-width: 100%;
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
+    0 2px 4px -1px rgba(0, 0, 0, 0.06);
+`;
+
+const IconContainer = styled.div`
+  margin-right: 12px;
+  flex-shrink: 0;
+`;
+
+const ContentContainer = styled.div`
+  flex-grow: 1;
+`;
+
+const Title = styled.h3`
+  color: #f87171;
+  font-size: 16px;
+  font-weight: 600;
+  margin: 0 0 8px 0;
+`;
+
+const Message = styled.p`
+  color: #fecaca;
+  font-size: 14px;
+  line-height: 1.5;
+  margin: 0;
+`;
+
+const CloseButton = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  color: #f87171;
+  margin-left: 12px;
+  &:hover {
+    color: #fecaca;
+  }
+`;
+
+const WebsiteLink = styled.a`
+  color: #fca5a5;
+  text-decoration: underline;
+  cursor: pointer;
+  &:hover {
+    color: #f87171;
+  }
+`;
+
+const MigrationNotice = ({
+  title,
+  message,
+  onClose,
+}: {
+  title: string;
+  message: string;
+  onClose: () => void;
+}) => (
+  <NoticeContainer>
+    <IconContainer>
+      <Info size={24} color="#F87171" />
+    </IconContainer>
+    <ContentContainer>
+      <Title>{title}</Title>
+      <Message>
+        {message}
+        <br />
+        <WebsiteLink
+          href="https://legacy.novaswap.fi/#/pool"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Visit Novaswap Legacy V1 interface
+        </WebsiteLink>
+      </Message>
+    </ContentContainer>
+  </NoticeContainer>
+);
+
 function PositionsLoadingPlaceholder() {
   return (
     <LoadingRows>
@@ -190,37 +278,60 @@ function WrongNetworkCard() {
 }
 
 export default function Pool() {
-  const { account, chainId } = useWeb3React()
-  const networkSupportsV2 = useNetworkSupportsV2()
-  const toggleWalletDrawer = useToggleAccountDrawer()
+  const { account, chainId } = useWeb3React();
+  const networkSupportsV2 = useNetworkSupportsV2();
+  const toggleWalletDrawer = useToggleAccountDrawer();
 
-  const theme = useTheme()
-  const [userHideClosedPositions, setUserHideClosedPositions] = useUserHideClosedPositions()
+  const theme = useTheme();
+  const [userHideClosedPositions, setUserHideClosedPositions] =
+    useUserHideClosedPositions();
+  //useLegacyV3Positions
+  const { positions:legacyPositions, loading: legacyPositionsLoading } = useLegacyV3Positions(account);
 
-  const { positions, loading: positionsLoading } = useV3Positions(account)
 
-  console.log('Pool++++++positions',positions)
+  const { positions, loading: positionsLoading } = useV3Positions(account);
 
-  const [openPositions, closedPositions] = positions?.reduce<[PositionDetails[], PositionDetails[]]>(
+  const [openPositions, closedPositions] = positions?.reduce<
+    [PositionDetails[], PositionDetails[]]
+  >(
     (acc, p) => {
-      acc[p.liquidity?.isZero() ? 1 : 0].push(p)
-      return acc
+      acc[p.liquidity?.isZero() ? 1 : 0].push(p);
+      return acc;
     },
-    [[], []]
-  ) ?? [[], []]
+    [[], []],
+  ) ?? [[], []];
+
+  const [legacyOpenPositions, legacyClosedPositions] = legacyPositions?.reduce<
+    [PositionDetails[], PositionDetails[]]
+  >(
+    (acc, p) => {
+      acc[p.liquidity?.isZero() ? 1 : 0].push(p);
+      return acc;
+    },
+    [[], []],
+  ) ?? [[], []];
+
+  console.log(legacyOpenPositions, "legacyOpenPositions---->");
+
+  const hasLegacyContractOpenPositions = legacyOpenPositions.length > 0;
 
   const userSelectedPositionSet = useMemo(
-    () => [...openPositions, ...(userHideClosedPositions ? [] : closedPositions)],
-    [closedPositions, openPositions, userHideClosedPositions]
-  )
+    () => [
+      ...openPositions,
+      ...(userHideClosedPositions ? [] : closedPositions),
+    ],
+    [closedPositions, openPositions, userHideClosedPositions],
+  );
 
-  const filteredPositions = useFilterPossiblyMaliciousPositions(userSelectedPositionSet)
+  const filteredPositions = useFilterPossiblyMaliciousPositions(
+    userSelectedPositionSet,
+  );
 
   if (!isSupportedChain(chainId)) {
-    return <WrongNetworkCard />
+    return <WrongNetworkCard />;
   }
 
-  const showConnectAWallet = Boolean(!account)
+  const showConnectAWallet = Boolean(!account);
 
   const menuItems = [
     {
@@ -230,7 +341,7 @@ export default function Pool() {
           <ChevronsRight size={16} />
         </PoolMenuItem>
       ),
-      link: '/migrate/v2',
+      link: "/migrate/v2",
       external: false,
     },
     {
@@ -240,7 +351,7 @@ export default function Pool() {
           <Layers size={16} />
         </PoolMenuItem>
       ),
-      link: '/pools/v2',
+      link: "/pools/v2",
       external: false,
     },
     {
@@ -250,16 +361,16 @@ export default function Pool() {
           <BookOpen size={16} />
         </PoolMenuItem>
       ),
-      link: 'https://support.uniswap.org/hc/en-us/categories/8122334631437-Providing-Liquidity-',
+      link: "https://support.uniswap.org/hc/en-us/categories/8122334631437-Providing-Liquidity-",
       external: true,
     },
-  ]
+  ];
 
   return (
     <Trace page={InterfacePageName.POOL_PAGE} shouldLogImpression>
       <PageWrapper>
         <AutoColumn gap="lg" justify="center">
-          <AutoColumn gap="lg" style={{ width: '100%' }}>
+          <AutoColumn gap="lg" style={{ width: "100%" }}>
             <TitleRow padding="0">
               <Row gap="md" width="min-content">
                 <ThemedText.LargeHeader>
@@ -283,16 +394,38 @@ export default function Pool() {
                     )}
                   />
                 )} */}
-                <ResponsiveButtonPrimary data-cy="join-pool-button" id="join-pool-button" as={Link} to="/add/ETH">
+                <ResponsiveButtonPrimary
+                  data-cy="join-pool-button"
+                  id="join-pool-button"
+                  as={Link}
+                  to="/add/ETH"
+                >
                   + <Trans>New position</Trans>
                 </ResponsiveButtonPrimary>
               </ButtonRow>
+            </TitleRow>
+            <TitleRow>
+              {hasLegacyContractOpenPositions && (
+                <MigrationNotice
+                  title="Migration Required"
+                  message="Dear users, due to a contract upgrade, we kindly request that
+                you migrate your liquidity to the NovaSwap V2 platform. The
+                liquidity you had previously provided will no longer be eligible
+                to earn trading fee revenue. Therefore, we ask that you withdraw
+                your liquidity from V1 and add it to the current V2 version of
+                the platform. We apologize for any inconvenience this upgrade
+                may have caused you."
+                  onClose={() => {}}
+                />
+              )}
             </TitleRow>
 
             <MainContentWrapper>
               {positionsLoading ? (
                 <PositionsLoadingPlaceholder />
-              ) : filteredPositions && closedPositions && filteredPositions.length > 0 ? (
+              ) : filteredPositions &&
+                closedPositions &&
+                filteredPositions.length > 0 ? (
                 <PositionList
                   positions={filteredPositions}
                   setUserHideClosedPositions={setUserHideClosedPositions}
@@ -300,19 +433,24 @@ export default function Pool() {
                 />
               ) : (
                 <ErrorContainer>
-                  <ThemedText.BodyPrimary color={theme.neutral3} textAlign="center">
-                    <InboxIcon strokeWidth={1} style={{ marginTop: '2em' }} />
-                    <div style={{ marginTop: '0.5em'}}>
+                  <ThemedText.BodyPrimary
+                    color={theme.neutral3}
+                    textAlign="center"
+                  >
+                    <InboxIcon strokeWidth={1} style={{ marginTop: "2em" }} />
+                    <div style={{ marginTop: "0.5em" }}>
                       <Trans>Your active liquidity positions will.</Trans>
                     </div>
-                    <div style={{ marginTop: '0.5em',fontSize: '2em'}}>
+                    <div style={{ marginTop: "0.5em", fontSize: "2em" }}>
                       <Trans>appear here.</Trans>
                     </div>
                   </ThemedText.BodyPrimary>
                   {!showConnectAWallet && closedPositions.length > 0 && (
                     <ButtonText
-                      style={{ marginTop: '.5rem' }}
-                      onClick={() => setUserHideClosedPositions(!userHideClosedPositions)}
+                      style={{ marginTop: ".5rem" }}
+                      onClick={() =>
+                        setUserHideClosedPositions(!userHideClosedPositions)
+                      }
                     >
                       <Trans>Show closed positions</Trans>
                     </ButtonText>
@@ -325,7 +463,11 @@ export default function Pool() {
                       element={InterfaceElementName.CONNECT_WALLET_BUTTON}
                     >
                       <ButtonPrimary
-                        style={{ marginTop: '2em', marginBottom: '2em', padding: '8px 16px' }}
+                        style={{
+                          marginTop: "2em",
+                          marginBottom: "2em",
+                          padding: "8px 16px",
+                        }}
                         onClick={toggleWalletDrawer}
                       >
                         <Trans>Connect a wallet</Trans>
@@ -343,5 +485,5 @@ export default function Pool() {
       </PageWrapper>
       <SwitchLocaleLink />
     </Trace>
-  )
+  );
 }
