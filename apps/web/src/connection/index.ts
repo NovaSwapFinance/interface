@@ -1,4 +1,3 @@
-import { bnWalConnection } from './index';
 import { ChainId } from "@novaswap/sdk-core";
 import { CoinbaseWallet } from "@web3-react/coinbase-wallet";
 import { initializeConnector } from "@web3-react/core";
