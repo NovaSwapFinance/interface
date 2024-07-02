@@ -7018,13 +7018,13 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@novaswap/permit2-sdk@npm:1.2.0":
-  version: 1.2.0
-  resolution: "@novaswap/permit2-sdk@npm:1.2.0"
+"@novaswap/permit2-sdk@npm:1.2.0-beta.0":
+  version: 1.2.0-beta.0
+  resolution: "@novaswap/permit2-sdk@npm:1.2.0-beta.0"
   dependencies:
     ethers: ^5.3.1
     tiny-invariant: ^1.3.1
-  checksum: d32cde5549374e445db8b9b941831a5bb6ee510718b142ae304d0c495c9f439c35aa092a7a0366edb65c781afba5d18c3ccee3358593168ceea760e9714ae130
+  checksum: 4994d35e50a0352f279d8ac72d1d10f4620aa36d16b70edf22bf974dca98c04b4cd8921d9efd801709c16ccb851d008929c32c5ab60b25369126e94143f8ce72
   languageName: node
   linkType: hard
 
@@ -14204,7 +14204,7 @@ __metadata:
     "@juggle/resize-observer": 3.4.0
     "@looksrare/sdk": 0.10.4
     "@metamask/jazzicon": 2.0.0
-    "@novaswap/permit2-sdk": 1.2.0
+    "@novaswap/permit2-sdk": 1.2.0-beta.0
     "@novaswap/router-sdk": 6.9.1
     "@novaswap/sdk-core": 6.2.0
     "@novaswap/smart-order-router": 6.3.0
@@ -46332,7 +46332,7 @@ __metadata:
     "@graphql-tools/load": 8.0.1
     "@graphql-tools/merge": 9.0.1
     "@graphql-tools/mock": 9.0.0
-    "@novaswap/permit2-sdk": 1.2.0
+    "@novaswap/permit2-sdk": 1.2.0-beta.0
     "@novaswap/router-sdk": 1.9.1
     "@novaswap/sdk-core": 4.2.0
     "@novaswap/universal-router-sdk": 1.9.3

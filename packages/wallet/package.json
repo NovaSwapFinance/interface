@@ -20,7 +20,7 @@
     "@ethersproject/providers": "5.7.2",
     "@ethersproject/units": "5.7.0",
     "@gorhom/bottom-sheet": "4.5.1",
-    "@novaswap/permit2-sdk": "1.2.0",
+    "@novaswap/permit2-sdk": "1.2.0-beta.0",
     "@novaswap/router-sdk": "1.9.1",
     "@novaswap/sdk-core": "4.2.0",
     "@novaswap/universal-router-sdk": "1.9.3",

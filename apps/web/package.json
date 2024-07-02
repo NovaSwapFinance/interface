@@ -177,7 +177,7 @@
     "@juggle/resize-observer": "3.4.0",
     "@looksrare/sdk": "0.10.4",
     "@metamask/jazzicon": "2.0.0",
-    "@novaswap/permit2-sdk": "1.2.0",
+    "@novaswap/permit2-sdk": "1.2.0-beta.0",
     "@novaswap/router-sdk": "6.9.1",
     "@novaswap/sdk-core": "6.2.0",
     "@novaswap/smart-order-router": "6.3.0",
