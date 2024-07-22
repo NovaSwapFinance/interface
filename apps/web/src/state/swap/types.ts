@@ -119,4 +119,5 @@ export interface CurrencyState {
 export interface SwapState {
   readonly independentField: Field;
   readonly typedValue: string;
+  readonly gasToken?: Currency;
 }
