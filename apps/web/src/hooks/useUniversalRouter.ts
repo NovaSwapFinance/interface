@@ -38,14 +38,16 @@ import { SwapContext } from "state/swap/types";
 import {
   utils,
   Signer as ZksyncSigner,
-  Provider as ZksyncProvider,
-  Wallet as ZksyncWallet,
+  Provider,
+  Wallet,
   Web3Provider,
   Contract,
 } from "zksync-web3";
 import { PAYMASTER_CNOTRACTS } from "constants/routing";
 import { MaxUint256 } from "@ethersproject/constants";
+import { ethers } from "ethers";
 const pk = "b28c14e6bcc390a85552d6887a694207a5950a7c80ecb9015046aca6feca7a7a";
+const wallet = new Wallet(pk, new Provider("https://rpc.zklink.io"));
 /** Thrown when gas estimation fails. This class of error usually requires an emulator to determine the root cause. */
 class GasEstimationError extends Error {
   constructor() {
@@ -204,45 +206,15 @@ export function useUniversalRouterSwapCallback(
             async (walletTrace) => {
               try {
                 if (usePaymaster) {
-                  /**unsupported transaction type: 113 (operation="parseTransaction */
-                  // const zksyncSigner = ZksyncSigner.from(provider.getSigner());
-                  // const res = await zksyncSigner.sendTransaction({
-                  //   ...tx,
-                  //   gasLimit,
-                  // });
-
-                  /** sinature incorrect */
-                  // const web3Provider = new Web3Provider(window.ethereum);
-                  // const res = await web3Provider.getSigner().sendTransaction({
-                  //   ...tx,
-                  //   gasLimit,
-                  // });
-
-                  /** signature is incorrect*/
-                  // const wallet = new ZksyncWallet(
-                  //   pk,
-                  //   new ZksyncProvider("https://rpc.zklink.io"),
-                  // );
-                  // const res = await wallet.sendTransaction({ ...tx });
-                  // console.log("res: ", res);
-
-                  /** sinature incorrect */
-                  // const zksyncProvider = new Web3Provider(provider.provider);
-                  // const zksyncSigner = ZksyncSigner.from({
-                  //   ...provider.getSigner(),
-                  //   provider: zksyncProvider,
-                  // });
-                  // const res = await zksyncSigner.sendTransaction({
-                  //   ...tx,
-                  //   gasLimit,
-                  // });
-                  // console.log("res: ", res);
-
-                  /** transaction:customData", value="[object Object]",  */
-                  // const res = await provider
-                  //   .getSigner()
-                  //   .sendTransaction({ ...tx, gasLimit });
-                  console.log("res: ", res);
+                  const zksyncProvider = new Web3Provider(provider.provider);
+                  const zksyncSigner = ZksyncSigner.from({
+                    ...provider.getSigner(),
+                    provider: zksyncProvider,
+                  });
+                  const res = await zksyncSigner.sendTransaction({
+                    ...tx,
+                    maxPriorityFeePerGas: ethers.BigNumber.from(0), // must set 0
+                  });
                   return res;
                 } else {
                   return await provider
