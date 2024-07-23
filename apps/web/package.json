@@ -163,7 +163,8 @@
     "webpack": "5.90.0",
     "webpack-retry-chunk-load-plugin": "3.1.1",
     "wrangler": "3.15.0",
-    "yarn-deduplicate": "6.0.0"
+    "yarn-deduplicate": "6.0.0",
+    "zksync-web3": "0.17.1"
   },
   "dependencies": {
     "@apollo/client": "3.9.6",
@@ -303,7 +304,7 @@
     "wcag-contrast": "3.0.0",
     "web-vitals": "2.1.4",
     "xml2js": "0.6.2",
-    "zksync-web3": "0.17.1",
+    "zksync-web3": "0.14.3",
     "zone.js": "0.12.0",
     "zustand": "4.4.6"
   },

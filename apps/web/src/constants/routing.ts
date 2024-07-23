@@ -48,11 +48,13 @@ import {
   WETH_POLYGON,
   WETH_POLYGON_MUMBAI,
   WRAPPED_NATIVE_CURRENCY,
+  ZKL,
+  ZKT,
   nativeOnChain,
 } from "./tokens";
 import { USDT_NOVA_MAINNET } from "providers/token-provider";
 
-import {NOVA_BASE_TOKEN} from './NovaBaseToken'
+import { NOVA_BASE_TOKEN } from "./NovaBaseToken";
 
 type ChainTokenList = {
   readonly [chainId: number]: Token[];
@@ -189,6 +191,21 @@ export const COMMON_BASES: ChainCurrencyList = {
   ],
 };
 
+export const GAS_TOKENS: ChainCurrencyList = {
+  [ChainId.NOVA_MAINNET]: [
+    ...NOVA_BASE_TOKEN,
+    // ZKL,
+    ZKT,
+    nativeOnChain(ChainId.NOVA_MAINNET),
+  ],
+  [ChainId.NOVA_SEPOLIA]: [nativeOnChain(ChainId.NOVA_SEPOLIA)],
+};
+
+export const PAYMASTER_CNOTRACTS: Record<[chainId: number], string> = {
+  [ChainId.NOVA_MAINNET]: "0x52296b11f296E93E802C80C3e2cd3974873d5451",
+  [ChainId.NOVA_SEPOLIA]: "",
+};
+
 // used to construct the list of all pairs we consider by default in the frontend
 export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
   ...WRAPPED_NATIVE_CURRENCIES_ONLY,
@@ -230,10 +247,22 @@ export const BASES_TO_TRACK_LIQUIDITY_FOR: ChainTokenList = {
 export const PINNED_PAIRS: { readonly [chainId: number]: [Token, Token][] } = {
   [ChainId.MAINNET]: [
     [
-      new Token(ChainId.MAINNET, '0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643', 8, 'cDAI', 'Compound Dai'),
-      new Token(ChainId.MAINNET, '0x39AA39c021dfbaE8faC545936693aC917d5E7563', 8, 'cUSDC', 'Compound USD Coin'),
+      new Token(
+        ChainId.MAINNET,
+        "0x5d3a536E4D6DbD6114cc1Ead35777bAB948E3643",
+        8,
+        "cDAI",
+        "Compound Dai",
+      ),
+      new Token(
+        ChainId.MAINNET,
+        "0x39AA39c021dfbaE8faC545936693aC917d5E7563",
+        8,
+        "cUSDC",
+        "Compound USD Coin",
+      ),
     ],
     [USDC_MAINNET, USDT],
     [DAI, USDT],
   ],
-}
+};
