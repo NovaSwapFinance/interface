@@ -170,7 +170,7 @@ export const ZKL = new Token(
 );
 export const ZKT = new Token(
   ChainId.NOVA_MAINNET,
-  "0x54b70A23650C2D2a44A23ca7d7ad1c69bbA09c9e",
+  "0xf26f31CDbca0e4082E4d3e2de0D27e25C52FD0dd",
   18,
   "ZKT",
   "ZKT",
@@ -669,6 +669,7 @@ class ExtendedEther extends NativeCurrency {
 
 const cachedNativeCurrency: { [chainId: number]: NativeCurrency | Token } = {};
 export function nativeOnChain(chainId: number): NativeCurrency | Token {
+  if (!chainId) return;
   if (cachedNativeCurrency[chainId]) return cachedNativeCurrency[chainId];
   let nativeCurrency: NativeCurrency | Token;
   if (isPolygon(chainId)) {
