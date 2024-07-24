@@ -18,8 +18,8 @@ const Container = styled(AutoRow)`
   margin-top: 5px;
   gap: 6px;
 `;
-const BaseWrapper = styled.div<{ disable?: boolean }>`
-  border: 1px solid ${({ theme }) => theme.surface3};
+export const BaseWrapper = styled.div<{ disable?: boolean }>`
+  border: 1px solid ${({ theme }) => theme.surface4};
   border-radius: 18px;
   display: flex;
   padding: 6px;
@@ -35,13 +35,13 @@ const BaseWrapper = styled.div<{ disable?: boolean }>`
   }
 
   color: ${({ theme, disable }) => disable && theme.neutral1};
-  background-color: ${({ theme, disable }) => disable && theme.surface3};
+  background-color: ${({ theme, disable }) => disable && theme.surface4};
 `;
-const LabelText = styled(ThemedText.BodySmall)<{ hasTooltip?: boolean }>`
+export const LabelText = styled(ThemedText.BodySmall)<{ hasTooltip?: boolean }>`
   cursor: ${({ hasTooltip }) => (hasTooltip ? "help" : "auto")};
   color: ${({ theme }) => theme.neutral2};
 `;
-export function GasTokens() {
+export function GasTokens({ onSelect }: { onSelect: () => void }) {
   const { chainId } = useWeb3React();
   const tokens = chainId ? GAS_TOKENS[chainId] ?? [] : [];
   const { swapState, setSwapState } = useContext(SwapContext);
@@ -54,12 +54,14 @@ export function GasTokens() {
 
   return (
     <Column>
-      <LabelText hasTooltip>Token for Gas</LabelText>
       <Container>
         {tokens.map((currency, index) => (
           <BaseWrapper
             tabIndex={0}
-            onClick={() => setSwapState({ ...swapState, gasToken: currency })}
+            onClick={() => {
+              setSwapState({ ...swapState, gasToken: currency });
+              onSelect();
+            }}
             disable={currency?.symbol === swapState?.gasToken?.symbol}
             key={currencyId(currency)}
             data-testid={`common-base-${currency.symbol}`}

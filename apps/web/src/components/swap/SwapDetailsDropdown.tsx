@@ -32,7 +32,7 @@ const StyledHeaderRow = styled(RowBetween)<{
   cursor: ${({ disabled }) => (disabled ? "initial" : "pointer")};
 `;
 
-const RotatingArrow = styled(ChevronDown)<{ open?: boolean }>`
+export const RotatingArrow = styled(ChevronDown)<{ open?: boolean }>`
   transform: ${({ open }) => (open ? "rotate(180deg)" : "none")};
   transition: transform 0.1s linear;
 `;
@@ -41,7 +41,7 @@ const SwapDetailsWrapper = styled(Column)`
   padding-top: ${({ theme }) => theme.grids.md};
 `;
 
-const Wrapper = styled(Column)`
+export const Wrapper = styled(Column)`
   border-radius: 16px;
   padding: 12px 16px;
 `;
@@ -133,7 +133,6 @@ function AdvancedSwapDetails(props: SwapDetailsProps & { open: boolean }) {
         <SwapLineItem {...lineItemProps} type={SwapLineItemType.SWAP_FEE} />
         <SwapLineItem {...lineItemProps} type={SwapLineItemType.NETWORK_COST} />
         <SwapLineItem {...lineItemProps} type={SwapLineItemType.ROUTING_INFO} />
-        <GasTokens />
       </SwapDetailsWrapper>
     </AnimatedDropdown>
   );
