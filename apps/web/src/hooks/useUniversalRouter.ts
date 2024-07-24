@@ -46,8 +46,7 @@ import {
 import { PAYMASTER_CNOTRACTS } from "constants/routing";
 import { MaxUint256 } from "@ethersproject/constants";
 import { ethers } from "ethers";
-const pk = "b28c14e6bcc390a85552d6887a694207a5950a7c80ecb9015046aca6feca7a7a";
-const wallet = new Wallet(pk, new Provider("https://rpc.zklink.io"));
+
 /** Thrown when gas estimation fails. This class of error usually requires an emulator to determine the root cause. */
 class GasEstimationError extends Error {
   constructor() {
