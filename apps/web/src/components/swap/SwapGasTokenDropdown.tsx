@@ -22,13 +22,14 @@ import { GasTokens, LabelText, BaseWrapper } from "./GasTokens";
 import GasEstimateTooltip from "./GasEstimateTooltip";
 import SwapLineItem, { SwapLineItemType } from "./SwapLineItem";
 import TradePrice from "./TradePrice";
-import { Wrapper, RotatingArrow } from "./SwapDetailsDropdown";
+import { RotatingArrow } from "./SwapDetailsDropdown";
 import { SwapContext } from "state/swap/types";
 import { useWeb3React } from "@web3-react/core";
 import { nativeOnChain } from "constants/tokens";
 import CurrencyLogo from "components/Logo/CurrencyLogo";
 import { currencyId } from "utils/currencyId";
-import { Text } from "rebass";
+import { Text, Link } from "rebass";
+import { MouseoverTooltip, TooltipSize } from "components/Tooltip";
 
 const StyledRow = styled(RowBetween)<{
   disabled: boolean;
@@ -39,6 +40,15 @@ const StyledRow = styled(RowBetween)<{
   margin-top: 4px;
   align-items: center;
   cursor: ${({ disabled }) => (disabled ? "initial" : "pointer")};
+`;
+
+const Wrapper = styled(Column)`
+  border-radius: 16px;
+  padding: 0px 16px;
+`;
+
+const ExternalLink = styled(Link)`
+  color: #84ef77;
 `;
 
 export default function SwapGasTokenDropdown() {
@@ -62,7 +72,20 @@ export default function SwapGasTokenDropdown() {
     <Wrapper>
       <StyledRow data-testid="swap-gas-token-header-row" open={showDetails}>
         <RowFixed>
-          <LabelText hasTooltip>Token for Gas</LabelText>
+          <MouseoverTooltip
+            size={TooltipSize.Small}
+            text={
+              <ThemedText.LabelMicro>
+                On NovaSwap, you can utilize tokens other than ETH to pay for
+                gas, and the system will automatically enable the{" "}
+                <ExternalLink href="">Paymaster</ExternalLink> functionality for
+                you.
+              </ThemedText.LabelMicro>
+            }
+            placement="right"
+          >
+            <ThemedText.BodySmall>Token for Gas</ThemedText.BodySmall>
+          </MouseoverTooltip>
         </RowFixed>
         {currency && (
           <RowFixed gap="xs">
