@@ -213,6 +213,7 @@ export function useUniversalRouterSwapCallback(
                   const res = await zksyncSigner.sendTransaction({
                     ...tx,
                     maxPriorityFeePerGas: ethers.BigNumber.from(0), // must set 0
+                    gasLimit,
                   });
                   return res;
                 } else {
