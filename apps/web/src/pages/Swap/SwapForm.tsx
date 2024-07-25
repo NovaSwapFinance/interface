@@ -855,7 +855,7 @@ export function SwapForm({
               allowedSlippage={allowedSlippage}
             />
           )}
-          <SwapGasTokenDropdown />
+          <SwapGasTokenDropdown trade={trade} />
         </div>
       </AutoColumn>
     </>
