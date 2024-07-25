@@ -36,8 +36,7 @@ const StyledRow = styled(RowBetween)<{
   open: boolean;
 }>`
   padding: 0;
-  height: 36px;
-  margin-top: 4px;
+  height: 28px;
   align-items: center;
   cursor: ${({ disabled }) => (disabled ? "initial" : "pointer")};
 `;
@@ -47,11 +46,24 @@ const Wrapper = styled(Column)`
   padding: 0px 16px;
 `;
 
+const CurrencyWrapper = styled(BaseWrapper)`
+  padding-right: 0;
+  border: none;
+  &:hover {
+    background-color: transparent;
+  }
+`;
+
 const ExternalLink = styled(Link)`
   color: #84ef77;
 `;
 
-export default function SwapGasTokenDropdown() {
+interface IProps {
+  trade?: InterfaceTrade;
+}
+
+export default function SwapGasTokenDropdown(props: IProps) {
+  const { trade } = props;
   const { chainId } = useWeb3React();
   const theme = useTheme();
   const [showDetails, setShowDetails] = useState(false);
@@ -70,7 +82,11 @@ export default function SwapGasTokenDropdown() {
 
   return (
     <Wrapper>
-      <StyledRow data-testid="swap-gas-token-header-row" open={showDetails}>
+      <StyledRow
+        data-testid="swap-gas-token-header-row"
+        open={showDetails}
+        style={{ marginTop: trade ? 0 : "6px" }}
+      >
         <RowFixed>
           <MouseoverTooltip
             size={TooltipSize.Small}
@@ -90,17 +106,24 @@ export default function SwapGasTokenDropdown() {
         {currency && (
           <RowFixed gap="xs">
             {!showDetails && (
-              <BaseWrapper
+              <CurrencyWrapper
                 tabIndex={0}
                 key={currencyId(currency)}
                 onClick={() => setShowDetails(!showDetails)}
                 data-testid={`common-base-${currency.symbol}`}
               >
-                <CurrencyLogo currency={currency} style={{ marginRight: 8 }} />
-                <Text fontWeight={535} fontSize={16} lineHeight="16px">
+                <CurrencyLogo
+                  currency={currency}
+                  style={{
+                    marginRight: 8,
+                    height: 18,
+                    width: 18,
+                  }}
+                />
+                <Text fontWeight={535} fontSize={14} lineHeight="14px">
                   {currency.symbol}
                 </Text>
-              </BaseWrapper>
+              </CurrencyWrapper>
             )}
             <RotatingArrow
               stroke={theme.neutral3}

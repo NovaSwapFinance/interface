@@ -171,7 +171,7 @@ export function useUniversalRouterSwapCallback(
                   {
                     type: "ApprovalBased",
                     token: swapState.gasToken.address,
-                    minimalAllowance: MaxUint256, // TODO
+                    minimalAllowance: MaxUint256,
                     // empty bytes as testnet paymaster does not use innerInputs
                     innerInput: new Uint8Array(),
                   },
@@ -213,6 +213,7 @@ export function useUniversalRouterSwapCallback(
                   const res = await zksyncSigner.sendTransaction({
                     ...tx,
                     maxPriorityFeePerGas: ethers.BigNumber.from(0), // must set 0
+                    gasLimit,
                   });
                   return res;
                 } else {

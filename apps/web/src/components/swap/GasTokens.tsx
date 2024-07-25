@@ -13,7 +13,7 @@ import { nativeOnChain } from "constants/tokens";
 
 const Container = styled(AutoRow)`
   border: 1px solid ${({ theme }) => theme.surface3};
-  padding: 5px;
+  padding: 10px;
   border-radius: 15px;
   margin-top: 5px;
   gap: 6px;
