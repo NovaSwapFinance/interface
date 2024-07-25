@@ -76,6 +76,7 @@ import { didUserReject } from "utils/swapErrorToUserReadableMessage";
 import { CurrencyState } from "state/swap/types";
 import { getIsReviewableQuote } from ".";
 import { OutputTaxTooltipBody } from "./TaxTooltipBody";
+import useCurrencyBalance from "lib/hooks/useCurrencyBalance";
 
 const SWAP_FORM_CURRENCY_SEARCH_FILTERS = {
   showCommonBases: true,
@@ -91,11 +92,17 @@ export function SwapForm({
   onCurrencyChange,
 }: SwapFormProps) {
   const connectionReady = useConnectionReady();
-  const { account, chainId: connectedChainId, connector } = useWeb3React();
+  const {
+    account,
+    chainId: connectedChainId,
+    connector,
+    provider,
+  } = useWeb3React();
   const trace = useTrace();
 
   const { chainId, prefilledState, currencyState } = useSwapAndLimitContext();
-  const { swapState, setSwapState, derivedSwapInfo } = useSwapContext();
+  const { swapState, setSwapState, derivedSwapInfo, gasAsFromToken } =
+    useSwapContext();
   const { typedValue, independentField } = swapState;
   console.log("derivedSwapInfo++++++++", derivedSwapInfo, chainId);
   // token warning stuff
@@ -118,6 +125,8 @@ export function SwapForm({
   const [loadedOutputCurrency, setLoadedOutputCurrency] = useState(
     prefilledOutputCurrency,
   );
+
+  const gasTokenBalance = useCurrencyBalance(account, swapState.gasToken);
 
   useEffect(() => {
     setLoadedInputCurrency(prefilledInputCurrency);
@@ -450,6 +459,45 @@ export function SwapForm({
   }, []);
 
   const handleSwap = useCallback(() => {
+    console.log(
+      ">==========gasAsFromToken: ",
+      gasAsFromToken,
+      gasTokenBalance,
+      trade?.inputAmount,
+    );
+
+    if (
+      gasAsFromToken &&
+      gasAsFromToken.token &&
+      gasTokenBalance &&
+      trade?.inputAmount
+    ) {
+      const gasAsFromTokenAmount = CurrencyAmount.fromRawAmount(
+        gasAsFromToken.token,
+        JSBI.BigInt(
+          10 ** gasAsFromToken.token.decimals * gasAsFromToken.amountDecimals,
+        ),
+      );
+      if (
+        gasAsFromTokenAmount
+          .add(
+            trade.inputAmount.currency.symbol === gasAsFromToken.token.symbol
+              ? trade?.inputAmount
+              : new CurrencyAmount(gasAsFromToken.token, JSBI.BigInt(0)),
+          )
+          .greaterThan(gasTokenBalance)
+      ) {
+        alert("not enough gas token balance");
+        setSwapFormState({
+          tradeToConfirm: trade,
+          swapError: undefined,
+          showConfirm: false,
+          swapResult: undefined,
+        });
+        return;
+      }
+    }
+
     if (!swapCallback) {
       return;
     }
@@ -474,7 +522,13 @@ export function SwapForm({
           swapResult: undefined,
         }));
       });
-  }, [swapCallback, preTaxStablecoinPriceImpact]);
+  }, [
+    swapCallback,
+    preTaxStablecoinPriceImpact,
+    gasAsFromToken,
+    gasTokenBalance,
+    trade,
+  ]);
 
   const handleOnWrap = useCallback(async () => {
     if (!onWrap) return;

@@ -11,6 +11,8 @@ import {
   SwapContext,
   SwapState,
   initialSwapState,
+  initialGasAsFromToken,
+  SwapGasAsFromToken,
 } from "./types";
 
 export function SwapAndLimitContextProvider({
@@ -108,6 +110,9 @@ export function SwapContextProvider({
   const [swapState, setSwapState] = useState<SwapState>({
     ...initialSwapState,
   });
+  const [gasAsFromToken, setGasAsFromToken] = useState<SwapGasAsFromToken>({
+    ...initialGasAsFromToken,
+  });
   const derivedSwapInfo = useDerivedSwapInfo(swapState);
 
   const { chainId: connectedChainId } = useWeb3React();
@@ -122,7 +127,15 @@ export function SwapContextProvider({
   }, [connectedChainId, previousConnectedChainId]);
 
   return (
-    <SwapContext.Provider value={{ swapState, setSwapState, derivedSwapInfo }}>
+    <SwapContext.Provider
+      value={{
+        swapState,
+        setSwapState,
+        derivedSwapInfo,
+        gasAsFromToken,
+        setGasAsFromToken,
+      }}
+    >
       {children}
     </SwapContext.Provider>
   );

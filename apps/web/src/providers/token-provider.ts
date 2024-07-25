@@ -692,6 +692,11 @@ export const USDC_NOVA_MAINNET = new Token(
   "USDC Token",
 );
 
+export const USDC_NOVA = {
+  [ChainId.NOVA_MAINNET]: USDC_NOVA_MAINNET,
+  [ChainId.NOVA_SEPOLIA]: USDC_NOVA_SEPOLIA,
+};
+
 export class TokenProvider implements ITokenProvider {
   constructor(
     private chainId: ChainId,

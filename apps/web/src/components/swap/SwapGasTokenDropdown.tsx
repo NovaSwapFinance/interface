@@ -11,7 +11,7 @@ import { LoadingOpacityContainer } from "components/Loader/styled";
 import { RowBetween, RowFixed } from "components/Row";
 import { Trans } from "i18n";
 import { formatCommonPropertiesForTrade } from "lib/utils/analytics";
-import { useState, useEffect, useContext, useMemo } from "react";
+import { useState, useEffect, useContext, useMemo, useCallback } from "react";
 import { ChevronDown } from "react-feather";
 import { InterfaceTrade } from "state/routing/types";
 import { isSubmittableTrade } from "state/routing/utils";
@@ -30,6 +30,17 @@ import CurrencyLogo from "components/Logo/CurrencyLogo";
 import { currencyId } from "utils/currencyId";
 import { Text, Link } from "rebass";
 import { MouseoverTooltip, TooltipSize } from "components/Tooltip";
+import { Protocol } from "@novaswap/router-sdk";
+import { BigNumber, ethers } from "ethers";
+import { USDC_NOVA, USDC_NOVA_MAINNET } from "providers/token-provider";
+import { TradeType } from "@novaswap/sdk-core";
+
+export function fromReadableAmount(
+  amount: number,
+  decimals: number,
+): BigNumber {
+  return ethers.utils.parseUnits(amount.toString(), decimals);
+}
 
 const StyledRow = styled(RowBetween)<{
   disabled: boolean;
@@ -68,13 +79,66 @@ export default function SwapGasTokenDropdown(props: IProps) {
   const theme = useTheme();
   const [showDetails, setShowDetails] = useState(false);
   const trace = useTrace();
-  const { swapState, setSwapState } = useContext(SwapContext);
+  const { swapState, setSwapState, setGasAsFromToken } =
+    useContext(SwapContext);
+
+  console.log("trade: ", trade);
+
+  const fetchSwapFromTokenAmountAsGasToken = useCallback(async () => {
+    if (
+      swapState.gasToken?.symbol === "USDC" ||
+      swapState.gasToken?.symbol === "USDT"
+    ) {
+      setGasAsFromToken({
+        token: swapState.gasToken,
+        amountDecimals: trade.gasUseEstimateUSD,
+      });
+      return;
+    }
+    const CLIENT_PARAMS = {
+      protocols: [Protocol.V3, Protocol.MIXED],
+    };
+    const tokenFrom = trade.routes[0].input;
+    const tokenIn = USDC_NOVA[chainId] || USDC_NOVA_MAINNET;
+    const tokenOut = swapState.gasToken;
+    const args = {
+      tokenInAddress: tokenIn.address,
+      tokenInChainId: tokenIn.chainId,
+      tokenInDecimals: tokenIn.decimals,
+      tokenInSymbol: tokenIn.symbol,
+      tokenOutAddress: tokenOut.address,
+      tokenOutChainId: tokenOut?.chainId,
+      tokenOutDecimals: tokenOut?.decimals,
+      tokenOutSymbol: tokenOut?.symbol,
+      amount: fromReadableAmount(trade.gasUseEstimateUSD, tokenIn.decimals),
+      tradeType: TradeType.EXACT_INPUT,
+    };
+    const { getClientSideQuote, getRouter } = await import(
+      "lib/hooks/routing/clientSideSmartOrderRouter"
+    );
+    const router = await getRouter(args.tokenInChainId);
+
+    const quoteResult = await getClientSideQuote(args, router, CLIENT_PARAMS);
+    console.log("fetchSwapFromTokenAmountAsGasToken====>", quoteResult);
+    const amountOut = quoteResult.data?.quote.quoteDecimals;
+
+    setGasAsFromToken({
+      token: swapState.gasToken,
+      amountDecimals: amountOut,
+    });
+  }, [trade, swapState]);
 
   useEffect(() => {
     if (swapState && !swapState.gasToken && chainId) {
       setSwapState({ ...swapState, gasToken: nativeOnChain(chainId) });
+      return;
+    } else if (swapState && swapState.gasToken && trade) {
+      const tokenIn = trade.routes[0].input;
+      if (swapState.gasToken.symbol !== "ETH") {
+        fetchSwapFromTokenAmountAsGasToken();
+      }
     }
-  }, [swapState, chainId]);
+  }, [swapState, chainId, trade]);
 
   const currency = useMemo(() => {
     return swapState?.gasToken;
