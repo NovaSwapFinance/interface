@@ -30,10 +30,10 @@ import { FeatureFlags } from "uniswap/src/features/statsig/flags";
 import { useFeatureFlag } from "uniswap/src/features/statsig/hooks";
 import { isSameAddress } from "utilities/src/addresses";
 
-import { useCurrencyBalance } from '../../state/connection/hooks'
-import { useNovaBaseTokens }  from 'hooks/useNovaBaseTokens'
+import { useCurrencyBalance } from "../../state/connection/hooks";
+import { useNovaBaseTokens } from "hooks/useNovaBaseTokens";
 // import { NumberType, useFormatter } from 'utils/formatNumbers'
-import {useSearchNovaTokensWebQuery} from 'hooks/useSearchNovaTokensWebQuery'
+import { useSearchNovaTokensWebQuery } from "hooks/useSearchNovaTokensWebQuery";
 
 interface CurrencySearchParams {
   searchQuery?: string;
@@ -46,7 +46,7 @@ interface CurrencySearchResults {
   searchCurrency?: Currency | null;
   allCurrencyRows: CurrencyListRow[];
   loading: boolean;
-  searchTokenAmount ?: CurrencyAmount<Currency>
+  searchTokenAmount?: CurrencyAmount<Currency>;
 }
 
 const currencyListRowMapper = (currency: Currency) =>
@@ -68,7 +68,7 @@ export function useCurrencySearchResults({
   selectedCurrency,
   otherSelectedCurrency,
 }: CurrencySearchParams): CurrencySearchResults {
-  const { chainId,account} = useWeb3React();
+  const { chainId, account } = useWeb3React();
 
   // const gqlTokenListsEnabled = useFeatureFlag(FeatureFlags.GqlTokenLists);
   const gqlTokenListsEnabled = true;
@@ -76,7 +76,8 @@ export function useCurrencySearchResults({
   /**
    * GraphQL queries for tokens and search results
    */
-  const { data: searchResults, loading: searchResultsLoading } = useSearchNovaTokensWebQuery(searchQuery ?? "");
+  const { data: searchResults, loading: searchResultsLoading } =
+    useSearchNovaTokensWebQuery(searchQuery ?? "");
   // const { data: popularTokens, loading: popularTokensLoading } =
   //   useTopTokensQuery({
   //     fetchPolicy: "cache-first",
@@ -89,20 +90,26 @@ export function useCurrencySearchResults({
   //     skip: !gqlTokenListsEnabled,
   //   });
 
-
-  const { data: popularTokens, loading: popularTokensLoading } = useNovaBaseTokens()
-  
+  const { data: popularTokens, loading: popularTokensLoading } =
+    useNovaBaseTokens();
 
   const sortedPopularTokens = useMemo(() => {
     if (!popularTokens?.topTokens) {
       return undefined;
     }
-    return [...popularTokens.topTokens].sort((a, b) => {
+    const sorted = [...popularTokens.topTokens].sort((a, b) => {
       if (a?.project?.name && b?.project?.name) {
         return a.project.name.localeCompare(b.project.name);
       }
       return 0;
     });
+    const index = sorted.findIndex((item) => item.symbol === "Linx");
+    if (index > -1) {
+      const linx = { ...sorted[index] };
+      sorted.splice(index, 1);
+      sorted.splice(1, 0, linx);
+    }
+    return sorted;
   }, [popularTokens?.topTokens]);
   const {
     balanceMap,
@@ -119,9 +126,10 @@ export function useCurrencySearchResults({
   const defaultAndUserAddedTokens = useDefaultActiveTokens(chainId);
   const userAddedTokens = useUserAddedTokens();
 
-
-  const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, searchToken ?? undefined)
-
+  const selectedCurrencyBalance = useCurrencyBalance(
+    account ?? undefined,
+    searchToken ?? undefined,
+  );
 
   // const { formatCurrencyAmount } = useFormatter();
 
@@ -187,7 +195,7 @@ export function useCurrencySearchResults({
         sortedTokensWithoutPortfolio: fullBaseList,
       };
     }
-   
+
     // Filter out tokens with balances so they aren't duplicated when we merge below.
     const filteredListTokens = fullBaseList.filter((token) => {
       if (token.isNative) {
@@ -322,11 +330,10 @@ export function useCurrencySearchResults({
     sortedCombinedTokens,
   ]);
 
-
   return {
     loading: searchResultsLoading || popularTokensLoading || balancesLoading,
     searchCurrency: searchToken,
     allCurrencyRows: finalCurrencyList,
-    searchTokenAmount:selectedCurrencyBalance
+    searchTokenAmount: selectedCurrencyBalance,
   };
 }
