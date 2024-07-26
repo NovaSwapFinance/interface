@@ -126,7 +126,7 @@ export function SwapForm({
     prefilledOutputCurrency,
   );
 
-  const [openGasTokenNotEnough, setOpenGasTokenNotEnough] = useState(true);
+  const [openGasTokenNotEnough, setOpenGasTokenNotEnough] = useState(false);
   const [gasTokenAsFromAmount, setGasTokenAsFromAmount] =
     useState<CurrencyAmount>();
   const gasTokenBalance = useCurrencyBalance(account, swapState.gasToken);
