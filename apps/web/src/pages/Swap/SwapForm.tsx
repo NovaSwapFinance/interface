@@ -72,6 +72,7 @@ import { maxAmountSpend } from "utils/maxAmountSpend";
 import { largerPercentValue } from "utils/percent";
 import { computeRealizedPriceImpact, warningSeverity } from "utils/prices";
 import { didUserReject } from "utils/swapErrorToUserReadableMessage";
+import { parseUnits } from "ethers/lib/utils";
 
 import { CurrencyState } from "state/swap/types";
 import { getIsReviewableQuote } from ".";
@@ -478,7 +479,10 @@ export function SwapForm({
       const gasAsFromTokenAmount = CurrencyAmount.fromRawAmount(
         gasAsFromToken.token,
         JSBI.BigInt(
-          10 ** gasAsFromToken.token.decimals * gasAsFromToken.amountDecimals,
+          parseUnits(
+            String(gasAsFromToken.amountDecimals),
+            gasAsFromToken.token.decimals,
+          ),
         ),
       );
       setGasTokenAsFromAmount(gasAsFromTokenAmount);
