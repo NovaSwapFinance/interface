@@ -77,7 +77,7 @@ import { CurrencyState } from "state/swap/types";
 import { getIsReviewableQuote } from ".";
 import { OutputTaxTooltipBody } from "./TaxTooltipBody";
 import useCurrencyBalance from "lib/hooks/useCurrencyBalance";
-
+import GasTokenNotEnoughModal from "components/swap/GasTokenNotEnoughModal";
 const SWAP_FORM_CURRENCY_SEARCH_FILTERS = {
   showCommonBases: true,
 };
@@ -126,6 +126,9 @@ export function SwapForm({
     prefilledOutputCurrency,
   );
 
+  const [openGasTokenNotEnough, setOpenGasTokenNotEnough] = useState(true);
+  const [gasTokenAsFromAmount, setGasTokenAsFromAmount] =
+    useState<CurrencyAmount>();
   const gasTokenBalance = useCurrencyBalance(account, swapState.gasToken);
 
   useEffect(() => {
@@ -478,6 +481,7 @@ export function SwapForm({
           10 ** gasAsFromToken.token.decimals * gasAsFromToken.amountDecimals,
         ),
       );
+      setGasTokenAsFromAmount(gasAsFromTokenAmount);
       if (
         gasAsFromTokenAmount
           .add(
@@ -487,13 +491,13 @@ export function SwapForm({
           )
           .greaterThan(gasTokenBalance)
       ) {
-        alert("not enough gas token balance");
         setSwapFormState({
           tradeToConfirm: trade,
           swapError: undefined,
           showConfirm: false,
           swapResult: undefined,
         });
+        setOpenGasTokenNotEnough(true);
         return;
       }
     }
@@ -663,6 +667,12 @@ export function SwapForm({
 
   return (
     <>
+      <GasTokenNotEnoughModal
+        isOpen={openGasTokenNotEnough}
+        onCancel={() => setOpenGasTokenNotEnough(false)}
+        gasTokenAmount={gasTokenAsFromAmount}
+        trade={trade}
+      />
       <TokenSafetyModal
         isOpen={urlTokensNotInDefault.length > 0 && !dismissTokenWarning}
         tokenAddress={urlTokensNotInDefault[0]?.address}
