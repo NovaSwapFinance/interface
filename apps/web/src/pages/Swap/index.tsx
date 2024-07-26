@@ -29,34 +29,7 @@ import { RowBetween } from "components/Row";
 import styled from "styled-components";
 import { Trans } from "i18n";
 
-const BannerContainer = styled(RowBetween)`
-  width: 100%;
-  height: 45px;
-  padding-left: 18px;
-  padding-right: 24px;
-  border-radius: 8px;
-  margin-bottom: 40px;
-  cursor: pointer;
-  background: url(/images/zklink-banner.png);
-  > p {
-    background: linear-gradient(90deg, #fff 0%, #84ef77 100%);
-    background-clip: text;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    font-family: Satoshi;
-    font-size: 16px;
-    font-weight: 700;
-  }
-`;
-
-const Banner = () => (
-  <BannerContainer>
-    <p onClick={() => window.open("https://app.zklink.io", "_blank")}>
-      <Trans>Join zkLink Nova Aggregation Parade to Earn</Trans>
-    </p>
-    <img src="/images/icon-banner-link.svg" alt="" />
-  </BannerContainer>
-);
+import Banner from "./Banner";
 
 export function getIsReviewableQuote(
   trade: InterfaceTrade | undefined,
