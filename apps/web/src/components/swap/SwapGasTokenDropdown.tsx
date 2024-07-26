@@ -73,6 +73,12 @@ interface IProps {
   trade?: InterfaceTrade;
 }
 
+/**
+ * TODO get estiamte gas with paymaster from api or contract
+ * set it to average $0.2 for simple calculation.
+ */
+export const EstimatePaymasterGasUsd = "0.2"; //
+
 export default function SwapGasTokenDropdown(props: IProps) {
   const { trade } = props;
   const { chainId } = useWeb3React();
@@ -91,7 +97,7 @@ export default function SwapGasTokenDropdown(props: IProps) {
     ) {
       setGasAsFromToken({
         token: swapState.gasToken,
-        amountDecimals: trade.gasUseEstimateUSD,
+        amountDecimals: EstimatePaymasterGasUsd,
       });
       return;
     }
@@ -110,7 +116,7 @@ export default function SwapGasTokenDropdown(props: IProps) {
       tokenOutChainId: tokenOut?.chainId,
       tokenOutDecimals: tokenOut?.decimals,
       tokenOutSymbol: tokenOut?.symbol,
-      amount: fromReadableAmount(trade.gasUseEstimateUSD, tokenIn.decimals),
+      amount: fromReadableAmount(EstimatePaymasterGasUsd, tokenIn.decimals),
       tradeType: TradeType.EXACT_INPUT,
     };
     const { getClientSideQuote, getRouter } = await import(
