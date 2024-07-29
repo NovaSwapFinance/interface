@@ -410,11 +410,18 @@ export function SwapForm({
 
   const maximumAmountIn = useMaxAmountIn(trade, allowedSlippage);
   // console.log(' UNIVERSAL_ROUTER_ADDRESS(chainId)',chainId, UNIVERSAL_ROUTER_ADDRESS(chainId!))
+  // const allowance = usePermit2Allowance(
+  //   maximumAmountIn ??
+  //     (parsedAmounts[Field.INPUT]?.currency.isToken
+  //       ? (parsedAmounts[Field.INPUT] as CurrencyAmount<Token>)
+  //       : undefined),
+  //   isSupportedChain(chainId) ? UNIVERSAL_ROUTER_ADDRESS(chainId) : undefined,
+  //   trade?.fillType,
+  // );
+
+  // TODO: for test
   const allowance = usePermit2Allowance(
-    maximumAmountIn ??
-      (parsedAmounts[Field.INPUT]?.currency.isToken
-        ? (parsedAmounts[Field.INPUT] as CurrencyAmount<Token>)
-        : undefined),
+    (parsedAmounts[Field.INPUT] as CurrencyAmount<Token>),
     isSupportedChain(chainId) ? UNIVERSAL_ROUTER_ADDRESS(chainId) : undefined,
     trade?.fillType,
   );

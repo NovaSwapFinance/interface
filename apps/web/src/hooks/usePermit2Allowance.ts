@@ -153,7 +153,7 @@ export default function usePermit2Allowance(
           needsPermitSignature: shouldRequestSignature,
           allowedAmount: tokenAllowance,
         }
-      } else if (!isApproved) {
+      } else if (isApproved) {
         return {
           token,
           state: AllowanceState.REQUIRED,
