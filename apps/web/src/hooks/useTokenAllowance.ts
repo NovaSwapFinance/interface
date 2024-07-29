@@ -26,6 +26,8 @@ import { calculateGasMargin } from "utils/calculateGasMargin";
 import { useWeb3React } from "@web3-react/core";
 import ERC20_ABI from 'uniswap/src/abis/erc20.json'
 import { ethers } from "ethers";
+import toast from 'react-hot-toast';
+
 const MAX_ALLOWANCE = MaxUint256.toString()
 
 export function useTokenAllowance(
@@ -109,6 +111,7 @@ export function useUpdateTokenAllowance(
                   // empty bytes as testnet paymaster does not use innerInput
                   innerInput: new Uint8Array(),
                 });
+
                 const zksyncProvider = new Web3Provider(contract.provider.provider);
                 const zksyncSigner = ZksyncSigner.from({
                   ...contract.signer,
@@ -122,7 +125,7 @@ export function useUpdateTokenAllowance(
                   },
                   maxFeePerGas: fee.maxFeePerGas.toBigInt(),
                   maxPriorityFeePerGas: ethers.BigNumber.from(0), // must set 0
-                  gasLimit: fee.gasLimit.mul(150).div(100),
+                  gasLimit: fee.gasLimit.mul(200).div(100),
                 });
                 return res;
               }
@@ -158,6 +161,9 @@ export function useUpdateTokenAllowance(
             throw error
           } else {
             const symbol = amount?.currency.symbol ?? 'Token'
+            if(error.data && error.data.message && error.data.message.includes('transfer amount exceeds balance')) {
+              toast(`Not enough ${symbol} for gas fee.`)
+            }
             throw new Error(`${symbol} token allowance failed: ${error instanceof Error ? error.message : error}`)
           }
         }

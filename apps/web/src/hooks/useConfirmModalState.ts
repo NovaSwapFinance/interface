@@ -65,7 +65,7 @@ export function useConfirmModalState({
     ) {
       steps.push(ConfirmModalState.RESETTING_TOKEN_ALLOWANCE)
     }
-    steps.push(ConfirmModalState.APPROVING_TOKEN)
+
     if (allowance.state === AllowanceState.REQUIRED && allowance.needsSetupApproval) {
       steps.push(ConfirmModalState.APPROVING_TOKEN)
     }
@@ -128,7 +128,7 @@ export function useConfirmModalState({
           break
         case ConfirmModalState.APPROVING_TOKEN:
           setConfirmModalState(ConfirmModalState.APPROVING_TOKEN)
-          // invariant(allowance.state === AllowanceState.REQUIRED, 'Allowance should be required')
+          invariant(allowance.state === AllowanceState.REQUIRED, 'Allowance should be required')
           allowance.approve().catch((e) => catchUserReject(e, PendingModalError.TOKEN_APPROVAL_ERROR))
           break
         case ConfirmModalState.PERMITTING:
