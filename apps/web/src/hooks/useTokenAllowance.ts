@@ -4,11 +4,29 @@ import { CurrencyAmount, MaxUint256, Token } from "@novaswap/sdk-core";
 import { sendAnalyticsEvent, useTrace as useAnalyticsTrace } from 'analytics'
 import { useTokenContract } from 'hooks/useContract'
 import { useSingleCallResult } from 'lib/hooks/multicall'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState, useContext } from 'react'
 import { ApproveTransactionInfo, TransactionType } from 'state/transactions/types'
 import { trace } from 'tracing/trace'
 import { UserRejectedRequestError } from 'utils/errors'
 import { didUserReject } from 'utils/swapErrorToUserReadableMessage'
+import { SwapContext } from "state/swap/types";
+import { APP_RPC_URLS } from "constants/networks";
+import { encodeFunctionData } from 'viem';
+import { zkSyncProvider } from 'novaProvider/zksync-provider';
+import {
+  utils,
+  Signer as ZksyncSigner,
+  Provider,
+  Wallet,
+  Web3Provider,
+  Contract,
+} from "zksync-web3";
+import { PAYMASTER_CNOTRACTS } from "constants/routing";
+import { calculateGasMargin } from "utils/calculateGasMargin";
+import { useWeb3React } from "@web3-react/core";
+import ERC20_ABI from 'uniswap/src/abis/erc20.json'
+import { ethers } from "ethers";
+import toast from 'react-hot-toast';
 
 const MAX_ALLOWANCE = MaxUint256.toString()
 
@@ -47,6 +65,17 @@ export function useUpdateTokenAllowance(
 ): () => Promise<{ response: ContractTransaction; info: ApproveTransactionInfo }> {
   const contract = useTokenContract(amount?.currency.address)
   const analyticsTrace = useAnalyticsTrace()
+  const { swapState, setSwapState } = useContext(SwapContext);
+  const { account, chainId } = useWeb3React()
+  const novaRpc: string | undefined = useMemo(() => {
+    if (chainId) {
+      if (Object.keys(APP_RPC_URLS).includes(chainId?.toString())) {
+        return APP_RPC_URLS[chainId?.toString()][0];
+      }
+      return undefined;
+    }
+    return undefined;
+  }, [chainId]);
 
   return useCallback(
     () =>
@@ -56,9 +85,50 @@ export function useUpdateTokenAllowance(
           if (!contract) throw new Error('missing contract')
           if (!spender) throw new Error('missing spender')
 
+          const usePaymster =  swapState.gasToken?.symbol !== "ETH";
+
+
           const allowance = amount.equalTo(0) ? '0' : MAX_ALLOWANCE
           const response = await trace.child({ name: 'Approve', op: 'wallet.approve' }, async (walletTrace) => {
             try {
+              if(usePaymster) {
+                const txData = encodeFunctionData({
+                  abi: ERC20_ABI,
+                  functionName: 'approve',
+                  args: [spender, ethers.BigNumber.from(MAX_ALLOWANCE)]
+                })
+                const tx = {
+                  from: account as `0x${string}`,
+                  to: contract.address as `0x${string}`,
+                  data: txData,
+                }
+                const fee = await zkSyncProvider.attachEstimateFee(novaRpc)(tx)
+                const paymasterContract = PAYMASTER_CNOTRACTS[chainId];
+                const paymasterParams = utils.getPaymasterParams(paymasterContract, {
+                  type: "ApprovalBased",
+                  token: swapState.gasToken.address,
+                  minimalAllowance:  ethers.BigNumber.from(MAX_ALLOWANCE),
+                  // empty bytes as testnet paymaster does not use innerInput
+                  innerInput: new Uint8Array(),
+                });
+
+                const zksyncProvider = new Web3Provider(contract.provider.provider);
+                const zksyncSigner = ZksyncSigner.from({
+                  ...contract.signer,
+                  provider: zksyncProvider,
+                });
+                const res = await zksyncSigner.sendTransaction({
+                  ...tx,
+                  customData: {
+                    gasPerPubdata: utils.DEFAULT_GAS_PER_PUBDATA_LIMIT,
+                    paymasterParams,
+                  },
+                  maxFeePerGas: fee.maxFeePerGas.toBigInt(),
+                  maxPriorityFeePerGas: ethers.BigNumber.from(0), // must set 0
+                  gasLimit: fee.gasLimit.mul(200).div(100),
+                });
+                return res;
+              }
               return await contract.approve(spender, allowance)
             } catch (error) {
               if (didUserReject(error)) {
@@ -91,11 +161,14 @@ export function useUpdateTokenAllowance(
             throw error
           } else {
             const symbol = amount?.currency.symbol ?? 'Token'
+            if(error.data && error.data.message && error.data.message.includes('transfer amount exceeds balance')) {
+              toast(`Not enough ${symbol} for gas fee.`)
+            }
             throw new Error(`${symbol} token allowance failed: ${error instanceof Error ? error.message : error}`)
           }
         }
       }),
-    [amount, contract, spender, analyticsTrace]
+    [amount, contract, spender, analyticsTrace, swapState]
   )
 }
 
