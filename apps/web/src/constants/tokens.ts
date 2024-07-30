@@ -170,7 +170,7 @@ export const ZKL = new Token(
 );
 export const ZKT = new Token(
   ChainId.NOVA_MAINNET,
-  "0x4ddeEC23b1fF671869eB6f42ba9DeB9d9E2B9C03",
+  "0xf2847d44b5d3edd466f550dcf473ca46e9af4c3f",
   18,
   "ZKT",
   "ZKT",
