@@ -47,7 +47,7 @@ export function GasTokens({ onSelect }: { onSelect: () => void }) {
   const { swapState, setSwapState } = useContext(SwapContext);
 
   useEffect(() => {
-    if (swapState && !swapState.gasToken) {
+    if (chainId && swapState && !swapState.gasToken) {
       setSwapState({ ...swapState, gasToken: nativeOnChain(chainId) });
     }
   }, [swapState, chainId]);
