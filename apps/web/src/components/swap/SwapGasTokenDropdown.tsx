@@ -85,8 +85,12 @@ export default function SwapGasTokenDropdown(props: IProps) {
   const theme = useTheme();
   const [showDetails, setShowDetails] = useState(false);
   const trace = useTrace();
-  const { swapState, setSwapState, setGasAsFromToken } =
-    useContext(SwapContext);
+  const {
+    swapState,
+    setSwapState,
+    setGasAsFromToken,
+    setQuotingGasAsFromToken,
+  } = useContext(SwapContext);
 
   console.log("trade: ", trade);
 
@@ -101,6 +105,7 @@ export default function SwapGasTokenDropdown(props: IProps) {
       });
       return;
     }
+    setQuotingGasAsFromToken(true);
     const CLIENT_PARAMS = {
       protocols: [Protocol.V3, Protocol.MIXED],
     };
@@ -132,6 +137,7 @@ export default function SwapGasTokenDropdown(props: IProps) {
       token: swapState.gasToken,
       amountDecimals: amountOut,
     });
+    setQuotingGasAsFromToken(false);
   }, [trade, swapState]);
 
   useEffect(() => {

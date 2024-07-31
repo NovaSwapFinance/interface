@@ -197,9 +197,6 @@ export const GAS_TOKENS: ChainCurrencyList = {
   [ChainId.NOVA_MAINNET]: [
     ...NOVA_BASE_TOKEN,
     ZKL,
-    ZKT,
-    ZKT2,
-    ZKT3,
     nativeOnChain(ChainId.NOVA_MAINNET),
   ],
   [ChainId.NOVA_SEPOLIA]: [nativeOnChain(ChainId.NOVA_SEPOLIA)],

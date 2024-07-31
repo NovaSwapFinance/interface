@@ -5,5 +5,5 @@ import { BigNumber } from "@ethersproject/bignumber";
  * @param value the gas value to pad
  */
 export function calculateGasMargin(value: BigNumber): BigNumber {
-  return value.mul(1000).div(100);
+  return value.mul(120).div(100);
 }

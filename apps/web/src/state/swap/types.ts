@@ -28,6 +28,8 @@ type SwapContextType = {
   swapState: SwapState;
   derivedSwapInfo: SwapInfo;
   setSwapState: Dispatch<SetStateAction<SwapState>>;
+  quotingGasAsFromToken: boolean;
+  setQuotingGasAsFromToken: Dispatch<SetStateAction<boolean>>;
   gasAsFromToken: { token?: Currency; amountDecimals: number };
   setGasAsFromToken: Dispatch<
     SetStateAction<{ token?: Currency; amountDecimals: number }>
@@ -85,11 +87,13 @@ export const SwapContext = createContext<SwapContextType>({
   swapState: initialSwapState,
   derivedSwapInfo: EMPTY_DERIVED_SWAP_INFO,
   setSwapState: () => undefined,
+  quotingGasAsFromToken: false,
   gasAsFromToken: {
     token: undefined,
     amountDecimals: 0,
   },
   setGasAsFromToken: () => undefined,
+  setGuotingGasAsFromToken: () => undefined,
 });
 
 type SwapAndLimitContextType = {

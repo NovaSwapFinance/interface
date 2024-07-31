@@ -110,6 +110,7 @@ export function SwapContextProvider({
   const [swapState, setSwapState] = useState<SwapState>({
     ...initialSwapState,
   });
+  const [quotingGasAsFromToken, setQuotingGasAsFromToken] = useState(false);
   const [gasAsFromToken, setGasAsFromToken] = useState<SwapGasAsFromToken>({
     ...initialGasAsFromToken,
   });
@@ -134,6 +135,8 @@ export function SwapContextProvider({
         derivedSwapInfo,
         gasAsFromToken,
         setGasAsFromToken,
+        quotingGasAsFromToken,
+        setQuotingGasAsFromToken,
       }}
     >
       {children}
