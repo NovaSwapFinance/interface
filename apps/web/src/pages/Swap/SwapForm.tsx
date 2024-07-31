@@ -102,8 +102,13 @@ export function SwapForm({
   const trace = useTrace();
 
   const { chainId, prefilledState, currencyState } = useSwapAndLimitContext();
-  const { swapState, setSwapState, derivedSwapInfo, gasAsFromToken } =
-    useSwapContext();
+  const {
+    swapState,
+    setSwapState,
+    derivedSwapInfo,
+    gasAsFromToken,
+    quotingGasAsFromToken,
+  } = useSwapContext();
   const { typedValue, independentField } = swapState;
   console.log("derivedSwapInfo++++++++", derivedSwapInfo, chainId);
   // token warning stuff
@@ -471,6 +476,8 @@ export function SwapForm({
     );
 
     if (
+      swapState.gasToken &&
+      swapState.gasToken.symbol !== "ETH" &&
       gasAsFromToken &&
       gasAsFromToken.token &&
       gasTokenBalance &&
@@ -893,7 +900,8 @@ export function SwapForm({
                 id="swap-button"
                 data-testid="swap-button"
                 disabled={
-                  !getIsReviewableQuote(trade, tradeState, swapInputError)
+                  !getIsReviewableQuote(trade, tradeState, swapInputError) ||
+                  quotingGasAsFromToken
                 }
                 error={
                   !swapInputError &&
