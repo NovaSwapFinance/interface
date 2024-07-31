@@ -175,6 +175,20 @@ export const ZKT = new Token(
   "ZKT",
   "ZKT",
 );
+export const ZKT2 = new Token(
+  ChainId.NOVA_MAINNET,
+  "0x637303C5815234cF96Db48Cee7EC8b2192ebC93A",
+  18,
+  "ZKT2",
+  "ZKT2",
+);
+export const ZKT3 = new Token(
+  ChainId.NOVA_MAINNET,
+  "0x852490a8dc093b4146a9fdabca5b2b9c3ddbcc6c",
+  18,
+  "ZKT3",
+  "ZKT3",
+);
 export const USDT = new Token(
   ChainId.MAINNET,
   "0xdAC17F958D2ee523a2206206994597C13D831ec7",
