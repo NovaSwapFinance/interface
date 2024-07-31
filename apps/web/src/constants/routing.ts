@@ -206,7 +206,7 @@ export const GAS_TOKENS: ChainCurrencyList = {
 };
 
 export const PAYMASTER_CNOTRACTS: Record<[chainId: number], string> = {
-  [ChainId.NOVA_MAINNET]: "0xF2bD6CCA7a594d855f28b3d9186f2736C847682F",
+  [ChainId.NOVA_MAINNET]: "0x52296b11f296E93E802C80C3e2cd3974873d5451",
   [ChainId.NOVA_SEPOLIA]: "",
 };
 
