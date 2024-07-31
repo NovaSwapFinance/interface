@@ -46,7 +46,7 @@ import useWrapCallback, {
   WrapErrorText,
   WrapType,
 } from "hooks/useWrapCallback";
-import { Trans } from "i18n";
+import { t, Trans } from "i18n";
 import JSBI from "jsbi";
 import { formatSwapQuoteReceivedEventProperties } from "lib/utils/analytics";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
@@ -467,7 +467,7 @@ export function SwapForm({
     }));
   }, []);
 
-  const handleSwap = useCallback(() => {
+  const checkGasAsFromTokenAmount = useCallback(() => {
     console.log(
       ">==========gasAsFromToken: ",
       gasAsFromToken,
@@ -509,10 +509,13 @@ export function SwapForm({
           swapResult: undefined,
         });
         setOpenGasTokenNotEnough(true);
-        return;
+        return false;
       }
+      return true;
     }
+  }, [gasAsFromToken, gasTokenBalance, trade]);
 
+  const handleSwap = useCallback(() => {
     if (!swapCallback) {
       return;
     }
@@ -703,6 +706,7 @@ export function SwapForm({
           allowedSlippage={allowedSlippage}
           clearSwapState={clearSwapState}
           onConfirm={handleSwap}
+          onCheckGasAsFromTokenAmount={checkGasAsFromTokenAmount}
           allowance={allowance}
           swapError={swapError}
           onDismiss={handleConfirmDismiss}
