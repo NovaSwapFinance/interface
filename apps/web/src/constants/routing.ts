@@ -50,6 +50,8 @@ import {
   WRAPPED_NATIVE_CURRENCY,
   ZKL,
   ZKT,
+  ZKT2,
+  ZKT3,
   nativeOnChain,
 } from "./tokens";
 import { USDT_NOVA_MAINNET } from "providers/token-provider";
@@ -196,6 +198,8 @@ export const GAS_TOKENS: ChainCurrencyList = {
     ...NOVA_BASE_TOKEN,
     // ZKL,
     ZKT,
+    ZKT2,
+    ZKT3,
     nativeOnChain(ChainId.NOVA_MAINNET),
   ],
   [ChainId.NOVA_SEPOLIA]: [nativeOnChain(ChainId.NOVA_SEPOLIA)],
