@@ -511,8 +511,8 @@ export function SwapForm({
         setOpenGasTokenNotEnough(true);
         return false;
       }
-      return true;
     }
+    return true;
   }, [gasAsFromToken, gasTokenBalance, trade]);
 
   const handleSwap = useCallback(() => {
