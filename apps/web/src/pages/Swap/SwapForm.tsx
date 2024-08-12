@@ -927,6 +927,7 @@ export function SwapForm({
               </ButtonError>
             </TraceEvent>
           )}
+          <SwapGasTokenDropdown trade={trade} />
           {showDetailsDropdown && (
             <SwapDetailsDropdown
               trade={trade}
@@ -935,7 +936,6 @@ export function SwapForm({
               allowedSlippage={allowedSlippage}
             />
           )}
-          <SwapGasTokenDropdown trade={trade} />
         </div>
       </AutoColumn>
     </>

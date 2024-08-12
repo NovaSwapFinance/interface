@@ -55,6 +55,7 @@ const StyledRow = styled(RowBetween)<{
 const Wrapper = styled(Column)`
   border-radius: 16px;
   padding: 0px 16px;
+  padding-top: 12px;
 `;
 
 const CurrencyWrapper = styled(BaseWrapper)`
@@ -170,8 +171,13 @@ export default function SwapGasTokenDropdown(props: IProps) {
               <ThemedText.LabelMicro>
                 On NovaSwap, you can utilize tokens other than ETH to pay for
                 gas, and the system will automatically enable the{" "}
-                <ExternalLink href="">Paymaster</ExternalLink> functionality for
-                you.
+                <ExternalLink
+                  target="_blank"
+                  href="https://docs.novaswap.fi/welcome-to-novaswap/why-novaswap#paymaster"
+                >
+                  Paymaster
+                </ExternalLink>{" "}
+                functionality for you.
               </ThemedText.LabelMicro>
             }
             placement="right"
