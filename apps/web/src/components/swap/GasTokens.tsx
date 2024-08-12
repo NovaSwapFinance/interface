@@ -10,6 +10,7 @@ import { ThemedText } from "theme/components";
 import { useEffect, useContext, useMemo } from "react";
 import { SwapContext } from "state/swap/types";
 import { nativeOnChain } from "constants/tokens";
+import { getConnection, OkxWalletName } from "connection";
 
 const Container = styled(AutoRow)`
   border: 1px solid ${({ theme }) => theme.surface3};
@@ -42,20 +43,36 @@ export const LabelText = styled(ThemedText.BodySmall)<{ hasTooltip?: boolean }>`
   color: ${({ theme }) => theme.neutral2};
 `;
 export function GasTokens({ onSelect }: { onSelect: () => void }) {
-  const { chainId } = useWeb3React();
+  const { chainId, account, connector } = useWeb3React();
   const tokens = chainId ? GAS_TOKENS[chainId] ?? [] : [];
   const { swapState, setSwapState } = useContext(SwapContext);
+  const connection = getConnection(connector);
+  const connectionName = connection?.getProviderInfo().name;
 
+  const gasTokens = useMemo(() => {
+    if (account && connectionName === OkxWalletName) {
+      return tokens.filter((token) => token.symbol !== "ZKL");
+    }
+    return tokens;
+  }, [account, connectionName]);
   useEffect(() => {
     if (chainId && swapState && !swapState.gasToken) {
       setSwapState({ ...swapState, gasToken: nativeOnChain(chainId) });
+    } else if (
+      chainId &&
+      swapState &&
+      swapState.gasToken &&
+      connectionName === OkxWalletName &&
+      swapState.gasToken.symbol === "ZKL"
+    ) {
+      setSwapState({ ...swapState, gasToken: nativeOnChain(chainId) });
     }
-  }, [swapState, chainId]);
+  }, [swapState, chainId, connectionName]);
 
   return (
     <Column>
       <Container>
-        {tokens.map((currency, index) => (
+        {gasTokens.map((currency, index) => (
           <BaseWrapper
             tabIndex={0}
             onClick={() => {

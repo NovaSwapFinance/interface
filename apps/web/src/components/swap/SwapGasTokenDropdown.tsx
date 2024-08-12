@@ -101,7 +101,7 @@ export default function SwapGasTokenDropdown(props: IProps) {
     ) {
       setGasAsFromToken({
         token: swapState.gasToken,
-        amountDecimals: EstimatePaymasterGasUsd,
+        amountDecimals: Number(EstimatePaymasterGasUsd),
       });
       return;
     }
