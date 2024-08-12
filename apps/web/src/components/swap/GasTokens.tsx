@@ -11,6 +11,7 @@ import { useEffect, useContext, useMemo } from "react";
 import { SwapContext } from "state/swap/types";
 import { nativeOnChain } from "constants/tokens";
 import { getConnection, OkxWalletName } from "connection";
+import { ChainId } from "@novaswap/sdk-core";
 
 const Container = styled(AutoRow)`
   border: 1px solid ${({ theme }) => theme.surface3};
@@ -44,17 +45,20 @@ export const LabelText = styled(ThemedText.BodySmall)<{ hasTooltip?: boolean }>`
 `;
 export function GasTokens({ onSelect }: { onSelect: () => void }) {
   const { chainId, account, connector } = useWeb3React();
-  const tokens = chainId ? GAS_TOKENS[chainId] ?? [] : [];
+  console.log("chainId: ", chainId);
+
   const { swapState, setSwapState } = useContext(SwapContext);
   const connection = getConnection(connector);
   const connectionName = connection?.getProviderInfo().name;
 
   const gasTokens = useMemo(() => {
+    const tokens =
+      (chainId && GAS_TOKENS[chainId]) || GAS_TOKENS[ChainId.NOVA_MAINNET];
     if (account && connectionName === OkxWalletName) {
       return tokens.filter((token) => token.symbol !== "ZKL");
     }
     return tokens;
-  }, [account, connectionName]);
+  }, [account, connectionName, chainId]);
   useEffect(() => {
     if (chainId && swapState && !swapState.gasToken) {
       setSwapState({ ...swapState, gasToken: nativeOnChain(chainId) });
