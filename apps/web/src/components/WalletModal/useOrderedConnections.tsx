@@ -24,6 +24,15 @@ export function useEIP6963Connections() {
   }, [eip6963Injectors, eip6963Enabled])
 }
 
+export function useBybitConnections() {
+  const eip6963Injectors = useInjectedProviderDetails()
+  const bybit = eip6963Injectors.find((i) => i.info.name.includes('Bybit'))
+  if(bybit) {
+    const bybitConnection= eip6963Connection.wrap(bybit.info)
+    return bybitConnection
+  }
+}
+
 function mergeConnections(connections: Connection[], eip6963Connections: Connection[]) {
   const hasEip6963Connections = eip6963Connections.length > 0
   const displayedConnections = connections.filter((c) => c.shouldDisplay())
@@ -69,9 +78,10 @@ function getOrderedConnections(
 
 export function useOrderedConnections(excludeUniswapConnections?: boolean) {
   const { eip6963Connections, showDeprecatedMessage } = useEIP6963Connections()
+  const bybitConnection = useBybitConnections()
   const recentConnection = useAppSelector((state) => state.user.recentConnectionMeta)
   const orderedConnections = useMemo(() => {
-    const allConnections = mergeConnections(connections, eip6963Connections)
+    const allConnections = mergeConnections([...connections,bybitConnection].filter(c=>!!c), eip6963Connections)
     return getOrderedConnections(allConnections, recentConnection, excludeUniswapConnections ?? false)
   }, [eip6963Connections, excludeUniswapConnections, recentConnection])
 

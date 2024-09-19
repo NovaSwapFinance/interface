@@ -75,7 +75,7 @@ export const eip6963Connection: InjectedConnection = {
         eip6963.selectProvider(rdns); // Select the specific eip6963 provider before activating
         return false;
       },
-      shouldDisplay: () => true, // Individual eip6963 wallets should always be displayed
+      shouldDisplay: () => true, // Individual eip6963 wallets should always be displayed 
     };
   },
 };
