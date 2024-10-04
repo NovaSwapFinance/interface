@@ -1,6 +1,6 @@
-import { TransactionResponse } from '@ethersproject/abstract-provider'
-import { BigNumber } from '@ethersproject/bignumber'
-import { CustomUserProperties, SwapEventName } from '@uniswap/analytics-events'
+import { TransactionResponse } from "@ethersproject/abstract-provider";
+import { BigNumber } from "@ethersproject/bignumber";
+import { CustomUserProperties, SwapEventName } from "@uniswap/analytics-events";
 import { Percent } from "@novaswap/sdk-core";
 import {
   FlatFeeOptions,
@@ -8,31 +8,49 @@ import {
   UNIVERSAL_ROUTER_ADDRESS,
 } from "@novaswap/universal-router-sdk";
 import { FeeOptions, toHex } from "@novaswap/v3-sdk";
-import { useWeb3React } from '@web3-react/core'
-import { sendAnalyticsEvent, useTrace } from 'analytics'
-import { getConnection } from 'connection'
-import { useTotalBalancesUsdForAnalytics } from 'graphql/data/apollo/TokenBalancesProvider'
-import { useGetTransactionDeadline } from 'hooks/useTransactionDeadline'
-import { t } from 'i18n'
-import useBlockNumber from 'lib/hooks/useBlockNumber'
-import { formatCommonPropertiesForTrade, formatSwapSignedAnalyticsEventProperties } from 'lib/utils/analytics'
-import { useCallback, useMemo } from 'react'
-import { ClassicTrade, TradeFillType } from 'state/routing/types'
-import { useUserSlippageTolerance } from 'state/user/hooks'
-import { trace } from 'tracing/trace'
-import { calculateGasMargin } from 'utils/calculateGasMargin'
-import { UserRejectedRequestError, WrongChainError } from 'utils/errors'
-import isZero from 'utils/isZero'
-import { didUserReject, swapErrorToUserReadableMessage } from 'utils/swapErrorToUserReadableMessage'
-import { getWalletMeta } from 'utils/walletMeta'
-import { PermitSignature } from './usePermitAllowance'
-import {APP_RPC_URLS} from 'constants/networks'
-import { zkSyncProvider } from '../novaProvider/zksync-provider';
+import { useWeb3React } from "@web3-react/core";
+import { sendAnalyticsEvent, useTrace } from "analytics";
+import { getConnection } from "connection";
+import { useTotalBalancesUsdForAnalytics } from "graphql/data/apollo/TokenBalancesProvider";
+import { useGetTransactionDeadline } from "hooks/useTransactionDeadline";
+import { t } from "i18n";
+import useBlockNumber from "lib/hooks/useBlockNumber";
+import {
+  formatCommonPropertiesForTrade,
+  formatSwapSignedAnalyticsEventProperties,
+} from "lib/utils/analytics";
+import { useCallback, useMemo, useContext } from "react";
+import { ClassicTrade, TradeFillType } from "state/routing/types";
+import { useUserSlippageTolerance } from "state/user/hooks";
+import { trace } from "tracing/trace";
+import { calculateGasMargin } from "utils/calculateGasMargin";
+import { UserRejectedRequestError, WrongChainError } from "utils/errors";
+import isZero from "utils/isZero";
+import {
+  didUserReject,
+  swapErrorToUserReadableMessage,
+} from "utils/swapErrorToUserReadableMessage";
+import { getWalletMeta } from "utils/walletMeta";
+import { PermitSignature } from "./usePermitAllowance";
+import { APP_RPC_URLS } from "constants/networks";
+import { zkSyncProvider } from "../novaProvider/zksync-provider";
+import { SwapContext } from "state/swap/types";
+import {
+  utils,
+  Signer as ZksyncSigner,
+  Provider,
+  Wallet,
+  Web3Provider,
+  Contract,
+} from "zksync-web3";
+import { PAYMASTER_CNOTRACTS } from "constants/routing";
+import { MaxUint256 } from "@ethersproject/constants";
+import { ethers } from "ethers";
 
 /** Thrown when gas estimation fails. This class of error usually requires an emulator to determine the root cause. */
 class GasEstimationError extends Error {
   constructor() {
-    super(t`Your swap is expected to fail.`)
+    super(t`Your swap is expected to fail.`);
   }
 }
 
@@ -43,40 +61,41 @@ class GasEstimationError extends Error {
 class ModifiedSwapError extends Error {
   constructor() {
     super(
-      t`Your swap was modified through your wallet. If this was a mistake, please cancel immediately or risk losing your funds.`
-    )
+      t`Your swap was modified through your wallet. If this was a mistake, please cancel immediately or risk losing your funds.`,
+    );
   }
 }
 
 interface SwapOptions {
-  slippageTolerance: Percent
-  permit?: PermitSignature
-  feeOptions?: FeeOptions
-  flatFeeOptions?: FlatFeeOptions
+  slippageTolerance: Percent;
+  permit?: PermitSignature;
+  feeOptions?: FeeOptions;
+  flatFeeOptions?: FlatFeeOptions;
 }
 
 export function useUniversalRouterSwapCallback(
   trade: ClassicTrade | undefined,
   fiatValues: { amountIn?: number; amountOut?: number; feeUsd?: number },
-  options: SwapOptions
+  options: SwapOptions,
 ) {
-  const { account, chainId, provider, connector } = useWeb3React()
-  const analyticsContext = useTrace()
-  const blockNumber = useBlockNumber()
-  const getDeadline = useGetTransactionDeadline()
-  const isAutoSlippage = useUserSlippageTolerance()[0] === 'auto'
-  const portfolioBalanceUsd = useTotalBalancesUsdForAnalytics()
+  const { account, chainId, provider, connector } = useWeb3React();
+  const analyticsContext = useTrace();
+  const blockNumber = useBlockNumber();
+  const getDeadline = useGetTransactionDeadline();
+  const isAutoSlippage = useUserSlippageTolerance()[0] === "auto";
+  const portfolioBalanceUsd = useTotalBalancesUsdForAnalytics();
+
+  const { swapState, setSwapState } = useContext(SwapContext);
 
   const novaRpc: string | undefined = useMemo(() => {
-    if(chainId){
-      if(Object.keys(APP_RPC_URLS).includes(chainId?.toString())) {
-        return APP_RPC_URLS[chainId?.toString()][0]
+    if (chainId) {
+      if (Object.keys(APP_RPC_URLS).includes(chainId?.toString())) {
+        return APP_RPC_URLS[chainId?.toString()][0];
       }
-      return undefined
+      return undefined;
     }
-    return undefined
-  },[chainId])
-  
+    return undefined;
+  }, [chainId]);
 
   return useCallback(
     (): Promise<{
@@ -106,9 +125,14 @@ export function useUniversalRouterSwapCallback(
           console.log(connectedChainId, "connectedChainId");
           if (chainId !== connectedChainId) throw new WrongChainError();
 
+          const paymasterContract = PAYMASTER_CNOTRACTS[chainId];
           const deadline = await getDeadline();
-        
-          console.log('deadline====>',deadline.toString(10),new Date(deadline.toString(10) * 1000))
+          console.log("swapState", swapState);
+          console.log(
+            "deadline====>",
+            deadline.toString(10),
+            new Date(deadline.toString(10) * 1000),
+          );
           trace.setData(
             "slippageTolerance",
             options.slippageTolerance.toFixed(2),
@@ -130,17 +154,34 @@ export function useUniversalRouterSwapCallback(
             // TODO(https://github.com/Uniswap/universal-router-sdk/issues/113): universal-router-sdk returns a non-hexlified value.
             ...(value && !isZero(value) ? { value: toHex(value) } : {}),
           };
-
+          const usePaymaster = swapState.gasToken?.symbol !== "ETH";
           let gasLimit: BigNumber;
           try {
-            if(novaRpc) {
-              const fee = await zkSyncProvider.attachEstimateFee(
-                novaRpc,
-              )(tx);
+            if (novaRpc) {
+              const fee = await zkSyncProvider.attachEstimateFee(novaRpc)(tx);
               gasLimit = calculateGasMargin(fee.gasLimit);
               tx.maxFeePerGas = fee.maxFeePerGas.toBigInt();
               tx.maxPriorityFeePerGas = fee.maxPriorityFeePerGas.toBigInt();
-            }else {
+              // calculate erc20 amount and paymaster params
+              const gasInWei = gasLimit.mul(tx.maxFeePerGas);
+              console.log("gasInWei: ", gasInWei.toString());
+              if (usePaymaster) {
+                const paymasterParams = utils.getPaymasterParams(
+                  paymasterContract,
+                  {
+                    type: "ApprovalBased",
+                    token: swapState.gasToken.address,
+                    minimalAllowance: MaxUint256,
+                    // empty bytes as testnet paymaster does not use innerInputs
+                    innerInput: new Uint8Array(),
+                  },
+                );
+                tx.customData = {
+                  gasPerPubdata: utils.DEFAULT_GAS_PER_PUBDATA_LIMIT,
+                  paymasterParams,
+                };
+              }
+            } else {
               const gasEstimate = await provider.estimateGas(tx);
               gasLimit = calculateGasMargin(gasEstimate);
             }
@@ -163,9 +204,23 @@ export function useUniversalRouterSwapCallback(
             { name: "Send transaction", op: "wallet.send_transaction" },
             async (walletTrace) => {
               try {
-                return await provider
-                  .getSigner()
-                  .sendTransaction({ ...tx, gasLimit });
+                if (usePaymaster) {
+                  const zksyncProvider = new Web3Provider(provider.provider);
+                  const zksyncSigner = ZksyncSigner.from({
+                    ...provider.getSigner(),
+                    provider: zksyncProvider,
+                  });
+                  const res = await zksyncSigner.sendTransaction({
+                    ...tx,
+                    maxPriorityFeePerGas: ethers.BigNumber.from(0), // must set 0
+                    gasLimit,
+                  });
+                  return res;
+                } else {
+                  return await provider
+                    .getSigner()
+                    .sendTransaction({ ...tx, gasLimit });
+                }
               } catch (error) {
                 if (didUserReject(error)) {
                   walletTrace.setStatus("cancelled");
@@ -211,6 +266,7 @@ export function useUniversalRouterSwapCallback(
           }
           return { type: TradeFillType.Classic as const, response, deadline };
         } catch (error: unknown) {
+          console.error("err: ", error);
           if (error instanceof GasEstimationError) {
             throw error;
           } else if (error instanceof UserRejectedRequestError) {

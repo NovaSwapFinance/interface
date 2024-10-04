@@ -65,6 +65,7 @@ export function useConfirmModalState({
     ) {
       steps.push(ConfirmModalState.RESETTING_TOKEN_ALLOWANCE)
     }
+
     if (allowance.state === AllowanceState.REQUIRED && allowance.needsSetupApproval) {
       steps.push(ConfirmModalState.APPROVING_TOKEN)
     }

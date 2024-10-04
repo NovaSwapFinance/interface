@@ -1,38 +1,46 @@
-import { InterfacePageName } from '@uniswap/analytics-events'
+import { InterfacePageName } from "@uniswap/analytics-events";
 import { ChainId, Currency } from "@novaswap/sdk-core";
-import { useWeb3React } from '@web3-react/core'
-import { Trace } from 'analytics'
-import { NetworkAlert } from 'components/NetworkAlert/NetworkAlert'
-import { SwitchLocaleLink } from 'components/SwitchLocaleLink'
-import SwapHeader from 'components/swap/SwapHeader'
-import { SwapTab } from 'components/swap/constants'
-import { PageWrapper, SwapWrapper } from 'components/swap/styled'
-import { asSupportedChain } from 'constants/chains'
-import { useCurrency } from 'hooks/Tokens'
-import useParsedQueryString from 'hooks/useParsedQueryString'
-import { useScreenSize } from 'hooks/useScreenSize'
-import { SendForm } from 'pages/Swap/Send/SendForm'
-import { ReactNode, useMemo } from 'react'
-import { useLocation } from 'react-router-dom'
-import { InterfaceTrade, TradeState } from 'state/routing/types'
-import { isPreviewTrade } from 'state/routing/utils'
-import { SwapAndLimitContextProvider, SwapContextProvider } from 'state/swap/SwapContext'
-import { queryParametersToCurrencyState } from 'state/swap/hooks'
-import { CurrencyState, SwapAndLimitContext } from 'state/swap/types'
-import { useIsDarkMode } from '../../theme/components/ThemeToggle'
-import { LimitFormWrapper } from './Limit/LimitForm'
-import { SwapForm } from './SwapForm'
+import { useWeb3React } from "@web3-react/core";
+import { Trace } from "analytics";
+import { NetworkAlert } from "components/NetworkAlert/NetworkAlert";
+import { SwitchLocaleLink } from "components/SwitchLocaleLink";
+import SwapHeader from "components/swap/SwapHeader";
+import { SwapTab } from "components/swap/constants";
+import { PageWrapper, SwapWrapper } from "components/swap/styled";
+import { asSupportedChain } from "constants/chains";
+import { useCurrency } from "hooks/Tokens";
+import useParsedQueryString from "hooks/useParsedQueryString";
+import { useScreenSize } from "hooks/useScreenSize";
+import { SendForm } from "pages/Swap/Send/SendForm";
+import { ReactNode, useMemo } from "react";
+import { useLocation } from "react-router-dom";
+import { InterfaceTrade, TradeState } from "state/routing/types";
+import { isPreviewTrade } from "state/routing/utils";
+import {
+  SwapAndLimitContextProvider,
+  SwapContextProvider,
+} from "state/swap/SwapContext";
+import { queryParametersToCurrencyState } from "state/swap/hooks";
+import { CurrencyState, SwapAndLimitContext } from "state/swap/types";
+import { useIsDarkMode } from "../../theme/components/ThemeToggle";
+import { LimitFormWrapper } from "./Limit/LimitForm";
+import { SwapForm } from "./SwapForm";
+import { RowBetween } from "components/Row";
+import styled from "styled-components";
+import { Trans } from "i18n";
+
+import Banner from "./Banner";
 
 export function getIsReviewableQuote(
   trade: InterfaceTrade | undefined,
   tradeState: TradeState,
-  swapInputError?: ReactNode
+  swapInputError?: ReactNode,
 ): boolean {
-  if (swapInputError) return false
+  if (swapInputError) return false;
   // if the current quote is a preview quote, allow the user to progress to the Swap review screen
-  if (isPreviewTrade(trade)) return true
+  if (isPreviewTrade(trade)) return true;
 
-  return Boolean(trade && tradeState === TradeState.VALID)
+  return Boolean(trade && tradeState === TradeState.VALID);
 }
 
 export default function SwapPage({ className }: { className?: string }) {
@@ -61,6 +69,7 @@ export default function SwapPage({ className }: { className?: string }) {
   return (
     <Trace page={InterfacePageName.SWAP_PAGE} shouldLogImpression>
       <PageWrapper>
+        <Banner />
         <Swap
           className={className}
           chainId={chainId}
@@ -93,17 +102,17 @@ export function Swap({
   compact = false,
   syncTabToUrl,
 }: {
-  className?: string
-  chainId?: ChainId
-  onCurrencyChange?: (selected: CurrencyState) => void
-  disableTokenInputs?: boolean
-  initialInputCurrency?: Currency
-  initialOutputCurrency?: Currency
-  compact?: boolean
-  syncTabToUrl: boolean
+  className?: string;
+  chainId?: ChainId;
+  onCurrencyChange?: (selected: CurrencyState) => void;
+  disableTokenInputs?: boolean;
+  initialInputCurrency?: Currency;
+  initialOutputCurrency?: Currency;
+  compact?: boolean;
+  syncTabToUrl: boolean;
 }) {
-  const isDark = useIsDarkMode()
-  const screenSize = useScreenSize()
+  const isDark = useIsDarkMode();
+  const screenSize = useScreenSize();
 
   return (
     <SwapAndLimitContextProvider
@@ -116,18 +125,29 @@ export function Swap({
         {({ currentTab }) => (
           <SwapContextProvider>
             <SwapWrapper isDark={isDark} className={className} id="swap-page">
-              <SwapHeader compact={compact || !screenSize.sm} syncTabToUrl={syncTabToUrl} />
+              <SwapHeader
+                compact={compact || !screenSize.sm}
+                syncTabToUrl={syncTabToUrl}
+              />
               {currentTab === SwapTab.Swap && (
-                <SwapForm onCurrencyChange={onCurrencyChange} disableTokenInputs={disableTokenInputs} />
+                <SwapForm
+                  onCurrencyChange={onCurrencyChange}
+                  disableTokenInputs={disableTokenInputs}
+                />
               )}
-              {currentTab === SwapTab.Limit && <LimitFormWrapper onCurrencyChange={onCurrencyChange} />}
+              {currentTab === SwapTab.Limit && (
+                <LimitFormWrapper onCurrencyChange={onCurrencyChange} />
+              )}
               {currentTab === SwapTab.Send && (
-                <SendForm disableTokenInputs={disableTokenInputs} onCurrencyChange={onCurrencyChange} />
+                <SendForm
+                  disableTokenInputs={disableTokenInputs}
+                  onCurrencyChange={onCurrencyChange}
+                />
               )}
             </SwapWrapper>
           </SwapContextProvider>
         )}
       </SwapAndLimitContext.Consumer>
     </SwapAndLimitContextProvider>
-  )
+  );
 }

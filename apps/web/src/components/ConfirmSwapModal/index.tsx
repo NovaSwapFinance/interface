@@ -60,6 +60,7 @@ export function ConfirmSwapModal({
   onConfirm,
   onCurrencySelection,
   onDismiss,
+  onCheckGasAsFromTokenAmount
 }: {
   trade: InterfaceTrade
   originalTrade?: InterfaceTrade
@@ -75,6 +76,7 @@ export function ConfirmSwapModal({
   onConfirm: () => void
   onCurrencySelection: (field: Field, currency: Currency) => void
   onDismiss: () => void
+  onCheckGasAsFromTokenAmount: () => boolean;
 }) {
   const {
     confirmModalState,
@@ -201,8 +203,10 @@ export function ConfirmSwapModal({
               <AutoColumn gap="md">
                 <SwapDetails
                   onConfirm={() => {
-                    suppressPopups()
-                    startSwapFlow()
+                    if(onCheckGasAsFromTokenAmount()) {
+                      suppressPopups()
+                      startSwapFlow()
+                    }
                   }}
                   trade={trade}
                   allowance={allowance}

@@ -58,7 +58,7 @@ import {
 } from "./RouteDefinitions";
 import HomePageNav from "./Homepage/components/Nav";
 import useInitNovaTokenList from 'hooks/useInitNovaTokenList'
-
+import { Toaster } from "react-hot-toast";
 // The Chrome is always loaded, but is lazy-loaded because it is not needed without user interaction.
 // Annotating it with webpackPreload allows it to be ready when requested.
 const AppChrome = lazy(() => import(/* webpackPreload: true */ "./AppChrome"));
@@ -256,6 +256,7 @@ const Body = memo(function Body() {
           )}
         </Routes>
       </Suspense>
+      <Toaster />
     </BodyWrapper>
   );
 });
