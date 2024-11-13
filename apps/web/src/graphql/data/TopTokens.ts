@@ -153,20 +153,20 @@ export function useTopTokens(chain: Chain): UseTopTokensReturnValue {
         if(item?.iconURL) {
           project = {logoUrl: item?.iconURL || ''}
         }
-        const price = tokenDayData.length > 0 ? tokenDayData[tokenDayData.length -1].priceUSD : 0;
-        const volume1Day = tokenDayData.length > 0 ? tokenDayData[tokenDayData.length -1].volumeUSD : 0;
-        const lastSeven = (tokenDayData||[]).slice(Math.max(tokenDayData.length - 7, 0));
+        const price = tokenDayData.length > 0 ? tokenDayData[0].priceUSD : 0;
+        const volume1Day = tokenDayData.length > 0 ? tokenDayData[0].volumeUSD : 0;
+        const lastSeven = (tokenDayData||[]).slice(0, 7);
         const volume1Week = lastSeven.reduce((acc, current) => Number(acc) + Number(current.volumeUSD), 0);
-        
+
         let pricePercentChange1Day = {
           value: 0
         };
         if(tokenDayData.length >1) {
-          const lastPrice = tokenDayData[tokenDayData.length -2].priceUSD;
+          const lastPrice = tokenDayData[1].priceUSD;
           if(Number(lastPrice)!== 0) {
             pricePercentChange1Day = {
               value: ((price - lastPrice) / lastPrice) * 100
-            } 
+            }
           }
         }
        const market = {

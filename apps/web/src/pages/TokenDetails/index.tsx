@@ -126,8 +126,8 @@ function useCreateTDPContext(): PendingTDPContext | LoadedTDPContext {
     if(tokenResult.data) {
       const { token } = tokenResult.data;
       const {tokenDayData} = token;
-      const price = tokenDayData?.length>0?tokenDayData[tokenDayData.length -1].priceUSD:0;
-      const volumeUSD24H = tokenDayData?.length>0?tokenDayData[tokenDayData.length -1].volumeUSD:0;
+      const price = tokenDayData?.length>0?tokenDayData[0].priceUSD:0;
+      const volumeUSD24H = tokenDayData?.length>0?tokenDayData[0].volumeUSD:0;
       const market = {
         price:{
           currency:"USD",
