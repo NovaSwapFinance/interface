@@ -101,7 +101,7 @@ query TopTokens( $first: Int!) {
       poolCount
       totalValueLockedUSD
       totalValueLocked
-      tokenDayData {
+      tokenDayData(orderBy: date, orderDirection: desc, first: 10) {
         priceUSD
         volumeUSD
       }
