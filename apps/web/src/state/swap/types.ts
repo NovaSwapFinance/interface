@@ -28,6 +28,12 @@ type SwapContextType = {
   swapState: SwapState;
   derivedSwapInfo: SwapInfo;
   setSwapState: Dispatch<SetStateAction<SwapState>>;
+  quotingGasAsFromToken: boolean;
+  setQuotingGasAsFromToken: Dispatch<SetStateAction<boolean>>;
+  gasAsFromToken: { token?: Currency; amountDecimals: number };
+  setGasAsFromToken: Dispatch<
+    SetStateAction<{ token?: Currency; amountDecimals: number }>
+  >;
 };
 
 function parseTokenAmountURLParameter(urlParam: any): string {
@@ -69,10 +75,25 @@ export const EMPTY_DERIVED_SWAP_INFO: SwapInfo = Object.freeze({
 export const initialSwapState: SwapState =
   queryParametersToSwapState(parsedQueryString());
 
+export const initialGasAsFromToken: {
+  token?: Currency;
+  amountDecimals: number;
+} = {
+  token: undefined,
+  amountDecimals: 0,
+};
+
 export const SwapContext = createContext<SwapContextType>({
   swapState: initialSwapState,
   derivedSwapInfo: EMPTY_DERIVED_SWAP_INFO,
   setSwapState: () => undefined,
+  quotingGasAsFromToken: false,
+  gasAsFromToken: {
+    token: undefined,
+    amountDecimals: 0,
+  },
+  setGasAsFromToken: () => undefined,
+  setGuotingGasAsFromToken: () => undefined,
 });
 
 type SwapAndLimitContextType = {
@@ -119,4 +140,10 @@ export interface CurrencyState {
 export interface SwapState {
   readonly independentField: Field;
   readonly typedValue: string;
+  readonly gasToken?: Currency;
+}
+
+export interface SwapGasAsFromToken {
+  token: Currency | undefined;
+  amountDecimals: number;
 }
