@@ -172,7 +172,7 @@ function TVLChartSection({ chainId }: { chainId: number }) {
   const theme = useTheme()
 
   const { entries, loading, dataQuality } = useDailyProtocolTVL(chainIdToBackendName(chainId))
-  const lastEntry = entries[entries.length - 1]
+  const lastEntry = entries[0]
   const params = useMemo(
     () => ({
       data: entries,
